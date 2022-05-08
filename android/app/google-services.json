@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "1012941757457",
+    "firebase_url": "https://mytimetrade-8ef71-default-rtdb.firebaseio.com",
+    "project_id": "mytimetrade-8ef71",
+    "storage_bucket": "mytimetrade-8ef71.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1012941757457:android:c726e9f8f0e76ee876e5b0",
+        "android_client_info": {
+          "package_name": "com.example.mytimetrade"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1012941757457-q3vpf8m02utetka2gpf351qul92jtgjr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBymty19Ppf7MR7aUcvbxElblVs3MpveEw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1012941757457-q3vpf8m02utetka2gpf351qul92jtgjr.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1012941757457-ks1aslaj3onqv9pft4evro2asah7ut7g.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.mytimetrade"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
