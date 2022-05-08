@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
       title: '',
       initialRoute: "/",
       routes: {
-        '/': (ctx)
+        '/': (ctx) => AuthScreen(),
         AuthScreen.routeName: (context) => AuthScreen(),
       },
     );
