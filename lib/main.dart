@@ -1,6 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:mytimetrade/auth_gate.dart';
+import 'package:mytimetrade/screens/auth.dart';
 
 import 'firebase/firebase_options.dart';
 
@@ -16,15 +16,13 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      title: '',
-      home: AuthGate(),
-      /*initialRoute: "/",
+    return MaterialApp(
+      title: 'MyTimeTrade',
+      initialRoute: "/",
       routes: {
         '/': (ctx) => AuthScreen(),
         AuthScreen.routeName: (context) => AuthScreen(),
-      },*/
+      },
     );
-    ;
   }
 }
