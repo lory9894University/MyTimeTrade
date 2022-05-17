@@ -2,7 +2,6 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:mytimetrade/screens/auth.dart';
 import 'firebase/firebase_options.dart';
-import 'login_demo.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -20,9 +19,9 @@ class MyApp extends StatelessWidget {
       title: 'MyTimeTrade',
       debugShowCheckedModeBanner: false,
       home: LoginPage(),
-      //initialRoute: "/",
+      initialRoute: "/",
       routes: {
-        //'/': (ctx) => AuthScreen(),
+        '/': (ctx) => AuthScreen(),
         AuthScreen.routeName: (context) => AuthScreen(),
       },
     );
