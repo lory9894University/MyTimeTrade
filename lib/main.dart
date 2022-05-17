@@ -1,7 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:mytimetrade/auth_gate.dart';
-import 'package:mytimetrade/screens/auth.dart';
 
 import 'firebase/firebase_options.dart';
 

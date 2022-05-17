@@ -17,10 +17,7 @@ import 'package:flutter/foundation.dart'
 class DefaultFirebaseOptions {
   static FirebaseOptions get currentPlatform {
     if (kIsWeb) {
-      throw UnsupportedError(
-        'DefaultFirebaseOptions have not been configured for web - '
-        'you can reconfigure this by running the FlutterFire CLI again.',
-      );
+      return web;
     }
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
@@ -49,6 +46,16 @@ class DefaultFirebaseOptions {
     }
   }
 
+  static const FirebaseOptions web = FirebaseOptions(
+    apiKey: 'AIzaSyAgo71u764OIFvZR8TaWItb2kPnP4t9yHI',
+    appId: '1:1012941757457:web:93c6ab90a6462dbc76e5b0',
+    messagingSenderId: '1012941757457',
+    projectId: 'mytimetrade-8ef71',
+    authDomain: 'mytimetrade-8ef71.firebaseapp.com',
+    databaseURL: 'https://mytimetrade-8ef71-default-rtdb.firebaseio.com',
+    storageBucket: 'mytimetrade-8ef71.appspot.com',
+  );
+
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyBymty19Ppf7MR7aUcvbxElblVs3MpveEw',
     appId: '1:1012941757457:android:c726e9f8f0e76ee876e5b0',
@@ -65,6 +72,7 @@ class DefaultFirebaseOptions {
     projectId: 'mytimetrade-8ef71',
     databaseURL: 'https://mytimetrade-8ef71-default-rtdb.firebaseio.com',
     storageBucket: 'mytimetrade-8ef71.appspot.com',
+    androidClientId: '1012941757457-5vtm2hgf4celhpsbtttmp9n2i56u2dss.apps.googleusercontent.com',
     iosClientId: '1012941757457-ks1aslaj3onqv9pft4evro2asah7ut7g.apps.googleusercontent.com',
     iosBundleId: 'com.example.mytimetrade',
   );

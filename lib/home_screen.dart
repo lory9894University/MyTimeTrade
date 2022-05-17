@@ -1,6 +1,6 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutterfire_ui/auth.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({
@@ -22,9 +22,11 @@ class HomeScreen extends StatelessWidget {
           children: [
             const SizedBox(height: 20),
             CircleAvatar(
-              radius: 30,
-              backgroundImage: NetworkImage(user.photoURL!),
-            ),
+                radius: 30,
+                backgroundImage: (user.photoURL == null)
+                    ? const AssetImage("assets/img/blank-profile-picture.png")
+                        as ImageProvider
+                    : NetworkImage(user.photoURL!)),
             const SizedBox(height: 10),
             Text(
               user.displayName!,

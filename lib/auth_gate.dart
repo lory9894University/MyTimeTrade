@@ -12,17 +12,23 @@ class AuthGate extends StatelessWidget {
         //viene dal firebase_auth package e ci dice se c'è un user logged in o no: se sì, ci da i dati ad esso collegati
         stream: FirebaseAuth.instance
             .authStateChanges(), //ritorna stream di user obj: if null user not logged in
+        initialData: FirebaseAuth.instance.currentUser,
         builder: (context, snapshot) {
           if (!snapshot.hasData) {
             return SignInScreen(
+              showAuthActionSwitch: true,
               providerConfigs: const [
-              EmailProviderConfiguration(),
-              GoogleProviderConfiguration(clientId: '1012941757457-ks1aslaj3onqv9pft4evro2asah7ut7g.apps.googleusercontent.com')
-            ],
-              headerBuilder: (context, constraints, _) { //TODO: aggiustare immagine
+                EmailProviderConfiguration(),
+                GoogleProviderConfiguration(
+                    clientId:
+                        '1012941757457-ks1aslaj3onqv9pft4evro2asah7ut7g.apps.googleusercontent.com')
+              ],
+              headerBuilder: (context, constraints, _) {
+                //TODO: aggiustare immagine
                 return const CircleAvatar(
                   radius: 75,
-                  backgroundImage: NetworkImage('https://www.freeiconspng.com/uploads/handshake-icon-21.png'),
+                  backgroundImage: NetworkImage(
+                      'https://www.freeiconspng.com/uploads/handshake-icon-21.png'),
                 );
               },
             );
