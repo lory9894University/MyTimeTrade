@@ -13,8 +13,6 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
-    TextStyle defaultStyle = TextStyle(color: Colors.grey, fontSize: 20.0);
-    TextStyle linkStyle = TextStyle(color: Colors.blue);
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -74,8 +72,7 @@ class _LoginPageState extends State<LoginPage> {
                   color: Colors.blue, borderRadius: BorderRadius.circular(20)),
               child: FlatButton(
                 onPressed: () {
-                  Navigator.push(
-                      context, MaterialPageRoute(builder: (_) => HomePage()));
+                  Navigator.pushNamed(context, '/welcome');
                 },
                 child: const Text(
                   'Login',
@@ -89,8 +86,7 @@ class _LoginPageState extends State<LoginPage> {
             Text('Non ti sei ancora registrato?'),
             FlatButton(
               onPressed: (){
-                Navigator.push(
-                    context, MaterialPageRoute(builder: (_) => RegistrationPage()));
+                Navigator.pushNamed(context, '/registration');
               },
               child: const Text(
                 'Clicca qui, per farlo ora!',

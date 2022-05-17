@@ -1,7 +1,9 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:mytimetrade/registration_page.dart';
 import 'package:mytimetrade/screens/auth.dart';
 import 'firebase/firebase_options.dart';
+import 'home_page.dart';
 import 'login_demo.dart';
 
 void main() async {
@@ -20,9 +22,9 @@ class MyApp extends StatelessWidget {
       title: 'MyTimeTrade',
       debugShowCheckedModeBanner: false,
       home: LoginPage(),
-      //initialRoute: "/",
       routes: {
-        //'/': (ctx) => AuthScreen(),
+        '/registration': (context) => RegistrationPage(),
+        '/welcome': (context) => HomePage(),
         AuthScreen.routeName: (context) => AuthScreen(),
       },
     );
