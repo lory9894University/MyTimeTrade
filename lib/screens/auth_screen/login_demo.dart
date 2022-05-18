@@ -19,7 +19,7 @@ class _LoginPageState extends State<LoginPage> {
     FirebaseApp firebaseApp = await Firebase.initializeApp();
     User? user = FirebaseAuth.instance.currentUser;
     if (user != null) {
-      Navigator.pushNamed(context, '/welcome');
+      Navigator.pushNamed(context, '/welcome', arguments: user);
     }
     return firebaseApp;
   }
@@ -117,14 +117,15 @@ class _LoginPageState extends State<LoginPage> {
                           color: Colors.blue,
                           borderRadius: BorderRadius.circular(20)),
                       child: FlatButton(
-                        onPressed: () {
-                          signInUsingEmailPassword(
+                        onPressed: () async {
+                          User? user = await signInUsingEmailPassword(
                               email: emailController.text,
                               password: passwordController.text,
                               context:
                                   context); // ritorna qualcosa (credo null) se l'autenticazione non è riuscita
                           //todo: aggiungere errore nel caso l'autenticazione non riesca
-                          Navigator.pushNamed(context, '/welcome');
+                          Navigator.pushNamed(context, '/welcome',
+                              arguments: user);
                         },
                         child: const Text(
                           'Login',

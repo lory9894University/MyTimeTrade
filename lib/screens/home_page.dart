@@ -9,6 +9,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
+    User user = ModalRoute.of(context)?.settings.arguments as User;
     return Scaffold(
       appBar: AppBar(
         title: Text('Home Page'),
