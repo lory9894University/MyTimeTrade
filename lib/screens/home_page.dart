@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
@@ -19,7 +20,8 @@ class _HomePageState extends State<HomePage> {
           decoration: BoxDecoration(
               color: Colors.blue, borderRadius: BorderRadius.circular(10)),
           child: FlatButton(
-            onPressed: () {
+            onPressed: () async {
+              await FirebaseAuth.instance.signOut();
               Navigator.pop(context);
             },
             child: Text(

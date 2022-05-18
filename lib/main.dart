@@ -1,14 +1,11 @@
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:mytimetrade/registration_page.dart';
-import 'package:mytimetrade/screens/auth.dart';
-import 'firebase/firebase_options.dart';
-import 'home_page.dart';
-import 'login_demo.dart';
+import 'package:mytimetrade/screens/auth_screen/registration_page.dart';
+
+import 'screens/auth_screen/login_demo.dart';
+import 'screens/home_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   runApp(const MyApp());
 }
 
@@ -21,11 +18,11 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'MyTimeTrade',
       debugShowCheckedModeBanner: false,
-      home: LoginPage(),
+      initialRoute: '/',
       routes: {
+        '/': (context) => LoginPage(),
         '/registration': (context) => RegistrationPage(),
         '/welcome': (context) => HomePage(),
-        AuthScreen.routeName: (context) => AuthScreen(),
       },
     );
   }
