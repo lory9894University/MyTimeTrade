@@ -20,10 +20,10 @@ class _HomePageState extends State<HomePage> {
           width: 150,
           decoration: BoxDecoration(
               color: Colors.blue, borderRadius: BorderRadius.circular(10)),
-          child: FlatButton(
+          child: TextButton(
             onPressed: () async {
               await FirebaseAuth.instance.signOut();
-              Navigator.pop(context);
+              Navigator.pushReplacementNamed(context, '/');
             },
             child: Text(
               'Welcome',

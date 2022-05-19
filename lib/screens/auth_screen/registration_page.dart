@@ -1,5 +1,6 @@
-import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
+import 'package:mytimetrade/firebase/auth_operations.dart';
 
 class RegistrationPage extends StatefulWidget {
   @override
@@ -9,25 +10,6 @@ class RegistrationPage extends StatefulWidget {
 class _RegistrationPageState extends State<RegistrationPage> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
-
-  Future<void> registerUser(String emailAddress, String password) async {
-    //firebase Create user
-    try {
-      final credential =
-          await FirebaseAuth.instance.createUserWithEmailAndPassword(
-        email: emailAddress,
-        password: password,
-      );
-    } on FirebaseAuthException catch (e) {
-      if (e.code == 'weak-password') {
-        print('The password provided is too weak.');
-      } else if (e.code == 'email-already-in-use') {
-        print('The account already exists for that email.');
-      }
-    } catch (e) {
-      print(e);
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -61,7 +43,6 @@ class _RegistrationPageState extends State<RegistrationPage> {
                   EdgeInsets.only(left: 15.0, right: 15.0, top: 15, bottom: 0),
               //padding: EdgeInsets.symmetric(horizontal: 15),
               child: TextField(
-                obscureText: true,
                 decoration: InputDecoration(
                     border: OutlineInputBorder(),
                     labelText: 'Username',
@@ -89,10 +70,14 @@ class _RegistrationPageState extends State<RegistrationPage> {
               width: 250,
               decoration: BoxDecoration(
                   color: Colors.blue, borderRadius: BorderRadius.circular(20)),
-              child: FlatButton(
-                onPressed: () {
-                  registerUser(emailController.text, passwordController.text);
-                  Navigator.pop(context);
+              child: TextButton(
+                onPressed: () async {
+                  User? user = await AuthOperation.registerUserAndSignIn(
+                      emailController.text, passwordController.text);
+                  if (user != null) {
+                    Navigator.pushReplacementNamed(context, '/',
+                        arguments: user);
+                  }
                 },
                 child: const Text(
                   'Send',
