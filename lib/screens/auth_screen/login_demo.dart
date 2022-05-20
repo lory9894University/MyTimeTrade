@@ -99,7 +99,7 @@ class _LoginPageState extends State<LoginPage> {
                             email: emailController.text,
                             password: passwordController.text,
                             context:
-                                context); // ritorna qualcosa (credo null) se l'autenticazione non è riuscita
+                                context); // ritorna null se l'autenticazione non è riuscita
                         if (user != null) {
                           await Future.delayed(
                               const Duration(milliseconds: 500));
@@ -113,6 +113,32 @@ class _LoginPageState extends State<LoginPage> {
                       },
                       child: const Text(
                         'Login',
+                        style: TextStyle(color: Colors.white, fontSize: 25),
+                      ),
+                    ),
+                  ),
+                  Container(
+                    height: 50,
+                    width: 250,
+                    decoration: BoxDecoration(
+                        color: Colors.black,
+                        borderRadius: BorderRadius.circular(20)),
+                    child: TextButton(
+                      onPressed: () async {
+                        User? user = await AuthOperation.signInWithGoogle();
+                        if (user != null) {
+                          await Future.delayed(
+                              const Duration(milliseconds: 500));
+                          if (mounted) {
+                            Navigator.pushReplacementNamed(context, '/welcome',
+                                arguments: user);
+                          }
+                        } else {
+                          //TODO: implementare qualche errore di password errata/ email non esistente
+                        }
+                      },
+                      child: const Text(
+                        'Login with google',
                         style: TextStyle(color: Colors.white, fontSize: 25),
                       ),
                     ),
