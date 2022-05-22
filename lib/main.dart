@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'screens/servizi_elenco.dart';
 import 'screens/inserimento_ore.dart';
 import 'screens/auth_screen/registration_page.dart';
 import 'screens/auth_screen/login_demo.dart';
@@ -26,6 +27,7 @@ class MyApp extends StatelessWidget {
         '/welcome': (context) => HomePage(),
         '/profile': (context) => Profile(),
         '/ore': (context) => Ore(),
+        '/servizi': (context) => ServiziElenco(),
       },
     );
   }

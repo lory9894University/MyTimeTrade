@@ -61,7 +61,7 @@ class _HomePageState extends State<HomePage> {
                 ),
             ],
           ),
-          Flexible(
+          Flexible( //TODO: Cambiare in lista lunga
               child: ListView(
                 shrinkWrap: true,
                 children: <Widget>[

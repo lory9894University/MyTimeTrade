@@ -222,7 +222,7 @@ class _OreState extends State<Ore> {
                     Text("7"),
                     Divider(
                       color: Colors.black,
-                    )
+                    ),
                   ],
                 ),
               ),
