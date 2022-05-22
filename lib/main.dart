@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'screens/invita_amici.dart';
 import 'screens/servizi_elenco.dart';
 import 'screens/inserimento_ore.dart';
 import 'screens/auth_screen/registration_page.dart';
@@ -28,6 +29,7 @@ class MyApp extends StatelessWidget {
         '/profile': (context) => Profile(),
         '/ore': (context) => Ore(),
         '/servizi': (context) => ServiziElenco(),
+        '/amici': (context) => InvitaAmici(),
       },
     );
   }
