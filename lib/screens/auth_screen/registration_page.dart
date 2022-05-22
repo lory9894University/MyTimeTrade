@@ -11,6 +11,8 @@ class _RegistrationPageState extends State<RegistrationPage> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
+  //TODO: Impostare dei verificatori per i campi email e password. Firebase fails silently (anche se non dovrebbe).
+
   @override
   Widget build(BuildContext context) {
     TextStyle defaultStyle =
@@ -33,7 +35,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
               child: TextField(
                 controller: emailController,
                 decoration: const InputDecoration(
-                    border: const OutlineInputBorder(),
+                    border: OutlineInputBorder(),
                     labelText: 'Email',
                     hintText: 'Enter valid email id as abc@gmail.com'),
               ),
@@ -93,7 +95,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
               width: 250,
               decoration: BoxDecoration(
                   color: Colors.blue, borderRadius: BorderRadius.circular(20)),
-              child: FlatButton(
+              child: TextButton(
                 onPressed: () {
                   Navigator.pop(context);
                 },
