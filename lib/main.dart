@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:mytimetrade/screens/auth_screen/registration_page.dart';
+import 'screens/auth_screen/registration_page.dart';
 
 import 'screens/auth_screen/login_demo.dart';
 import 'screens/home_page.dart';
+import 'screens/profile.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -18,11 +19,12 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'MyTimeTrade',
       debugShowCheckedModeBanner: false,
-      initialRoute: '/',
+      initialRoute: '/welcome',
       routes: {
         '/': (context) => LoginPage(),
         '/registration': (context) => RegistrationPage(),
         '/welcome': (context) => HomePage(),
+        '/profile': (context) => Profile(),
       },
     );
   }

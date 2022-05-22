@@ -21,7 +21,7 @@ class _LoginPageState extends State<LoginPage> {
     User? user = FirebaseAuth.instance.currentUser;
     if (user != null) {
       await Future.delayed(const Duration(milliseconds: 500));
-      if (mounted) {
+      if (mounted) { //TODO: Commentato solo per vedere le modifiche nelle altre UI
         Navigator.pushReplacementNamed(context, '/welcome', arguments: user);
       }
     }
