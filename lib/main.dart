@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'screens/inserimento_ore.dart';
 import 'screens/auth_screen/registration_page.dart';
-
 import 'screens/auth_screen/login_demo.dart';
 import 'screens/home_page.dart';
 import 'screens/profile.dart';
@@ -19,12 +19,13 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'MyTimeTrade',
       debugShowCheckedModeBanner: false,
-      initialRoute: '/welcome',
+      initialRoute: '/',
       routes: {
         '/': (context) => LoginPage(),
         '/registration': (context) => RegistrationPage(),
         '/welcome': (context) => HomePage(),
         '/profile': (context) => Profile(),
+        '/ore': (context) => Ore(),
       },
     );
   }

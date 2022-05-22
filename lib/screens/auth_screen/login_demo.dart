@@ -14,7 +14,7 @@ class _LoginPageState extends State<LoginPage> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
-  Future<FirebaseApp> initializeFirebase() async {
+  /*Future<FirebaseApp> initializeFirebase() async {
     await Firebase.initializeApp(
         options: DefaultFirebaseOptions.currentPlatform);
     FirebaseApp firebaseApp = await Firebase.initializeApp();
@@ -26,7 +26,7 @@ class _LoginPageState extends State<LoginPage> {
       }
     }
     return firebaseApp;
-  }
+  }*/
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +36,7 @@ class _LoginPageState extends State<LoginPage> {
         title: const Text("Login Page"),
       ),
       body: FutureBuilder(
-          future: initializeFirebase(),
+          //future: initializeFirebase(),
           builder: (context, snapshot) {
             return SingleChildScrollView(
               child: Column(
