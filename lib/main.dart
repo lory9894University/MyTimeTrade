@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'screens/accetta.dart';
 import 'screens/invita_amici.dart';
 import 'screens/servizi_elenco.dart';
 import 'screens/inserimento_ore.dart';
@@ -30,6 +31,7 @@ class MyApp extends StatelessWidget {
         '/ore': (context) => Ore(),
         '/servizi': (context) => ServiziElenco(),
         '/amici': (context) => InvitaAmici(),
+        '/accetta': (context) => Accetta(),
       },
     );
   }

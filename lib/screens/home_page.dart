@@ -12,7 +12,7 @@ class _HomePageState extends State<HomePage> {
   late User user;
   late Map<dynamic, dynamic> userData;
 
-  @override
+@override
   void didChangeDependencies() {
     user = ModalRoute.of(context)?.settings.arguments as User;
     super.didChangeDependencies();
@@ -40,7 +40,7 @@ class _HomePageState extends State<HomePage> {
                 child: Padding(
                   padding: EdgeInsets.all(16.0),
                   child: Text(
-                    "Ciao, ${userData["name"]}!",
+                    "Ciao, ${userData["name"]}!", //todo: torna indietro a "Ciao, ${userData["name"]}!",
                     style: DefaultTextStyle.of(context)
                         .style
                         .apply(fontSizeFactor: 0.5),
@@ -73,7 +73,7 @@ class _HomePageState extends State<HomePage> {
                   //padding: const EdgeInsets.only(left:15.0,right: 15.0,top:0,bottom: 0),
                   padding: const EdgeInsets.symmetric(horizontal: 15),
                   child: Text(
-                    "${userData["dummyBalance"]} euro",
+                    "${userData["dummyBalance"]} euro", //todo: torna indietro a "${userData["dummyBalance"]} euro",
                   ),
                 ),
               ),
