@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 
 import '../firebase/auth_operations.dart';
 
@@ -12,6 +13,7 @@ class _ProfileState extends State<Profile> {
   int _selectedIndex = 0;
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,14 +26,14 @@ class _ProfileState extends State<Profile> {
                 child: Container(
                     width: 50,
                     height: 50,
-                    child: Image.asset('assets/img/handshake.png')
-                ),
+                    child: Image.asset('assets/img/handshake.png')),
               ),
-              Align(
+              const Align(
                 alignment: Alignment.topRight,
                 child: Padding(
                   padding: EdgeInsets.all(16.0),
-                  child: Text("Marco Demasi!",
+                  child: Text(
+                    "Marco Demasi!",
                     style: const TextStyle(fontWeight: FontWeight.bold),
                   ),
                 ),
@@ -39,34 +41,38 @@ class _ProfileState extends State<Profile> {
             ],
           ),
           Row(
-            children: <Widget>[
+            children: const <Widget>[
               Center(
-                child: Text("Bio",
-                  style: const TextStyle(fontWeight: FontWeight.bold),
+                child: Text(
+                  "Bio",
+                  style: TextStyle(fontWeight: FontWeight.bold),
                 ),
               ),
             ],
           ),
           Row(
-            children: <Widget>[
+            children: const <Widget>[
               Center(
-                child: Text("Lorem ipsum dolor sit amet, consectetur adipiscing elit laborum."),
+                child: Text(
+                    "Lorem ipsum dolor sit amet, consectetur adipiscing elit laborum."),
               ),
             ],
           ),
           Row(
-            children: <Widget>[
+            children: const <Widget>[
               Center(
-                child: Text("Interessi",
-                  style: const TextStyle(fontWeight: FontWeight.bold),
+                child: Text(
+                  "Interessi",
+                  style: TextStyle(fontWeight: FontWeight.bold),
                 ),
               ),
             ],
           ),
           Flexible(
-            child: ListView( //TODO: Impostare il ListView.builder(), https://www.javatpoint.com/flutter-lists, dopo aver collegato DB
+            child: ListView(
+              //TODO: Impostare il ListView.builder(), https://www.javatpoint.com/flutter-lists, dopo aver collegato DB
               shrinkWrap: true,
-              children: <Widget>[
+              children: const <Widget>[
                 ListTile(
                   title: Text('Inglese'),
                 ),
@@ -95,8 +101,7 @@ class _ProfileState extends State<Profile> {
                 User? user = await AuthOperation.registerUserAndSignIn(
                     emailController.text, passwordController.text);
                 if (user != null) {
-                  Navigator.pushReplacementNamed(context, '/',
-                      arguments: user);
+                  Navigator.pushReplacementNamed(context, '/', arguments: user);
                 }
               },
               child: const Text(
@@ -115,8 +120,7 @@ class _ProfileState extends State<Profile> {
                 User? user = await AuthOperation.registerUserAndSignIn(
                     emailController.text, passwordController.text);
                 if (user != null) {
-                  Navigator.pushReplacementNamed(context, '/',
-                      arguments: user);
+                  Navigator.pushReplacementNamed(context, '/', arguments: user);
                 }
               },
               child: const Text(

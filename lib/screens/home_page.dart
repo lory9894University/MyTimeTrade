@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
@@ -8,9 +9,24 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   int _selectedIndex = 1;
+  late User user;
+  late Map<dynamic, dynamic> userData;
+
+  @override
+  void didChangeDependencies() {
+    user = ModalRoute.of(context)?.settings.arguments as User;
+    super.didChangeDependencies();
+
+    DatabaseReference userRef =
+        FirebaseDatabase.instance.ref('users/${user.uid}');
+    userRef.onValue.listen((DatabaseEvent event) {
+      userData = event.snapshot.value as Map<dynamic, dynamic>;
+      setState(() => {});
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    User user = ModalRoute.of(context)?.settings.arguments as User;
     return Scaffold(
       appBar: AppBar(
         title: Text('Home Page'),
@@ -23,8 +39,11 @@ class _HomePageState extends State<HomePage> {
                 alignment: Alignment.topLeft,
                 child: Padding(
                   padding: EdgeInsets.all(16.0),
-                  child: Text("Ciao, Marco!",
-                    style: DefaultTextStyle.of(context).style.apply(fontSizeFactor: 0.5),
+                  child: Text(
+                    "Ciao, ${userData["name"]}!",
+                    style: DefaultTextStyle.of(context)
+                        .style
+                        .apply(fontSizeFactor: 0.5),
                   ),
                 ),
               ),
@@ -33,18 +52,17 @@ class _HomePageState extends State<HomePage> {
                 child: Container(
                     width: 50,
                     height: 50,
-                    child: Image.asset('assets/img/handshake.png')
-                ),
+                    child: Image.asset('assets/img/handshake.png')),
               ),
             ],
           ),
           Row(
             children: [
               Center(
-                  child: Text(
-                    "Il tuo saldo corrente è: ",
-                    style: const TextStyle(fontWeight: FontWeight.bold),
-                  ),
+                child: Text(
+                  "Il tuo saldo corrente è: ",
+                  style: const TextStyle(fontWeight: FontWeight.bold),
+                ),
               )
             ],
           ),
@@ -55,38 +73,40 @@ class _HomePageState extends State<HomePage> {
                   //padding: const EdgeInsets.only(left:15.0,right: 15.0,top:0,bottom: 0),
                   padding: const EdgeInsets.symmetric(horizontal: 15),
                   child: Text(
-                  "xxx euro",
+                    "${userData["dummyBalance"]} euro",
                   ),
                 ),
-                ),
+              ),
             ],
           ),
-          Flexible( //TODO: Cambiare in lista lunga
-              child: ListView(
-                shrinkWrap: true,
-                children: <Widget>[
-                  ListTile(
-                    leading: Image.asset('assets/img/handshake.png'),
-                    title: Text('Map'),
-                  ),
-                  ListTile(
-                    leading: Image.asset('assets/img/handshake.png'),
-                    title: Text('Map'),
-                  ),
-                  ListTile(
-                    leading: Image.asset('assets/img/handshake.png'),
-                    title: Text('Map'),
-                  ),
-                  ListTile(
-                    leading: Image.asset('assets/img/handshake.png'),
-                    title: Text('Map'),
-                  ),
-                  ListTile(
-                    leading: Image.asset('assets/img/handshake.png'),
-                    title: Text('Map'),
-                  ),
-                ],
-          ),
+          Flexible(
+            //per le liste usare questo https://pub.dev/documentation/firebase_database/latest/ui_firebase_animated_list/FirebaseAnimatedList-class.html
+            //TODO: Cambiare in lista lunga
+            child: ListView(
+              shrinkWrap: true,
+              children: <Widget>[
+                ListTile(
+                  leading: Image.asset('assets/img/handshake.png'),
+                  title: Text('Map'),
+                ),
+                ListTile(
+                  leading: Image.asset('assets/img/handshake.png'),
+                  title: Text('Map'),
+                ),
+                ListTile(
+                  leading: Image.asset('assets/img/handshake.png'),
+                  title: Text('Map'),
+                ),
+                ListTile(
+                  leading: Image.asset('assets/img/handshake.png'),
+                  title: Text('Map'),
+                ),
+                ListTile(
+                  leading: Image.asset('assets/img/handshake.png'),
+                  title: Text('Map'),
+                ),
+              ],
+            ),
           ),
         ],
       ),
