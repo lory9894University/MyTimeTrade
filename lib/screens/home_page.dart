@@ -41,10 +41,7 @@ class _HomePageState extends State<HomePage> {
                   padding: EdgeInsets.all(16.0),
                   child: Text(
                     "Ciao, ${userData["name"]}!", //todo: torna indietro a "Ciao, ${userData["name"]}!",
-                    style: DefaultTextStyle.of(context)
-                        .style
-                        .apply(fontSizeFactor: 0.5),
-                  ),
+                    ),
                 ),
               ),
               Align(

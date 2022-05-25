@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'screens/swipe.dart';
 import 'screens/accetta.dart';
 import 'screens/invita_amici.dart';
 import 'screens/servizi_elenco.dart';
@@ -32,6 +33,7 @@ class MyApp extends StatelessWidget {
         '/servizi': (context) => ServiziElenco(),
         '/amici': (context) => InvitaAmici(),
         '/accetta': (context) => Accetta(),
+        '/swipe':(context) => Swipe(),
       },
     );
   }
