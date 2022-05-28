@@ -1,6 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:mytimetrade/screens/invita_amici.dart';
+import 'package:mytimetrade/screens/servizi_elenco.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -28,54 +30,64 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Home Page'),
-      ),
       body: Column(
         children: <Widget>[
-          Row(
-            children: <Widget>[
-              Align(
-                alignment: Alignment.topLeft,
-                child: Padding(
-                  padding: EdgeInsets.all(16.0),
-                  child: Text(
-                    "Ciao, ${userData["name"]}!", //todo: torna indietro a "Ciao, ${userData["name"]}!",
+          Padding(padding: EdgeInsets.only(top: 60)),
+          Container(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: <Widget>[
+                DefaultTextStyle(
+                  style: const TextStyle(
+                    fontSize: 27.0,
+                    color: Colors.black,
+                  ),
+                  child: Text("Ciao, ${userData["name"]}!")
+                  ), //todo: torna indietro a "Ciao, ${userData["name"]}!"
+                IconButton(
+                    onPressed: () {
+                      Navigator.pushNamed(context, '/profile');
+                    },
+                    icon: const Icon(Icons.person, size: 35,))
+              ],
+            ),
+          ),
+          Padding(padding: EdgeInsets.only(top: 60)),
+          Container(
+            child:
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: const [
+                  DefaultTextStyle(
+                    style: TextStyle(
+                      fontSize: 20.0,
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold,
+                    ),
+                      child: Text("Il tuo saldo corrente è: "),
+                    ),
+                ],
+              ),
+          ),
+          Padding(padding: EdgeInsets.only(top: 15)),
+          Container(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                DefaultTextStyle(
+                    style: const TextStyle(
+                      fontSize: 40.0,
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold,
+                      ),
+                    child: Text(
+                      "${userData["dummyBalance"]} euro", //todo: torna indietro a "${userData["dummyBalance"]} euro",
                     ),
                 ),
-              ),
-              Align(
-                alignment: Alignment.topRight,
-                child: Container(
-                    width: 50,
-                    height: 50,
-                    child: Image.asset('assets/img/handshake.png')),
-              ),
-            ],
+              ],
+            ),
           ),
-          Row(
-            children: [
-              Center(
-                child: Text(
-                  "Il tuo saldo corrente è: ",
-                  style: const TextStyle(fontWeight: FontWeight.bold),
-                ),
-              )
-            ],
-          ),
-          Row(
-            children: [
-              Center(
-                child: Padding(
-                  //padding: const EdgeInsets.only(left:15.0,right: 15.0,top:0,bottom: 0),
-                  padding: const EdgeInsets.symmetric(horizontal: 15),
-                  child: Text(
-                    "${userData["dummyBalance"]} euro", //todo: torna indietro a "${userData["dummyBalance"]} euro",
-                  ),
-                ),
-              ),
-            ],
-          ),
+          Padding(padding: EdgeInsets.only(top: 30)),
           Flexible(
             //per le liste usare questo https://pub.dev/documentation/firebase_database/latest/ui_firebase_animated_list/FirebaseAnimatedList-class.html
             //TODO: Cambiare in lista lunga
@@ -84,30 +96,30 @@ class _HomePageState extends State<HomePage> {
               children: <Widget>[
                 ListTile(
                   leading: Image.asset('assets/img/handshake.png'),
-                  title: Text('Map'),
+                  title: Center(child: DefaultTextStyle(style: TextStyle(fontStyle: FontStyle.italic, color: Colors.black, fontSize: 20), child: Text('Alessandro DeMaria'))),
                 ),
                 ListTile(
                   leading: Image.asset('assets/img/handshake.png'),
-                  title: Text('Map'),
+                  title: Center(child: DefaultTextStyle(style: TextStyle(fontStyle: FontStyle.italic, color: Colors.black, fontSize: 20), child: Text('Filippo Lamberti'))),
                 ),
                 ListTile(
                   leading: Image.asset('assets/img/handshake.png'),
-                  title: Text('Map'),
+                  title: Center(child: DefaultTextStyle(style: TextStyle(fontStyle: FontStyle.italic, color: Colors.black, fontSize: 20), child: Text('Ichi Sakinawa'))),
                 ),
                 ListTile(
                   leading: Image.asset('assets/img/handshake.png'),
-                  title: Text('Map'),
+                  title: Center(child: DefaultTextStyle(style: TextStyle(fontStyle: FontStyle.italic, color: Colors.black, fontSize: 20), child: Text('Jade LaForlì'))),
                 ),
                 ListTile(
                   leading: Image.asset('assets/img/handshake.png'),
-                  title: Text('Map'),
+                  title: Center(child: DefaultTextStyle(style: TextStyle(fontStyle: FontStyle.italic, color: Colors.black, fontSize: 20), child: Text('Andrea Simonei'))),
                 ),
               ],
             ),
           ),
-        ],
+        ]
       ),
-      bottomNavigationBar: BottomNavigationBar(
+      bottomNavigationBar: BottomNavigationBar( //TODO: Fare navigazione con bottoni
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(Icons.handshake),
