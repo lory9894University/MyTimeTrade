@@ -48,7 +48,7 @@ class _HomePageState extends State<HomePage> {
                     onPressed: () {
                       Navigator.pushNamed(context, '/profile');
                     },
-                    icon: const Icon(Icons.person, size: 35,))
+                    icon: const Icon(Icons.person, size: 35))
               ],
             ),
           ),
@@ -81,7 +81,7 @@ class _HomePageState extends State<HomePage> {
                       fontWeight: FontWeight.bold,
                       ),
                     child: Text(
-                      "${userData["dummyBalance"]} euro", //todo: torna indietro a "${userData["dummyBalance"]} euro",
+                      "${userData["dummyBalance"]} ore", //todo: torna indietro a "${userData["dummyBalance"]} euro",
                     ),
                 ),
               ],

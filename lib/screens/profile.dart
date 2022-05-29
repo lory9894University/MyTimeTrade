@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
@@ -19,54 +21,78 @@ class _ProfileState extends State<Profile> {
     return Scaffold(
       body: Column(
         children: <Widget>[
-          Row(
-            children: <Widget>[
-              Align(
-                alignment: Alignment.topLeft,
-                child: Container(
-                    width: 50,
-                    height: 50,
-                    child: Image.asset('assets/img/handshake.png')),
-              ),
-              const Align(
-                alignment: Alignment.topRight,
-                child: Padding(
-                  padding: EdgeInsets.all(16.0),
-                  child: Text(
-                    "Marco Demasi!",
-                    style: const TextStyle(fontWeight: FontWeight.bold),
+          Padding(padding: EdgeInsets.only(top: 60)),
+          Container(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: const <Widget>[
+                Icon(Icons.person, size: 35),
+                DefaultTextStyle(
+                    style: TextStyle(
+                      fontSize: 27.0,
+                      color: Colors.black,
+                    ),
+                    child: Text("Andrea D'Angelo")
+                )
+              ],
+            ),
+          ),
+          Padding(padding: EdgeInsets.only(top: 30)),
+          Container(
+            child:
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: const [
+                DefaultTextStyle(
+                  style: TextStyle(
+                    fontSize: 20.0,
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                  ),
+                  child: Text("Bio"),
+                ),
+              ],
+            ),
+          ),
+          Padding(padding: EdgeInsets.only(top: 15)),
+          Container(
+            child:
+            Row(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Container(
+                    constraints: BoxConstraints(minWidth: 100, maxWidth: 350),
+                    child: const DefaultTextStyle(
+                      style: TextStyle(
+                        fontStyle: FontStyle.italic,
+                        fontSize: 15.0,
+                        color: Colors.black,
+                      ),
+                    child: Text("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. "
+                        "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. "
+                        "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. "),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
-          Row(
-            children: const <Widget>[
-              Center(
-                child: Text(
-                  "Bio",
-                  style: TextStyle(fontWeight: FontWeight.bold),
+          Padding(padding: EdgeInsets.only(top: 30)),
+          Container(
+            child:
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: const [
+                DefaultTextStyle(
+                  style: TextStyle(
+                    fontSize: 20.0,
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                  ),
+                  child: Text("Interessi"),
                 ),
-              ),
-            ],
-          ),
-          Row(
-            children: const <Widget>[
-              Center(
-                child: Text(
-                    "Lorem ipsum dolor sit amet, consectetur adipiscing elit laborum."),
-              ),
-            ],
-          ),
-          Row(
-            children: const <Widget>[
-              Center(
-                child: Text(
-                  "Interessi",
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                ),
-              ),
-            ],
+              ],
+            ),
           ),
           Flexible(
             child: ListView(
@@ -74,59 +100,73 @@ class _ProfileState extends State<Profile> {
               shrinkWrap: true,
               children: const <Widget>[
                 ListTile(
-                  title: Text('Inglese'),
+                  dense: true,
+                  title: Center(child: DefaultTextStyle(style: TextStyle(fontStyle: FontStyle.italic, color: Colors.black, fontSize: 20), child: Text('Inglese'))),
                 ),
                 ListTile(
-                  title: Text('Spagnolo'),
+                  dense: true,
+                  title: Center(child: DefaultTextStyle(style: TextStyle(fontStyle: FontStyle.italic, color: Colors.black, fontSize: 20), child: Text('Spagnolo'))),
                 ),
                 ListTile(
-                  title: Text('Dolci freddi'),
+                  dense: true,
+                  title: Center(child: DefaultTextStyle(style: TextStyle(fontStyle: FontStyle.italic, color: Colors.black, fontSize: 20), child: Text('Dolci freddi'))),
                 ),
                 ListTile(
-                  title: Text('Elettronica'),
+                  dense: true,
+                  title: Center(child: DefaultTextStyle(style: TextStyle(fontStyle: FontStyle.italic, color: Colors.black, fontSize: 20), child: Text('Elettronica'))),
                 ),
                 ListTile(
-                  title: Text('Make-up Artist'),
+                  dense: true,
+                  title: Center(child: DefaultTextStyle(style: TextStyle(fontStyle: FontStyle.italic, color: Colors.black, fontSize: 20), child: Text('Make-up Artist'))),
                 ),
               ],
             ),
           ),
+          Padding(padding: EdgeInsets.only(top: 15)),
           Container(
-            height: 50,
-            width: 250,
-            decoration: BoxDecoration(
-                color: Colors.blue, borderRadius: BorderRadius.circular(20)),
-            child: TextButton(
-              onPressed: () async {
-                User? user = await AuthOperation.registerUserAndSignIn(
-                    emailController.text, passwordController.text);
-                if (user != null) {
-                  Navigator.pushReplacementNamed(context, '/', arguments: user);
-                }
-              },
-              child: const Text(
-                'Contatta',
-                style: TextStyle(color: Colors.white, fontSize: 25),
-              ),
-            ),
-          ),
-          Container(
-            height: 50,
-            width: 250,
-            decoration: BoxDecoration(
-                color: Colors.blue, borderRadius: BorderRadius.circular(20)),
-            child: TextButton(
-              onPressed: () async {
-                User? user = await AuthOperation.registerUserAndSignIn(
-                    emailController.text, passwordController.text);
-                if (user != null) {
-                  Navigator.pushReplacementNamed(context, '/', arguments: user);
-                }
-              },
-              child: const Text(
-                'Richiedi ore',
-                style: TextStyle(color: Colors.white, fontSize: 25),
-              ),
+            child:
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: <Widget> [
+                Container(
+                  height: 50,
+                  width: 130,
+                  decoration: BoxDecoration(
+                      color: Colors.blue, borderRadius: BorderRadius.circular(20)),
+                  child: TextButton(
+                    onPressed: () async {
+                      User? user = await AuthOperation.registerUserAndSignIn(
+                          emailController.text, passwordController.text);
+                      if (user != null) {
+                        Navigator.pushReplacementNamed(context, '/', arguments: user);
+                      }
+                    },
+                    child: const Text(
+                      'Contatta',
+                      style: TextStyle(color: Colors.white, fontSize: 25),
+                    ),
+                  ),
+                ),
+                Container(
+                  height: 50,
+                  width: 160,
+                  decoration: BoxDecoration(
+                      color: Colors.blue, borderRadius: BorderRadius.circular(20)),
+                  child: TextButton(
+                    onPressed: () async {
+                      User? user = await AuthOperation.registerUserAndSignIn(
+                          emailController.text, passwordController.text);
+                      if (user != null) {
+                        Navigator.pushReplacementNamed(context, '/', arguments: user);
+                      }
+                    },
+                    child: const Text(
+                      'Richiedi ore',
+                      style: TextStyle(color: Colors.white, fontSize: 25),
+                    ),
+                  ),
+                ),
+              ],
             ),
           ),
         ],
