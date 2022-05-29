@@ -12,57 +12,95 @@ class _InvitaAmiciState extends State<InvitaAmici> {
     return Scaffold(
       body: Column(
         children: <Widget>[
-          Row(
-            children: <Widget>[
-              Text("Invita i tuoi amici!",
-                style: DefaultTextStyle.of(context).style.apply(fontSizeFactor: 0.5),
-              ),
-            ],
+          Padding(padding: EdgeInsets.only(top: 60)),
+          Container(
+            child:
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: const [
+                DefaultTextStyle(
+                  style: TextStyle(
+                    fontSize: 30.0,
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                  ),
+                  child: Text("Invita i tuoi amici!"),
+                ),
+              ],
+            ),
           ),
-          Row(
-            children: <Widget>[
-              Column(
-                children: <Widget>[
-                  Text("AMICI"),
-                ],
-              ),
-              VerticalDivider( //todo: capire il funzionamento
-                width: 20,
-                thickness: 1,
-                indent: 20,
-                endIndent: 0,
-                color: Colors.black,
-              ),
-              Column(
-                children: <Widget>[
-                  Text("Rimanenti: XXX"),
-                ],
-              ),
-            ],
-          ),
-          Flexible(
-            child: ListView(
-              shrinkWrap: true,
+          Padding(padding: EdgeInsets.only(top: 50)),
+          Container(
+            child:
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
-                ListTile(
-                  leading: Image.asset('assets/img/handshake.png'),
-                  title: Text('Map'),
+                DefaultTextStyle(
+                  style: TextStyle(
+                    fontSize: 20.0,
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                  ),
+                  child: Text("AMICI RIMANENTI: 3"),
                 ),
-                ListTile(
-                  leading: Image.asset('assets/img/handshake.png'),
-                  title: Text('Map'),
-                ),
-                ListTile(
-                  leading: Image.asset('assets/img/handshake.png'),
-                  title: Text('Map'),
-                ),
-                ListTile(
-                  leading: Image.asset('assets/img/handshake.png'),
-                  title: Text('Map'),
-                ),
-                ListTile(
-                  leading: Image.asset('assets/img/handshake.png'),
-                  title: Text('Map'),
+              ],
+            ),
+          ),
+          Container(
+            child: Flexible(
+              child: ListView(
+                shrinkWrap: true,
+                children: <Widget>[
+                  ListTile(
+                    tileColor: Colors.green,
+                    dense: true,
+                    shape: RoundedRectangleBorder(side: BorderSide(color: Colors.black, width: 3), borderRadius: BorderRadius.circular(10)),
+                    title: Center(child: DefaultTextStyle(style: TextStyle(fontStyle: FontStyle.italic, color: Colors.white, fontSize: 20), child: Text('Alessandro DeMaria'))),
+                  ),
+                  ListTile(
+                    tileColor: Colors.green,
+                    dense: true,
+                    shape: RoundedRectangleBorder(side: BorderSide(color: Colors.black, width: 3), borderRadius: BorderRadius.circular(10)),
+                    title: Center(child: DefaultTextStyle(style: TextStyle(fontStyle: FontStyle.italic, color: Colors.white, fontSize: 20), child: Text('Filippo Lamberti'))),
+                  ),
+                  ListTile(
+                    tileColor: Colors.red,
+                    dense: true,
+                    shape: RoundedRectangleBorder(side: BorderSide(color: Colors.black, width: 3), borderRadius: BorderRadius.circular(10)),
+                    title: Center(child: DefaultTextStyle(style: TextStyle(fontStyle: FontStyle.italic, color: Colors.white, fontSize: 20), child: Text(''))),
+                  ),
+                  ListTile(
+                    tileColor: Colors.red,
+                    dense: true,
+                    shape: RoundedRectangleBorder(side: BorderSide(color: Colors.black, width: 3), borderRadius: BorderRadius.circular(10)),
+                    title: Center(child: DefaultTextStyle(style: TextStyle(fontStyle: FontStyle.italic, color: Colors.white, fontSize: 20), child: Text(''))),
+                  ),
+                  ListTile(
+                    tileColor: Colors.red,
+                    dense: true,
+                    shape: RoundedRectangleBorder(side: BorderSide(color: Colors.black, width: 3), borderRadius: BorderRadius.circular(10)),
+                    title: Center(child: DefaultTextStyle(style: TextStyle(fontStyle: FontStyle.italic, color: Colors.white, fontSize: 20), child: Text(''))),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          Padding(padding: EdgeInsets.only(top: 60)),
+          Container(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Container(
+                  height: 50,
+                  width: 150,
+                  decoration: BoxDecoration(
+                      color: Colors.blue, borderRadius: BorderRadius.circular(20)),
+                  child: TextButton(
+                    onPressed: () async {
+                        Navigator.pushReplacementNamed(context, '/');
+                    },
+                    child: const Text('Condividi!', style: TextStyle(color: Colors.white, fontSize: 25)),
+                  ),
                 ),
               ],
             ),
