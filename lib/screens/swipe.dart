@@ -18,49 +18,111 @@ class _SwipeState extends State<Swipe> {
     return Scaffold(
       body: Column(
         children: <Widget>[
-          Row(
-            children: <Widget>[
-              Center(
-                child: Text("Conferma dello scambio ore"),
-              )
-            ]
-          ),
-          Row(
-              children: <Widget>[
-                Center(
-                  child: Text("Ordine #265829"),
-                )
-              ]
-          ),
-          Row(
-              children: <Widget>[
-                Text("3h "),
-                Text("- "),
-                Text("Gioia LeDritta")
-              ]
-          ),
-          Row(
-              children: <Widget>[
-                Center(
-                    child: SliderButton(
-                      action: () {
-                        ///Do something here
-                        Navigator.of(context).pop();
-                      },
-                      label: Text("Conferma",
-                        style: TextStyle(
-                            color: Color(0xff4a4a4a), fontWeight: FontWeight.w500, fontSize: 17),
-                      ),
-                      icon: Text("x",
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontWeight: FontWeight.w400,
-                          fontSize: 44,
-                        ),
-                      ),
-                    )
+          Padding(padding: EdgeInsets.only(top: 60)),
+          Container(
+            child:
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: const [
+                DefaultTextStyle(
+                  style: TextStyle(
+                    fontSize: 30.0,
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                  ),
+                  child: Text("Conferma dello scambio ore"),
                 ),
               ],
+            ),
+          ),
+          Padding(padding: EdgeInsets.only(top: 100)),
+          Container(
+            child:
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: const [
+                DefaultTextStyle(
+                  style: TextStyle(
+                    fontSize: 25.0,
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                  ),
+                  child: Text("Ordine #265829"),
+                ),
+              ],
+            ),
+          ),
+          Padding(padding: EdgeInsets.only(top: 50)),
+          Container(
+            child:
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: const [
+                DefaultTextStyle(
+                  style: TextStyle(
+                    fontSize: 25.0,
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                  ),
+                  child: Text("Numero di ore:"),
+                ),
+                DefaultTextStyle(
+                  style: TextStyle(
+                    fontSize: 25.0,
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                  ),
+                  child: Text("5"),
+                ),
+              ],
+            ),
+          ),
+          Padding(padding: EdgeInsets.only(top: 20)),
+          Container(
+            child:
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: const [
+                DefaultTextStyle(
+                  style: TextStyle(
+                    fontSize: 25.0,
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                  ),
+                  child: Text("Da donare a:"),
+                ),
+                DefaultTextStyle(
+                  style: TextStyle(
+                    fontSize: 25.0,
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                  ),
+                  child: Text("Gioia LeDritta"),
+                ),
+              ],
+            ),
+          ),
+          Padding(padding: EdgeInsets.only(top: 100)),
+          Container(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                SliderButton(
+                  width: 400,
+                  highlightedColor: Colors.green,
+                  action: () {
+                    ///Do something here
+                    Navigator.of(context).pop();
+                  },
+                  alignLabel: Alignment(0.1, 0),
+                  label: Text("Conferma",
+                    style: TextStyle(
+                        color: Color(0xff4a4a4a), fontWeight: FontWeight.w500, fontSize: 30),
+                  ),
+                  icon: Icon(Icons.handshake, size: 35),
+                )
+              ],
+            ),
           ),
         ],
       ),
