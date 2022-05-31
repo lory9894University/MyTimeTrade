@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:share_plus/share_plus.dart';
 
 class InvitaAmici extends StatefulWidget {
   @override
@@ -97,7 +98,7 @@ class _InvitaAmiciState extends State<InvitaAmici> {
                       color: Colors.blue, borderRadius: BorderRadius.circular(20)),
                   child: TextButton(
                     onPressed: () async {
-                        Navigator.pushReplacementNamed(context, '/');
+                        Share.share("Questo è il tuo codice per iscriverti!");
                     },
                     child: const Text('Condividi!', style: TextStyle(color: Colors.white, fontSize: 25)),
                   ),
