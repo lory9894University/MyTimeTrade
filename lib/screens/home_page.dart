@@ -1,8 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
-import 'package:mytimetrade/screens/invita_amici.dart';
-import 'package:mytimetrade/screens/servizi_elenco.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -12,9 +10,9 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   int _selectedIndex = 1;
   late User user;
-  late Map<dynamic, dynamic> userData;
-
-@override
+  Map<dynamic, dynamic> userData = Map.from({"name": "", "dummyBalance": "0"});
+  List<dynamic> transactions = List.empty(growable: true);
+  @override
   void didChangeDependencies() {
     user = ModalRoute.of(context)?.settings.arguments as User;
     super.didChangeDependencies();
@@ -23,103 +21,106 @@ class _HomePageState extends State<HomePage> {
         FirebaseDatabase.instance.ref('users/${user.uid}');
     userRef.onValue.listen((DatabaseEvent event) {
       userData = event.snapshot.value as Map<dynamic, dynamic>;
+
+      List<Object?> trans_id = userData["transactions"] as List<Object?>;
+      transactions.clear();
+      trans_id.forEach((value) {
+        DatabaseReference transaction_ref =
+            FirebaseDatabase.instance.ref('transaction/${value}');
+        transaction_ref.onValue.listen((DatabaseEvent event) {
+          print(event.snapshot.value);
+          transactions.add(event.snapshot.value);
+          setState(() => {});
+        });
+      });
+
       setState(() => {});
     });
+
+    //Query transactions_query = ;
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        children: <Widget>[
-          Padding(padding: EdgeInsets.only(top: 60)),
-          Container(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: <Widget>[
-                DefaultTextStyle(
+      body: Column(children: <Widget>[
+        Padding(padding: EdgeInsets.only(top: 60)),
+        Container(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: <Widget>[
+              DefaultTextStyle(
                   style: const TextStyle(
                     fontSize: 27.0,
                     color: Colors.black,
                   ),
-                  child: Text("Ciao, ${userData["name"]}!")
-                  ), //todo: torna indietro a "Ciao, ${userData["name"]}!"
-                IconButton(
-                    onPressed: () {
-                      Navigator.pushNamed(context, '/profile');
-                    },
-                    icon: const Icon(Icons.person, size: 35))
-              ],
-            ),
+                  child: Text(
+                      "Ciao, ${userData["name"]}!")), //todo: torna indietro a "Ciao, ${userData["name"]}!"
+              IconButton(
+                  onPressed: () {
+                    Navigator.pushNamed(context, '/profile');
+                  },
+                  icon: const Icon(Icons.person, size: 35))
+            ],
           ),
-          Padding(padding: EdgeInsets.only(top: 60)),
-          Container(
-            child:
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: const [
-                  DefaultTextStyle(
-                    style: TextStyle(
-                      fontSize: 20.0,
-                      color: Colors.black,
-                      fontWeight: FontWeight.bold,
-                    ),
-                      child: Text("Il tuo saldo corrente è: "),
-                    ),
-                ],
+        ),
+        Padding(padding: EdgeInsets.only(top: 60)),
+        Container(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: const [
+              DefaultTextStyle(
+                style: TextStyle(
+                  fontSize: 20.0,
+                  color: Colors.black,
+                  fontWeight: FontWeight.bold,
+                ),
+                child: Text("Il tuo saldo corrente è: "),
               ),
+            ],
           ),
-          Padding(padding: EdgeInsets.only(top: 15)),
-          Container(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                DefaultTextStyle(
-                    style: const TextStyle(
-                      fontSize: 40.0,
-                      color: Colors.black,
-                      fontWeight: FontWeight.bold,
-                      ),
-                    child: Text(
-                      "${userData["dummyBalance"]} ore", //todo: torna indietro a "${userData["dummyBalance"]} euro",
-                    ),
+        ),
+        Padding(padding: EdgeInsets.only(top: 15)),
+        Container(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              DefaultTextStyle(
+                style: const TextStyle(
+                  fontSize: 40.0,
+                  color: Colors.black,
+                  fontWeight: FontWeight.bold,
                 ),
-              ],
-            ),
+                child: Text(
+                  "${userData["dummyBalance"]} ore", //todo: torna indietro a "${userData["dummyBalance"]} euro",
+                ),
+              ),
+            ],
           ),
-          Padding(padding: EdgeInsets.only(top: 30)),
-          Flexible(
-            //per le liste usare questo https://pub.dev/documentation/firebase_database/latest/ui_firebase_animated_list/FirebaseAnimatedList-class.html
-            //TODO: Cambiare in lista lunga
-            child: ListView(
-              shrinkWrap: true,
-              children: <Widget>[
-                ListTile(
-                  leading: Image.asset('assets/img/handshake.png'),
-                  title: Center(child: DefaultTextStyle(style: TextStyle(fontStyle: FontStyle.italic, color: Colors.black, fontSize: 20), child: Text('Alessandro DeMaria'))),
-                ),
-                ListTile(
-                  leading: Image.asset('assets/img/handshake.png'),
-                  title: Center(child: DefaultTextStyle(style: TextStyle(fontStyle: FontStyle.italic, color: Colors.black, fontSize: 20), child: Text('Filippo Lamberti'))),
-                ),
-                ListTile(
-                  leading: Image.asset('assets/img/handshake.png'),
-                  title: Center(child: DefaultTextStyle(style: TextStyle(fontStyle: FontStyle.italic, color: Colors.black, fontSize: 20), child: Text('Ichi Sakinawa'))),
-                ),
-                ListTile(
-                  leading: Image.asset('assets/img/handshake.png'),
-                  title: Center(child: DefaultTextStyle(style: TextStyle(fontStyle: FontStyle.italic, color: Colors.black, fontSize: 20), child: Text('Jade LaForlì'))),
-                ),
-                ListTile(
-                  leading: Image.asset('assets/img/handshake.png'),
-                  title: Center(child: DefaultTextStyle(style: TextStyle(fontStyle: FontStyle.italic, color: Colors.black, fontSize: 20), child: Text('Andrea Simonei'))),
-                ),
-              ],
-            ),
+        ),
+        Padding(padding: EdgeInsets.only(top: 30)),
+        Flexible(
+          child: ListView.builder(
+            itemCount: transactions.length,
+            itemBuilder: (context, index) {
+              return ListTile(
+                leading: Image.asset('assets/img/handshake.png'),
+                title: Center(
+                    child: DefaultTextStyle(
+                        style: TextStyle(
+                            fontStyle: FontStyle.italic,
+                            color: Colors.black,
+                            fontSize: 20),
+                        child: Text(
+                            'data: ${transactions[index]["date"]}, importo: ${transactions[index]["amount"]}  '))),
+              );
+            },
+            shrinkWrap: true,
           ),
-        ]
-      ),
-      bottomNavigationBar: BottomNavigationBar( //TODO: Fare navigazione con bottoni
+        ),
+      ]),
+      bottomNavigationBar: BottomNavigationBar(
+        //TODO: Fare navigazione con bottoni
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(Icons.handshake),
