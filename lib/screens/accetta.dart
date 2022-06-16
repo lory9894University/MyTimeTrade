@@ -8,10 +8,18 @@ class Accetta extends StatefulWidget {
   _AccettaState createState() => _AccettaState();
 }
 
+//TODO: Capire come modificare ACCETTA.DART, in modo da avere la stessa navbar delle altre pagine
+
 class _AccettaState extends State<Accetta> {
   int _selectedIndex = 1;
   @override
   Widget build(BuildContext context) {
+    var index = 1;
+    final items = <Widget>[
+      const Icon(Icons.handshake, size: 30),
+      const Icon(Icons.home, size: 30),
+      const Icon(Icons.map, size: 30),
+    ];
     return MaterialApp(
       home: DefaultTabController(
         length: 2,

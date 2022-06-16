@@ -1,3 +1,4 @@
+import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 
 class ServiziElenco extends StatefulWidget {
@@ -18,9 +19,26 @@ class _ServiziElencoState extends State<ServiziElenco> {
 
   @override
   Widget build(BuildContext context) {
-
+    var index = 1;
+    final items_nav = <Widget>[
+      const Icon(Icons.handshake, size: 30),
+      const Icon(Icons.home, size: 30),
+      const Icon(Icons.map, size: 30),
+    ];
     return Scaffold(
-      body: Column(
+        extendBody: true,
+        body: Container(
+            decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  colors: [
+                    Colors.greenAccent,
+                    Colors.blueAccent,
+                  ],
+                  begin: Alignment.topRight,
+                  end: Alignment.bottomLeft,
+                )
+            ),
+            child: Column(
         children: <Widget>[
           Padding(padding: EdgeInsets.only(top: 60)),
           Container(
@@ -133,24 +151,13 @@ class _ServiziElencoState extends State<ServiziElenco> {
           ),
         ],
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.handshake),
-            label: 'Servizi',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.map),
-            label: 'Vicino a te',
-          ),
-        ],
-        currentIndex: _selectedIndex,
-        selectedItemColor: Colors.amber[800],
-      ),
+        ),
+        bottomNavigationBar: CurvedNavigationBar(
+          index: index,
+          backgroundColor: Colors.transparent,
+          height: 60,
+          items: items_nav,
+        )
     );
   }
 }
