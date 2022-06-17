@@ -11,12 +11,7 @@ class _InvitaAmiciState extends State<InvitaAmici> {
   int _selectedIndex = 0;
   @override
   Widget build(BuildContext context) {
-    var index = 1;
-    final items = <Widget>[
-      const Icon(Icons.handshake, size: 30),
-      const Icon(Icons.home, size: 30),
-      const Icon(Icons.map, size: 30),
-    ];
+    var index = 0;
     return Scaffold(
         extendBody: true,
         body: Container(
@@ -132,7 +127,32 @@ class _InvitaAmiciState extends State<InvitaAmici> {
           index: index,
           backgroundColor: Colors.transparent,
           height: 60,
-          items: items,
+          items: <Widget>[
+            IconButton(
+              iconSize: 30,
+              onPressed: () {
+                Navigator.pushNamed(context, '/amici');
+              },
+              icon: const Icon(Icons.handshake),
+              tooltip: 'Invita i tuoi amici',
+            ),
+            IconButton(
+              iconSize: 30,
+              onPressed: () {
+                Navigator.pushNamed(context, '/');
+              },
+              icon: const Icon(Icons.home),
+              tooltip: 'Home',
+            ),
+            IconButton(
+              iconSize: 30,
+              onPressed: () {
+                Navigator.pushNamed(context, '/servizi');
+              },
+              icon: const Icon(Icons.map),
+              tooltip: 'Servizi',
+            ),
+          ],
         )
     );
   }

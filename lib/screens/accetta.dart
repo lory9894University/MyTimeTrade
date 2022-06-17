@@ -1,3 +1,4 @@
+import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -8,24 +9,19 @@ class Accetta extends StatefulWidget {
   _AccettaState createState() => _AccettaState();
 }
 
-//TODO: Capire come modificare ACCETTA.DART, in modo da avere la stessa navbar delle altre pagine
-
 class _AccettaState extends State<Accetta> {
   int _selectedIndex = 1;
   @override
   Widget build(BuildContext context) {
-    var index = 1;
-    final items = <Widget>[
-      const Icon(Icons.handshake, size: 30),
-      const Icon(Icons.home, size: 30),
-      const Icon(Icons.map, size: 30),
-    ];
+    var index = 0;
     return MaterialApp(
       home: DefaultTabController(
         length: 2,
         child: Scaffold(
+          extendBody: true,
           appBar: AppBar(
             toolbarHeight: 0.5,
+
             bottom: TabBar(
               tabs: [
                 Tab(text: "Da accettare"),
@@ -33,7 +29,18 @@ class _AccettaState extends State<Accetta> {
               ],
             ),
           ),
-          body: TabBarView(
+          body: Container(
+            decoration: BoxDecoration(
+            gradient: LinearGradient(
+            colors: [
+              Colors.greenAccent,
+              Colors.blueAccent,
+            ],
+            begin: Alignment.topRight,
+            end: Alignment.bottomLeft,
+            )
+          ),
+          child:TabBarView(
             children: [
               Center(
                 child: Column(children: <Widget>[
@@ -320,24 +327,38 @@ class _AccettaState extends State<Accetta> {
                 ),
               ],
           ),
-          bottomNavigationBar: BottomNavigationBar(
-            items: const <BottomNavigationBarItem>[
-              BottomNavigationBarItem(
-                icon: Icon(Icons.handshake),
-                label: 'Servizi',
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.home),
-                label: 'Home',
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.map),
-                label: 'Vicino a te',
-              ),
-            ],
-            currentIndex: _selectedIndex,
-            selectedItemColor: Colors.amber[800],
           ),
+            bottomNavigationBar: CurvedNavigationBar(
+              index: index,
+              backgroundColor: Colors.transparent,
+              height: 60,
+              items: <Widget>[
+                IconButton(
+                  iconSize: 30,
+                  onPressed: () {
+                    Navigator.pushNamed(context, '/amici');
+                  },
+                  icon: const Icon(Icons.handshake),
+                  tooltip: 'Invita i tuoi amici',
+                ),
+                IconButton(
+                  iconSize: 30,
+                  onPressed: () {
+                    Navigator.pushNamed(context, '/');
+                  },
+                  icon: const Icon(Icons.home),
+                  tooltip: 'Home',
+                ),
+                IconButton(
+                  iconSize: 30,
+                  onPressed: () {
+                    Navigator.pushNamed(context, '/servizi');
+                  },
+                  icon: const Icon(Icons.map),
+                  tooltip: 'Servizi',
+                ),
+              ],
+            )
         ),
       ),
     );
