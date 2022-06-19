@@ -269,7 +269,7 @@ class _OreState extends State<Ore> {
           Padding(padding: EdgeInsets.only(top: 10)),
           Container(
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
                 Container(
                     height: 50,
@@ -287,13 +287,25 @@ class _OreState extends State<Ore> {
                       child: const Text('Richiedi!', style: TextStyle(color: Colors.white, fontSize: 25)),
                     ),
                   ),
+                Container(
+                  height: 50,
+                  width: 150,
+                  decoration: BoxDecoration(
+                      color: Colors.blue, borderRadius: BorderRadius.circular(20)),
+                  child: TextButton(
+                    onPressed: () async {
+                      Navigator.pushNamed(context, '/');
+                    },
+                    child: const Text('Annulla', style: TextStyle(color: Colors.white, fontSize: 25)),
+                  ),
+                ),
               ],
             ),
           ),
         ],
       ),
         ),
-        bottomNavigationBar: CurvedNavigationBar(
+        /*bottomNavigationBar: CurvedNavigationBar(
           index: index,
           backgroundColor: Colors.transparent,
           height: 60,
@@ -323,7 +335,7 @@ class _OreState extends State<Ore> {
               tooltip: 'Servizi',
             ),
           ],
-        )
+        )*/
     );
   }
 }

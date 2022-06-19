@@ -4,6 +4,8 @@ import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 import '../firebase/auth_operations.dart';
 
@@ -63,7 +65,7 @@ class _ProfileState extends State<Profile> {
                     color: Colors.black,
                     fontWeight: FontWeight.bold,
                   ),
-                  child: Text("Bio"),
+                  child: Text("Indirizzo"),
                 ),
               ],
             ),
@@ -83,9 +85,7 @@ class _ProfileState extends State<Profile> {
                         fontSize: 15.0,
                         color: Colors.black,
                       ),
-                    child: Text("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. "
-                        "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. "
-                        "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. "),
+                    child: Text("Via Tal dei Tali, 65, 13478, Bergamo"),
                   ),
                 ),
               ],
@@ -108,35 +108,33 @@ class _ProfileState extends State<Profile> {
               ],
             ),
           ),
-          Flexible(
-            child: ListView(
+          ListView(
               //TODO: Impostare il ListView.builder(), https://www.javatpoint.com/flutter-lists, dopo aver collegato DB
               shrinkWrap: true,
               children: const <Widget>[
                 ListTile(
                   dense: true,
-                  title: Center(child: DefaultTextStyle(style: TextStyle(fontStyle: FontStyle.italic, color: Colors.black, fontSize: 20), child: Text('Inglese'))),
+                  title: Center(child: DefaultTextStyle(style: TextStyle(fontStyle: FontStyle.italic, color: Colors.black, fontSize: 15), child: Text('Inglese'))),
                 ),
                 ListTile(
                   dense: true,
-                  title: Center(child: DefaultTextStyle(style: TextStyle(fontStyle: FontStyle.italic, color: Colors.black, fontSize: 20), child: Text('Spagnolo'))),
+                  title: Center(child: DefaultTextStyle(style: TextStyle(fontStyle: FontStyle.italic, color: Colors.black, fontSize: 15), child: Text('Spagnolo'))),
                 ),
                 ListTile(
                   dense: true,
-                  title: Center(child: DefaultTextStyle(style: TextStyle(fontStyle: FontStyle.italic, color: Colors.black, fontSize: 20), child: Text('Dolci freddi'))),
+                  title: Center(child: DefaultTextStyle(style: TextStyle(fontStyle: FontStyle.italic, color: Colors.black, fontSize: 15), child: Text('Dolci freddi'))),
                 ),
                 ListTile(
                   dense: true,
-                  title: Center(child: DefaultTextStyle(style: TextStyle(fontStyle: FontStyle.italic, color: Colors.black, fontSize: 20), child: Text('Elettronica'))),
+                  title: Center(child: DefaultTextStyle(style: TextStyle(fontStyle: FontStyle.italic, color: Colors.black, fontSize: 15), child: Text('Elettronica'))),
                 ),
                 ListTile(
                   dense: true,
-                  title: Center(child: DefaultTextStyle(style: TextStyle(fontStyle: FontStyle.italic, color: Colors.black, fontSize: 20), child: Text('Make-up Artist'))),
+                  title: Center(child: DefaultTextStyle(style: TextStyle(fontStyle: FontStyle.italic, color: Colors.black, fontSize: 15), child: Text('Make-up Artist'))),
                 ),
               ],
             ),
-          ),
-          Padding(padding: EdgeInsets.only(top: 15)),
+          Padding(padding: EdgeInsets.only(top: 5)),
           Container(
             child:
             Row(
@@ -149,11 +147,14 @@ class _ProfileState extends State<Profile> {
                       color: Colors.blue, borderRadius: BorderRadius.circular(20)),
                   child: TextButton(
                     onPressed: () async {
-                      User? user = await AuthOperation.registerUserAndSignIn(
+                      /*User? user = await AuthOperation.registerUserAndSignIn(
                           emailController.text, passwordController.text);
                       if (user != null) {
                         Navigator.pushReplacementNamed(context, '/', arguments: user);
-                      }
+                      }*/
+                      String phoneNumber = '3425934167';
+                      Uri urlWhatsapp = Uri.parse('https://wa.me/$phoneNumber?text=CiaoMamma');
+                      await launchUrl(urlWhatsapp);
                     },
                     child: const Text(
                       'Contatta',
@@ -167,13 +168,15 @@ class _ProfileState extends State<Profile> {
                   decoration: BoxDecoration(
                       color: Colors.blue, borderRadius: BorderRadius.circular(20)),
                   child: TextButton(
-                    onPressed: () async {
+                    /*onPressed: () async {
                       User? user = await AuthOperation.registerUserAndSignIn(
                           emailController.text, passwordController.text);
                       if (user != null) {
                         Navigator.pushReplacementNamed(context, '/', arguments: user);
-                      }
-                    },
+                      }*/
+                      onPressed: () {
+                        Navigator.pushNamed(context, '/ore');
+                      },
                     child: const Text(
                       'Richiedi ore',
                       style: TextStyle(color: Colors.white, fontSize: 25),

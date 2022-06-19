@@ -19,7 +19,7 @@ class _ServiziElencoState extends State<ServiziElenco> {
 
   @override
   Widget build(BuildContext context) {
-    var index = 0;
+    var index = 2;
     return Scaffold(
         extendBody: true,
         body: Container(
