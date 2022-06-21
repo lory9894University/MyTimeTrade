@@ -4,6 +4,7 @@ import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
@@ -152,9 +153,11 @@ class _ProfileState extends State<Profile> {
                       if (user != null) {
                         Navigator.pushReplacementNamed(context, '/', arguments: user);
                       }*/
-                      String phoneNumber = '3425934167';
-                      Uri urlWhatsapp = Uri.parse('https://wa.me/$phoneNumber?text=CiaoMamma');
-                      await launchUrl(urlWhatsapp);
+                      var lavoro = "lavoro da insegnante di liceo";
+                      Share.share("Ciao! Ti contatto dall'applicazione MyTimeTrade per quel "+lavoro);
+                      /*var phoneNumber = '3425934167';
+                      var whatsapp_android = "whatsapp://send?phone="+phoneNumber+"&text=hello";
+                      await launchUrl(whatsapp_android);*/
                     },
                     child: const Text(
                       'Contatta',

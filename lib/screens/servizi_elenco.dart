@@ -17,6 +17,10 @@ class _ServiziElencoState extends State<ServiziElenco> {
     'Allenamento',
   ];
 
+  void _prova() {
+    Navigator.pushNamed(context, '/profile');
+  }
+
   @override
   Widget build(BuildContext context) {
     var index = 2;
@@ -83,10 +87,14 @@ class _ServiziElencoState extends State<ServiziElenco> {
             children: <Widget>[
               Expanded(
                 child: Column(
-                  children: <Widget>[
-                    Center(child: DefaultTextStyle(style: TextStyle(color: Colors.black, fontSize: 18), child: Text('Programmazione'))),
-                    Divider(
-                      color: Colors.black,
+                  children: const <Widget>[
+                    Center(
+                      child: TextField(
+                        decoration: InputDecoration(
+                          contentPadding: EdgeInsets.symmetric(horizontal: 40),
+                          hintText: 'Inserisci la specifica categoria che ti interessa',
+                        ),
+                      ),
                     ),
                   ],
                 ),
@@ -97,44 +105,51 @@ class _ServiziElencoState extends State<ServiziElenco> {
             child: Flexible( //TODO: Cambiare in lista infinita
               child: ListView(
                 shrinkWrap: true,
-                children: const <Widget>[
+                children: <Widget>[
                   ListTile(
+                    onTap: () => _prova(),
                     dense: true,
                     leading: Icon(Icons.person, size: 35),
                     title: Center(child: DefaultTextStyle(style: TextStyle(color: Colors.black, fontSize: 20), child: Text("D'Angelo Andrea"))),
                     subtitle: Center(child: DefaultTextStyle(style: TextStyle(fontStyle: FontStyle.italic, color: Colors.black, fontSize: 15), child: Text('C++'))),
                   ),
                   ListTile(
+                    onTap: () => _prova(),
                     dense: true,
                     leading: Icon(Icons.person, size: 35),
                     title: Center(child: DefaultTextStyle(style: TextStyle(color: Colors.black, fontSize: 20), child: Text("Lorenzo Dentis"))),
                     subtitle: Center(child: DefaultTextStyle(style: TextStyle(fontStyle: FontStyle.italic, color: Colors.black, fontSize: 15), child: Text('Unity, JavaScript'))),
                   ),
                   ListTile(
+                    onTap: () => _prova(),
                     dense: true,
                     leading: Icon(Icons.person, size: 35),
                     title: Center(child: DefaultTextStyle(style: TextStyle(color: Colors.black, fontSize: 20), child: Text("Francesca Rinaldi"))),
                     subtitle: Center(child: DefaultTextStyle(style: TextStyle(fontStyle: FontStyle.italic, color: Colors.black, fontSize: 15), child: Text('Java'))),
                   ),
                   ListTile(
+                    onTap: () => _prova(),
                     dense: true,
                     leading: Icon(Icons.person, size: 35),
                     title: Center(child: DefaultTextStyle(style: TextStyle(color: Colors.black, fontSize: 20), child: Text("Marta Meroni"))),
                     subtitle: Center(child: DefaultTextStyle(style: TextStyle(fontStyle: FontStyle.italic, color: Colors.black, fontSize: 15), child: Text('HTML/CSS'))),
                   ),
                   ListTile(
+                    onTap: () => _prova(),
                     dense: true,
                     leading: Icon(Icons.person, size: 35),
                     title: Center(child: DefaultTextStyle(style: TextStyle(color: Colors.black, fontSize: 20), child: Text("Matteo Filisti"))),
                     subtitle: Center(child: DefaultTextStyle(style: TextStyle(fontStyle: FontStyle.italic, color: Colors.black, fontSize: 15), child: Text('Flutter'))),
                   ),
                   ListTile(
+                    onTap: () => _prova(),
                     dense: true,
                     leading: Icon(Icons.person, size: 35),
                     title: Center(child: DefaultTextStyle(style: TextStyle(color: Colors.black, fontSize: 20), child: Text("Sandra Keyhole"))),
                     subtitle: Center(child: DefaultTextStyle(style: TextStyle(fontStyle: FontStyle.italic, color: Colors.black, fontSize: 15), child: Text('React, UnReal Engine'))),
                   ),
                   ListTile(
+                    onTap: () => _prova(),
                     dense: true,
                     leading: Icon(Icons.person, size: 35),
                     title: Center(child: DefaultTextStyle(style: TextStyle(color: Colors.black, fontSize: 20), child: Text("Marco Demasi"))),
