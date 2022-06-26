@@ -2,6 +2,8 @@ import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:mytimetrade/screens/Profile_Passage.dart';
+import 'package:mytimetrade/screens/profile.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -43,7 +45,7 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    var index = 1;
+    var index = 2;
     return Scaffold(
       extendBody: true,
       body: Container(
@@ -71,11 +73,6 @@ class _HomePageState extends State<HomePage> {
                   ),
                   child: Text(
                       "Ciao, ${userData["name"]}!")), //todo: torna indietro a "Ciao, ${userData["name"]}!"
-              IconButton(
-                  onPressed: () {
-                    Navigator.pushNamed(context, '/profile');
-                  },
-                  icon: const Icon(Icons.person, size: 35))
             ],
           ),
         ),
@@ -151,10 +148,33 @@ class _HomePageState extends State<HomePage> {
             IconButton(
               iconSize: 30,
               onPressed: () {
+                Navigator.pushNamed(context, '/accetta');
+              },
+              icon: const Icon(Icons.check_outlined),
+              tooltip: 'Accetta',
+            ),
+            IconButton(
+              iconSize: 30,
+              onPressed: () {
                 Navigator.pushNamed(context, '/');
               },
               icon: const Icon(Icons.home),
               tooltip: 'Home',
+            ),
+            IconButton(
+              iconSize: 30,
+              onPressed: () {
+                Navigator.pushNamed(
+                  context,
+                  '/profile',
+                  arguments: Profile_Passage(
+                    "Andrea",
+                    "Developer",
+                  ),
+                );
+              },
+              icon: const Icon(Icons.person),
+              tooltip: 'Profilo',
             ),
             IconButton(
               iconSize: 30,

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 import '../firebase/auth_operations.dart';
+import 'Profile_Passage.dart';
 
 class Accetta extends StatefulWidget {
   @override
@@ -13,7 +14,7 @@ class _AccettaState extends State<Accetta> {
   int _selectedIndex = 1;
   @override
   Widget build(BuildContext context) {
-    var index = 0;
+    var index = 1;
     return MaterialApp(
       home: DefaultTabController(
         length: 2,
@@ -94,7 +95,7 @@ class _AccettaState extends State<Accetta> {
                               child: Text('Conferma', style: TextStyle(fontSize: 20.0),),
                               color: Colors.green,
                               textColor: Colors.white,
-                              onPressed: () {},
+                              onPressed: () {Navigator.pushNamed(context, '/ore');},
                             ),
                           ),  ]),
                         ]),
@@ -139,7 +140,7 @@ class _AccettaState extends State<Accetta> {
                               child: Text('Conferma', style: TextStyle(fontSize: 20.0),),
                               color: Colors.green,
                               textColor: Colors.white,
-                              onPressed: () {},
+                              onPressed: () {Navigator.pushNamed(context, '/ore');},
                             ),
                           ),  ]),
                         ]),
@@ -184,7 +185,7 @@ class _AccettaState extends State<Accetta> {
                               child: Text('Conferma', style: TextStyle(fontSize: 20.0),),
                               color: Colors.green,
                               textColor: Colors.white,
-                              onPressed: () {},
+                              onPressed: () {Navigator.pushNamed(context, '/ore');},
                             ),
                           ),  ]),
                         ]),
@@ -344,10 +345,33 @@ class _AccettaState extends State<Accetta> {
                 IconButton(
                   iconSize: 30,
                   onPressed: () {
+                    Navigator.pushNamed(context, '/accetta');
+                  },
+                  icon: const Icon(Icons.check_outlined),
+                  tooltip: 'Accetta',
+                ),
+                IconButton(
+                  iconSize: 30,
+                  onPressed: () {
                     Navigator.pushNamed(context, '/');
                   },
                   icon: const Icon(Icons.home),
                   tooltip: 'Home',
+                ),
+                IconButton(
+                  iconSize: 30,
+                  onPressed: () {
+                    Navigator.pushNamed(
+                      context,
+                      '/profile',
+                      arguments: Profile_Passage(
+                        "Andrea",
+                        "Developer",
+                      ),
+                    );
+                  },
+                  icon: const Icon(Icons.person),
+                  tooltip: 'Profilo',
                 ),
                 IconButton(
                   iconSize: 30,

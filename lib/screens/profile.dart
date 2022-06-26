@@ -4,6 +4,7 @@ import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:mytimetrade/screens/Profile_Passage.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:url_launcher/url_launcher_string.dart';
@@ -16,13 +17,21 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
-  int _selectedIndex = 0;
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+  Profile_Passage args = Profile_Passage('','');
+
+  void didChangeDependencies() {
+    args = ModalRoute
+        .of(context)
+        ?.settings
+        .arguments as Profile_Passage;
+    super.didChangeDependencies();
+  }
 
   @override
   Widget build(BuildContext context) {
-    var index = 0;
+    var index = 3;
     return Scaffold(
         extendBody: true,
         body: Container(
@@ -42,14 +51,14 @@ class _ProfileState extends State<Profile> {
           Container(
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: const <Widget>[
+              children: <Widget>[
                 Icon(Icons.person, size: 35),
                 DefaultTextStyle(
                     style: TextStyle(
                       fontSize: 27.0,
                       color: Colors.black,
                     ),
-                    child: Text("Andrea D'Angelo")
+                    child: Text('${args.nome} ${args.cognome}')
                 )
               ],
             ),
@@ -208,10 +217,33 @@ class _ProfileState extends State<Profile> {
             IconButton(
               iconSize: 30,
               onPressed: () {
+                Navigator.pushNamed(context, '/accetta');
+              },
+              icon: const Icon(Icons.check_outlined),
+              tooltip: 'Accetta',
+            ),
+            IconButton(
+              iconSize: 30,
+              onPressed: () {
                 Navigator.pushNamed(context, '/');
               },
               icon: const Icon(Icons.home),
               tooltip: 'Home',
+            ),
+            IconButton(
+              iconSize: 30,
+              onPressed: () {
+                Navigator.pushNamed(
+                  context,
+                  '/profile',
+                  arguments: Profile_Passage(
+                    "Andrea",
+                    "Developer",
+                  ),
+                );
+              },
+              icon: const Icon(Icons.person),
+              tooltip: 'Profilo',
             ),
             IconButton(
               iconSize: 30,

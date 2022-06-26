@@ -142,7 +142,7 @@ class _SwipeState extends State<Swipe> {
         ],
       ),
         ),
-        bottomNavigationBar: CurvedNavigationBar(
+        /*bottomNavigationBar: CurvedNavigationBar(
           index: index,
           backgroundColor: Colors.transparent,
           height: 60,
@@ -158,10 +158,26 @@ class _SwipeState extends State<Swipe> {
             IconButton(
               iconSize: 30,
               onPressed: () {
+                Navigator.pushNamed(context, '/accetta');
+              },
+              icon: const Icon(Icons.check_outlined),
+              tooltip: 'Accetta',
+            ),
+            IconButton(
+              iconSize: 30,
+              onPressed: () {
                 Navigator.pushNamed(context, '/');
               },
               icon: const Icon(Icons.home),
               tooltip: 'Home',
+            ),
+            IconButton(
+              iconSize: 30,
+              onPressed: () {
+                Navigator.pushNamed(context, '/profile');
+              },
+              icon: const Icon(Icons.person),
+              tooltip: 'Profilo',
             ),
             IconButton(
               iconSize: 30,
@@ -172,7 +188,7 @@ class _SwipeState extends State<Swipe> {
               tooltip: 'Servizi',
             ),
           ],
-        )
+        )*/
     );
   }
 }

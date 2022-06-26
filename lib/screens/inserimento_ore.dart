@@ -273,7 +273,7 @@ class _OreState extends State<Ore> {
               children: <Widget>[
                 Container(
                     height: 50,
-                    width: 150,
+                    width: 100,
                     decoration: BoxDecoration(
                         color: Colors.blue, borderRadius: BorderRadius.circular(20)),
                     child: TextButton(
@@ -284,19 +284,33 @@ class _OreState extends State<Ore> {
                           Navigator.pushReplacementNamed(context, '/', arguments: user);
                         }
                       },
-                      child: const Text('Richiedi!', style: TextStyle(color: Colors.white, fontSize: 25)),
+                      child: const Text('Richiedi!', style: TextStyle(color: Colors.white, fontSize: 20)),
                     ),
                   ),
                 Container(
                   height: 50,
-                  width: 150,
+                  width: 100,
+                  decoration: BoxDecoration(
+                      color: Colors.blue, borderRadius: BorderRadius.circular(20)),
+                  child: TextButton(
+                    onPressed: () {
+                      setState(() {
+                        ore = '';
+                      });
+                    },
+                    child: const Text('Cancella', style: TextStyle(color: Colors.white, fontSize: 20)),
+                  ),
+                ),
+                Container(
+                  height: 50,
+                  width: 100,
                   decoration: BoxDecoration(
                       color: Colors.blue, borderRadius: BorderRadius.circular(20)),
                   child: TextButton(
                     onPressed: () async {
                       Navigator.pushNamed(context, '/');
                     },
-                    child: const Text('Annulla', style: TextStyle(color: Colors.white, fontSize: 25)),
+                    child: const Text('Indietro', style: TextStyle(color: Colors.white, fontSize: 20)),
                   ),
                 ),
               ],

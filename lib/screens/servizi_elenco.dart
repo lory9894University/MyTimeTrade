@@ -1,13 +1,14 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 
+import 'Profile_Passage.dart';
+
 class ServiziElenco extends StatefulWidget {
   @override
   _ServiziElencoState createState() => _ServiziElencoState();
 }
 
 class _ServiziElencoState extends State<ServiziElenco> {
-  int _selectedIndex = 0;
   String dropdownvalue = 'Informatica';
   var items = [
     'Informatica',
@@ -17,13 +18,20 @@ class _ServiziElencoState extends State<ServiziElenco> {
     'Allenamento',
   ];
 
-  void _prova() {
-    Navigator.pushNamed(context, '/profile');
+  void _goToProfilo(String nome, String cognome) {
+    Navigator.pushNamed(
+      context,
+      '/profile',
+      arguments: Profile_Passage(
+        nome,
+        cognome,
+      ),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-    var index = 2;
+    var index = 4;
     return Scaffold(
         extendBody: true,
         body: Container(
@@ -107,49 +115,49 @@ class _ServiziElencoState extends State<ServiziElenco> {
                 shrinkWrap: true,
                 children: <Widget>[
                   ListTile(
-                    onTap: () => _prova(),
+                    onTap: () => _goToProfilo("Andrea", "D'Angelo"),
                     dense: true,
                     leading: Icon(Icons.person, size: 35),
-                    title: Center(child: DefaultTextStyle(style: TextStyle(color: Colors.black, fontSize: 20), child: Text("D'Angelo Andrea"))),
+                    title: Center(child: DefaultTextStyle(style: TextStyle(color: Colors.black, fontSize: 20), child: Text("Andrea D'Angelo"))),
                     subtitle: Center(child: DefaultTextStyle(style: TextStyle(fontStyle: FontStyle.italic, color: Colors.black, fontSize: 15), child: Text('C++'))),
                   ),
                   ListTile(
-                    onTap: () => _prova(),
+                    onTap: () => _goToProfilo("Lorenzo", "Dentis"),
                     dense: true,
                     leading: Icon(Icons.person, size: 35),
                     title: Center(child: DefaultTextStyle(style: TextStyle(color: Colors.black, fontSize: 20), child: Text("Lorenzo Dentis"))),
                     subtitle: Center(child: DefaultTextStyle(style: TextStyle(fontStyle: FontStyle.italic, color: Colors.black, fontSize: 15), child: Text('Unity, JavaScript'))),
                   ),
                   ListTile(
-                    onTap: () => _prova(),
+                    onTap: () => _goToProfilo("Francesca", "Rinaldi"),
                     dense: true,
                     leading: Icon(Icons.person, size: 35),
                     title: Center(child: DefaultTextStyle(style: TextStyle(color: Colors.black, fontSize: 20), child: Text("Francesca Rinaldi"))),
                     subtitle: Center(child: DefaultTextStyle(style: TextStyle(fontStyle: FontStyle.italic, color: Colors.black, fontSize: 15), child: Text('Java'))),
                   ),
                   ListTile(
-                    onTap: () => _prova(),
+                    onTap: () => _goToProfilo("Marta", "Meroni"),
                     dense: true,
                     leading: Icon(Icons.person, size: 35),
                     title: Center(child: DefaultTextStyle(style: TextStyle(color: Colors.black, fontSize: 20), child: Text("Marta Meroni"))),
                     subtitle: Center(child: DefaultTextStyle(style: TextStyle(fontStyle: FontStyle.italic, color: Colors.black, fontSize: 15), child: Text('HTML/CSS'))),
                   ),
                   ListTile(
-                    onTap: () => _prova(),
+                    onTap: () => _goToProfilo("Matteo", "Filisti"),
                     dense: true,
                     leading: Icon(Icons.person, size: 35),
                     title: Center(child: DefaultTextStyle(style: TextStyle(color: Colors.black, fontSize: 20), child: Text("Matteo Filisti"))),
                     subtitle: Center(child: DefaultTextStyle(style: TextStyle(fontStyle: FontStyle.italic, color: Colors.black, fontSize: 15), child: Text('Flutter'))),
                   ),
                   ListTile(
-                    onTap: () => _prova(),
+                    onTap: () => _goToProfilo("Sandra", "Keyhole"),
                     dense: true,
                     leading: Icon(Icons.person, size: 35),
                     title: Center(child: DefaultTextStyle(style: TextStyle(color: Colors.black, fontSize: 20), child: Text("Sandra Keyhole"))),
                     subtitle: Center(child: DefaultTextStyle(style: TextStyle(fontStyle: FontStyle.italic, color: Colors.black, fontSize: 15), child: Text('React, UnReal Engine'))),
                   ),
                   ListTile(
-                    onTap: () => _prova(),
+                    onTap: () => _goToProfilo("Marco", "Demasi"),
                     dense: true,
                     leading: Icon(Icons.person, size: 35),
                     title: Center(child: DefaultTextStyle(style: TextStyle(color: Colors.black, fontSize: 20), child: Text("Marco Demasi"))),
@@ -178,10 +186,33 @@ class _ServiziElencoState extends State<ServiziElenco> {
             IconButton(
               iconSize: 30,
               onPressed: () {
+                Navigator.pushNamed(context, '/accetta');
+              },
+              icon: const Icon(Icons.check_outlined),
+              tooltip: 'Accetta',
+            ),
+            IconButton(
+              iconSize: 30,
+              onPressed: () {
                 Navigator.pushNamed(context, '/');
               },
               icon: const Icon(Icons.home),
               tooltip: 'Home',
+            ),
+            IconButton(
+              iconSize: 30,
+              onPressed: () {
+                Navigator.pushNamed(
+                  context,
+                  '/profile',
+                  arguments: Profile_Passage(
+                    "Andrea",
+                    "Developer",
+                  ),
+                );
+              },
+              icon: const Icon(Icons.person),
+              tooltip: 'Profilo',
             ),
             IconButton(
               iconSize: 30,

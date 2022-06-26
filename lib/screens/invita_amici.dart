@@ -2,6 +2,8 @@ import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:share_plus/share_plus.dart';
 
+import 'Profile_Passage.dart';
+
 class InvitaAmici extends StatefulWidget {
   @override
   _InvitaAmiciState createState() => _InvitaAmiciState();
@@ -139,10 +141,33 @@ class _InvitaAmiciState extends State<InvitaAmici> {
             IconButton(
               iconSize: 30,
               onPressed: () {
+                Navigator.pushNamed(context, '/accetta');
+              },
+              icon: const Icon(Icons.check_outlined),
+              tooltip: 'Accetta',
+            ),
+            IconButton(
+              iconSize: 30,
+              onPressed: () {
                 Navigator.pushNamed(context, '/');
               },
               icon: const Icon(Icons.home),
               tooltip: 'Home',
+            ),
+            IconButton(
+              iconSize: 30,
+              onPressed: () {
+                Navigator.pushNamed(
+                  context,
+                  '/profile',
+                  arguments: Profile_Passage(
+                    "Andrea",
+                    "Developer",
+                  ),
+                );
+              },
+              icon: const Icon(Icons.person),
+              tooltip: 'Profilo',
             ),
             IconButton(
               iconSize: 30,
