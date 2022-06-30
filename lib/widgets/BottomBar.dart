@@ -1,6 +1,7 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:mytimetrade/widgets/userSingleton.dart';
 
 import '../screens/Profile_Passage.dart';
 
@@ -21,7 +22,7 @@ class BottomBar extends StatelessWidget {
         IconButton(
           iconSize: 30,
           onPressed: () {
-            Navigator.pushNamed(context, '/amici');
+            Navigator.pushReplacementNamed(context, '/amici');
           },
           icon: const Icon(Icons.handshake),
           tooltip: 'Invita i tuoi amici',
@@ -29,7 +30,7 @@ class BottomBar extends StatelessWidget {
         IconButton(
           iconSize: 30,
           onPressed: () {
-            Navigator.pushNamed(context, '/accetta');
+            Navigator.pushReplacementNamed(context, '/accetta');
           },
           icon: const Icon(Icons.check_outlined),
           tooltip: 'Accetta',
@@ -37,7 +38,8 @@ class BottomBar extends StatelessWidget {
         IconButton(
           iconSize: 30,
           onPressed: () {
-            Navigator.pushNamed(context, '/');
+            Navigator.pushReplacementNamed(context, '/welcome',
+                arguments: logged_user!);
           },
           icon: const Icon(Icons.home),
           tooltip: 'Home',
@@ -45,7 +47,7 @@ class BottomBar extends StatelessWidget {
         IconButton(
           iconSize: 30,
           onPressed: () {
-            Navigator.pushNamed(
+            Navigator.pushReplacementNamed(
               context,
               '/profile',
               arguments: Profile_Passage(
@@ -62,7 +64,7 @@ class BottomBar extends StatelessWidget {
         IconButton(
           iconSize: 30,
           onPressed: () {
-            Navigator.pushNamed(context, '/servizi');
+            Navigator.pushReplacementNamed(context, '/servizi');
           },
           icon: const Icon(Icons.map),
           tooltip: 'Servizi',
