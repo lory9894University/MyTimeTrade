@@ -1,9 +1,8 @@
-import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
-import 'package:mytimetrade/screens/Profile_Passage.dart';
-import 'package:mytimetrade/screens/profile.dart';
+
+import '../widgets/BottomBar.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -47,147 +46,92 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     var index = 2;
     return Scaffold(
-      extendBody: true,
-      body: Container(
-        decoration: BoxDecoration(
-            gradient: LinearGradient(
-              colors: [
-                Colors.greenAccent,
-                Colors.blueAccent,
-              ],
-              begin: Alignment.topRight,
-              end: Alignment.bottomLeft,
-            )
-        ),
-        child:
-        Column(children: <Widget>[
-        Padding(padding: EdgeInsets.only(top: 60)),
-        Container(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: <Widget>[
-              DefaultTextStyle(
-                  style: const TextStyle(
-                    fontSize: 27.0,
-                    color: Colors.black,
+        extendBody: true,
+        body: Container(
+          decoration: BoxDecoration(
+              gradient: LinearGradient(
+            colors: [
+              Colors.greenAccent,
+              Colors.blueAccent,
+            ],
+            begin: Alignment.topRight,
+            end: Alignment.bottomLeft,
+          )),
+          child: Column(children: <Widget>[
+            Padding(padding: EdgeInsets.only(top: 60)),
+            Container(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: <Widget>[
+                  DefaultTextStyle(
+                      style: const TextStyle(
+                        fontSize: 27.0,
+                        color: Colors.black,
+                      ),
+                      child: Text(
+                          "Ciao, ${userData["name"]}!")), //todo: torna indietro a "Ciao, ${userData["name"]}!"
+                ],
+              ),
+            ),
+            Padding(padding: EdgeInsets.only(top: 60)),
+            Container(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: const [
+                  DefaultTextStyle(
+                    style: TextStyle(
+                      fontSize: 20.0,
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold,
+                    ),
+                    child: Text("Il tuo saldo corrente è: "),
                   ),
-                  child: Text(
-                      "Ciao, ${userData["name"]}!")), //todo: torna indietro a "Ciao, ${userData["name"]}!"
-            ],
-          ),
-        ),
-        Padding(padding: EdgeInsets.only(top: 60)),
-        Container(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: const [
-              DefaultTextStyle(
-                style: TextStyle(
-                  fontSize: 20.0,
-                  color: Colors.black,
-                  fontWeight: FontWeight.bold,
-                ),
-                child: Text("Il tuo saldo corrente è: "),
+                ],
               ),
-            ],
-          ),
-        ),
-        Padding(padding: EdgeInsets.only(top: 15)),
-        Container(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              DefaultTextStyle(
-                style: const TextStyle(
-                  fontSize: 40.0,
-                  color: Colors.black,
-                  fontWeight: FontWeight.bold,
-                ),
-                child: Text(
-                  "${userData["dummyBalance"]} ore", //todo: torna indietro a "${userData["dummyBalance"]} euro",
-                ),
+            ),
+            Padding(padding: EdgeInsets.only(top: 15)),
+            Container(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  DefaultTextStyle(
+                    style: const TextStyle(
+                      fontSize: 40.0,
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold,
+                    ),
+                    child: Text(
+                      "${userData["dummyBalance"]} ore", //todo: torna indietro a "${userData["dummyBalance"]} euro",
+                    ),
+                  ),
+                ],
               ),
-            ],
-          ),
+            ),
+            Padding(padding: EdgeInsets.only(top: 30)),
+            Flexible(
+              child: ListView.builder(
+                itemCount: transactions.length,
+                itemBuilder: (context, index) {
+                  return ListTile(
+                    leading: Image.asset('assets/img/handshake.png'),
+                    title: Center(
+                        child: DefaultTextStyle(
+                            style: TextStyle(
+                                fontStyle: FontStyle.italic,
+                                color: Colors.black,
+                                fontSize: 20),
+                            child: Text(
+                                'data: ${transactions[index]["date"]}, importo: ${transactions[index]["amount"]}  '))),
+                  );
+                },
+                shrinkWrap: true,
+              ),
+            ),
+          ]),
         ),
-        Padding(padding: EdgeInsets.only(top: 30)),
-        Flexible(
-          child: ListView.builder(
-            itemCount: transactions.length,
-            itemBuilder: (context, index) {
-              return ListTile(
-                leading: Image.asset('assets/img/handshake.png'),
-                title: Center(
-                    child: DefaultTextStyle(
-                        style: TextStyle(
-                            fontStyle: FontStyle.italic,
-                            color: Colors.black,
-                            fontSize: 20),
-                        child: Text(
-                            'data: ${transactions[index]["date"]}, importo: ${transactions[index]["amount"]}  '))),
-              );
-            },
-            shrinkWrap: true,
-          ),
-        ),
-      ]),
-      ),
-        bottomNavigationBar: CurvedNavigationBar(
+        bottomNavigationBar: BottomBar(
           index: index,
-          backgroundColor: Colors.transparent,
-          height: 60,
-          items: <Widget>[
-            IconButton(
-              iconSize: 30,
-              onPressed: () {
-                Navigator.pushNamed(context, '/amici');
-              },
-              icon: const Icon(Icons.handshake),
-              tooltip: 'Invita i tuoi amici',
-            ),
-            IconButton(
-              iconSize: 30,
-              onPressed: () {
-                Navigator.pushNamed(context, '/accetta');
-              },
-              icon: const Icon(Icons.check_outlined),
-              tooltip: 'Accetta',
-            ),
-            IconButton(
-              iconSize: 30,
-              onPressed: () {
-                Navigator.pushNamed(context, '/');
-              },
-              icon: const Icon(Icons.home),
-              tooltip: 'Home',
-            ),
-            IconButton(
-              iconSize: 30,
-              onPressed: () {
-                Navigator.pushNamed(
-                  context,
-                  '/profile',
-                  arguments: Profile_Passage(
-                    "Andrea",
-                    "Developer",
-                    "",
-                    "",
-                  ),
-                );
-              },
-              icon: const Icon(Icons.person),
-              tooltip: 'Profilo',
-            ),
-            IconButton(
-              iconSize: 30,
-              onPressed: () {
-                Navigator.pushNamed(context, '/servizi');
-              },
-              icon: const Icon(Icons.map),
-              tooltip: 'Servizi',
-            ),
-          ],
-        )
-    );
+          context: context,
+        ));
   }
 }
