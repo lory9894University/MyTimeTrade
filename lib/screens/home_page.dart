@@ -170,6 +170,8 @@ class _HomePageState extends State<HomePage> {
                   arguments: Profile_Passage(
                     "Andrea",
                     "Developer",
+                    "",
+                    "",
                   ),
                 );
               },

@@ -1,6 +1,7 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:mytimetrade/screens/Profile_Passage.dart';
 
 import '../firebase/auth_operations.dart';
 
@@ -14,6 +15,16 @@ class _OreState extends State<Ore> {
   String ore = '';
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+  Profile_Passage args = Profile_Passage('', '', '', '');
+
+  void didChangeDependencies() {
+    args = ModalRoute
+        .of(context)
+        ?.settings
+        .arguments as Profile_Passage;
+    super.didChangeDependencies();
+  }
+
   @override
   Widget build(BuildContext context) {
     var index = 0;
@@ -278,11 +289,16 @@ class _OreState extends State<Ore> {
                         color: Colors.blue, borderRadius: BorderRadius.circular(20)),
                     child: TextButton(
                       onPressed: () async {
-                        User? user = await AuthOperation.registerUserAndSignIn(
-                            emailController.text, passwordController.text);
-                        if (user != null) {
-                          Navigator.pushReplacementNamed(context, '/', arguments: user);
-                        }
+                        Navigator.pushNamed(
+                          context,
+                          '/accetta',
+                          arguments: Profile_Passage(
+                            args.nome,
+                            args.cognome,
+                            ore,
+                            args.servizio,
+                          ),
+                        );
                       },
                       child: const Text('Richiedi!', style: TextStyle(color: Colors.white, fontSize: 20)),
                     ),
@@ -308,7 +324,7 @@ class _OreState extends State<Ore> {
                       color: Colors.blue, borderRadius: BorderRadius.circular(20)),
                   child: TextButton(
                     onPressed: () async {
-                      Navigator.pushNamed(context, '/');
+                      Navigator.of(context).pop();
                     },
                     child: const Text('Indietro', style: TextStyle(color: Colors.white, fontSize: 20)),
                   ),
@@ -319,37 +335,6 @@ class _OreState extends State<Ore> {
         ],
       ),
         ),
-        /*bottomNavigationBar: CurvedNavigationBar(
-          index: index,
-          backgroundColor: Colors.transparent,
-          height: 60,
-          items: <Widget>[
-            IconButton(
-              iconSize: 30,
-              onPressed: () {
-                Navigator.pushNamed(context, '/amici');
-              },
-              icon: const Icon(Icons.handshake),
-              tooltip: 'Invita i tuoi amici',
-            ),
-            IconButton(
-              iconSize: 30,
-              onPressed: () {
-                Navigator.pushNamed(context, '/');
-              },
-              icon: const Icon(Icons.home),
-              tooltip: 'Home',
-            ),
-            IconButton(
-              iconSize: 30,
-              onPressed: () {
-                Navigator.pushNamed(context, '/servizi');
-              },
-              icon: const Icon(Icons.map),
-              tooltip: 'Servizi',
-            ),
-          ],
-        )*/
     );
   }
 }

@@ -9,13 +9,14 @@ class ServiziElenco extends StatefulWidget {
 }
 
 class _ServiziElencoState extends State<ServiziElenco> {
-  String dropdownvalue = 'Informatica';
+  String dropdownvalue = 'Unity'; //TODO: Sistemare nel momento di collegamento con backend
+  String servizio = '';
   var items = [
-    'Informatica',
-    'Cucina',
-    'Lavori in casa',
-    'Lingue straniere',
-    'Allenamento',
+    'Unity',
+    'Unreal Engine',
+    'C++',
+    'Dart',
+    'JavaScript',
   ];
 
   void _goToProfilo(String nome, String cognome) {
@@ -25,6 +26,8 @@ class _ServiziElencoState extends State<ServiziElenco> {
       arguments: Profile_Passage(
         nome,
         cognome,
+        "",
+        "Unity"
       ),
     );
   }
@@ -119,49 +122,42 @@ class _ServiziElencoState extends State<ServiziElenco> {
                     dense: true,
                     leading: Icon(Icons.person, size: 35),
                     title: Center(child: DefaultTextStyle(style: TextStyle(color: Colors.black, fontSize: 20), child: Text("Andrea D'Angelo"))),
-                    subtitle: Center(child: DefaultTextStyle(style: TextStyle(fontStyle: FontStyle.italic, color: Colors.black, fontSize: 15), child: Text('C++'))),
                   ),
                   ListTile(
                     onTap: () => _goToProfilo("Lorenzo", "Dentis"),
                     dense: true,
                     leading: Icon(Icons.person, size: 35),
                     title: Center(child: DefaultTextStyle(style: TextStyle(color: Colors.black, fontSize: 20), child: Text("Lorenzo Dentis"))),
-                    subtitle: Center(child: DefaultTextStyle(style: TextStyle(fontStyle: FontStyle.italic, color: Colors.black, fontSize: 15), child: Text('Unity, JavaScript'))),
                   ),
                   ListTile(
                     onTap: () => _goToProfilo("Francesca", "Rinaldi"),
                     dense: true,
                     leading: Icon(Icons.person, size: 35),
                     title: Center(child: DefaultTextStyle(style: TextStyle(color: Colors.black, fontSize: 20), child: Text("Francesca Rinaldi"))),
-                    subtitle: Center(child: DefaultTextStyle(style: TextStyle(fontStyle: FontStyle.italic, color: Colors.black, fontSize: 15), child: Text('Java'))),
                   ),
                   ListTile(
                     onTap: () => _goToProfilo("Marta", "Meroni"),
                     dense: true,
                     leading: Icon(Icons.person, size: 35),
                     title: Center(child: DefaultTextStyle(style: TextStyle(color: Colors.black, fontSize: 20), child: Text("Marta Meroni"))),
-                    subtitle: Center(child: DefaultTextStyle(style: TextStyle(fontStyle: FontStyle.italic, color: Colors.black, fontSize: 15), child: Text('HTML/CSS'))),
                   ),
                   ListTile(
                     onTap: () => _goToProfilo("Matteo", "Filisti"),
                     dense: true,
                     leading: Icon(Icons.person, size: 35),
                     title: Center(child: DefaultTextStyle(style: TextStyle(color: Colors.black, fontSize: 20), child: Text("Matteo Filisti"))),
-                    subtitle: Center(child: DefaultTextStyle(style: TextStyle(fontStyle: FontStyle.italic, color: Colors.black, fontSize: 15), child: Text('Flutter'))),
                   ),
                   ListTile(
                     onTap: () => _goToProfilo("Sandra", "Keyhole"),
                     dense: true,
                     leading: Icon(Icons.person, size: 35),
                     title: Center(child: DefaultTextStyle(style: TextStyle(color: Colors.black, fontSize: 20), child: Text("Sandra Keyhole"))),
-                    subtitle: Center(child: DefaultTextStyle(style: TextStyle(fontStyle: FontStyle.italic, color: Colors.black, fontSize: 15), child: Text('React, UnReal Engine'))),
                   ),
                   ListTile(
                     onTap: () => _goToProfilo("Marco", "Demasi"),
                     dense: true,
                     leading: Icon(Icons.person, size: 35),
                     title: Center(child: DefaultTextStyle(style: TextStyle(color: Colors.black, fontSize: 20), child: Text("Marco Demasi"))),
-                    subtitle: Center(child: DefaultTextStyle(style: TextStyle(fontStyle: FontStyle.italic, color: Colors.black, fontSize: 15), child: Text('Vue.js'))),
                   ),
                 ],
               ),
@@ -208,6 +204,8 @@ class _ServiziElencoState extends State<ServiziElenco> {
                   arguments: Profile_Passage(
                     "Andrea",
                     "Developer",
+                    "",
+                    "",
                   ),
                 );
               },

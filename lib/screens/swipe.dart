@@ -1,6 +1,7 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:mytimetrade/screens/Profile_Passage.dart';
 import 'package:slider_button/slider_button.dart';
 
 import '../firebase/auth_operations.dart';
@@ -14,6 +15,16 @@ class _SwipeState extends State<Swipe> {
   int _selectedIndex = 0;
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+  Profile_Passage args = Profile_Passage('', '', '', '');
+
+  void didChangeDependencies() {
+    args = ModalRoute
+        .of(context)
+        ?.settings
+        .arguments as Profile_Passage;
+    super.didChangeDependencies();
+  }
+
   @override
   Widget build(BuildContext context) {
     var index = 0;
@@ -50,28 +61,12 @@ class _SwipeState extends State<Swipe> {
             ),
           ),
           Padding(padding: EdgeInsets.only(top: 100)),
-          Container(
-            child:
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: const [
-                DefaultTextStyle(
-                  style: TextStyle(
-                    fontSize: 25.0,
-                    color: Colors.black,
-                    fontWeight: FontWeight.bold,
-                  ),
-                  child: Text("Ordine #265829"),
-                ),
-              ],
-            ),
-          ),
           Padding(padding: EdgeInsets.only(top: 50)),
           Container(
             child:
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: const [
+              children: [
                 DefaultTextStyle(
                   style: TextStyle(
                     fontSize: 25.0,
@@ -86,7 +81,7 @@ class _SwipeState extends State<Swipe> {
                     color: Colors.black,
                     fontWeight: FontWeight.bold,
                   ),
-                  child: Text("5"),
+                  child: Text(args.ore),
                 ),
               ],
             ),
@@ -96,7 +91,32 @@ class _SwipeState extends State<Swipe> {
             child:
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: const [
+              children: [
+                DefaultTextStyle(
+                  style: TextStyle(
+                    fontSize: 25.0,
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                  ),
+                  child: Text("Servizio richiesto:"),
+                ),
+                DefaultTextStyle(
+                  style: TextStyle(
+                    fontSize: 25.0,
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                  ),
+                  child: Text(args.servizio),
+                ),
+              ],
+            ),
+          ),
+          Padding(padding: EdgeInsets.only(top: 20)),
+          Container(
+            child:
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
                 DefaultTextStyle(
                   style: TextStyle(
                     fontSize: 25.0,
@@ -111,7 +131,7 @@ class _SwipeState extends State<Swipe> {
                     color: Colors.black,
                     fontWeight: FontWeight.bold,
                   ),
-                  child: Text("Gioia LeDritta"),
+                  child: Text("${args.nome} ${args.cognome}"),
                 ),
               ],
             ),

@@ -163,6 +163,8 @@ class _InvitaAmiciState extends State<InvitaAmici> {
                   arguments: Profile_Passage(
                     "Andrea",
                     "Developer",
+                    "",
+                    "",
                   ),
                 );
               },

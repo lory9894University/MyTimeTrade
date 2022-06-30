@@ -19,7 +19,7 @@ class Profile extends StatefulWidget {
 class _ProfileState extends State<Profile> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
-  Profile_Passage args = Profile_Passage('','');
+  Profile_Passage args = Profile_Passage('','','', '');
 
   void didChangeDependencies() {
     args = ModalRoute
@@ -180,14 +180,22 @@ class _ProfileState extends State<Profile> {
                   decoration: BoxDecoration(
                       color: Colors.blue, borderRadius: BorderRadius.circular(20)),
                   child: TextButton(
-                    /*onPressed: () async {
-                      User? user = await AuthOperation.registerUserAndSignIn(
-                          emailController.text, passwordController.text);
-                      if (user != null) {
-                        Navigator.pushReplacementNamed(context, '/', arguments: user);
-                      }*/
                       onPressed: () {
-                        Navigator.pushNamed(context, '/ore');
+                        if(args.servizio != ''){
+                          Navigator.pushNamed(
+                            context,
+                            '/ore',
+                            arguments: Profile_Passage(
+                              args.nome,
+                              args.cognome,
+                              "",
+                              args.servizio,
+                            ),
+                          );
+                        }
+                        else {
+                          null;
+                        }
                       },
                     child: const Text(
                       'Richiedi ore',
@@ -239,6 +247,8 @@ class _ProfileState extends State<Profile> {
                   arguments: Profile_Passage(
                     "Andrea",
                     "Developer",
+                    "",
+                    "",
                   ),
                 );
               },
