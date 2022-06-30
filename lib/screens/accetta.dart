@@ -1,6 +1,6 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:mytimetrade/widgets/userSingleton.dart';
 
 import '../firebase/auth_operations.dart';
 import 'Profile_Passage.dart';
@@ -537,7 +537,7 @@ class _AccettaState extends State<Accetta> {
                   Navigator.pushNamed(context, '/accetta');
                 }
                 else if (index == 2) {
-                  Navigator.pushNamed(context, '/');
+                  Navigator.pushNamed(context, '/welcome',arguments: logged_user!);
                 }
                 else if (index == 3) {
                   Navigator.pushNamed(context, '/profile',
