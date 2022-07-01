@@ -1,5 +1,7 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
+import 'firebase/firebase_options.dart';
 import 'screens/accetta.dart';
 import 'screens/auth_screen/login_demo.dart';
 import 'screens/auth_screen/registration_page.dart';
@@ -12,6 +14,7 @@ import 'screens/swipe.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   runApp(const MyApp());
 }
 
