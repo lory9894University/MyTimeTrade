@@ -2,7 +2,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:mytimetrade/firebase/auth_operations.dart';
-import 'package:mytimetrade/widgets/userSingleton.dart';
 
 import '../../firebase/firebase_options.dart';
 
@@ -23,7 +22,6 @@ class _LoginPageState extends State<LoginPage> {
     if (user != null) {
       await Future.delayed(const Duration(milliseconds: 500));
       if (mounted) {
-        logged_user = user;
         Navigator.pushReplacementNamed(context, '/welcome', arguments: user);
       }
     }

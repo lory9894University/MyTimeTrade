@@ -3,6 +3,7 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 
 import '../widgets/BottomBar.dart';
+import '../widgets/userSingleton.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -12,11 +13,13 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   int _selectedIndex = 1;
   late User user;
-  Map<dynamic, dynamic> userData = Map.from({"name": "", "dummyBalance": "0"});
+  Map<dynamic, dynamic> userData = Map.from({"name": "", "balance": "0"});
   List<dynamic> transactions = List.empty(growable: true);
+
   @override
   void didChangeDependencies() {
     user = ModalRoute.of(context)?.settings.arguments as User;
+    logged_user = user;
     super.didChangeDependencies();
 
     DatabaseReference userRef =
@@ -24,17 +27,19 @@ class _HomePageState extends State<HomePage> {
     userRef.onValue.listen((DatabaseEvent event) {
       userData = event.snapshot.value as Map<dynamic, dynamic>;
 
-      List<Object?> trans_id = userData["transactions"] as List<Object?>;
-      transactions.clear();
-      trans_id.forEach((value) {
-        DatabaseReference transaction_ref =
-            FirebaseDatabase.instance.ref('transaction/${value}');
-        transaction_ref.onValue.listen((DatabaseEvent event) {
-          print(event.snapshot.value);
-          transactions.add(event.snapshot.value);
-          setState(() => {});
+      if (userData["transactions"] != null) {
+        List<Object?> trans_id = userData["transactions"] as List<Object?>;
+        transactions.clear();
+        trans_id.forEach((value) {
+          DatabaseReference transaction_ref =
+              FirebaseDatabase.instance.ref('transaction/${value}');
+          transaction_ref.onValue.listen((DatabaseEvent event) {
+            print(event.snapshot.value);
+            transactions.add(event.snapshot.value);
+            setState(() => {});
+          });
         });
-      });
+      }
 
       setState(() => {});
     });
@@ -68,8 +73,7 @@ class _HomePageState extends State<HomePage> {
                         fontSize: 27.0,
                         color: Colors.black,
                       ),
-                      child: Text(
-                          "Ciao, ${userData["name"]}!")), //todo: torna indietro a "Ciao, ${userData["name"]}!"
+                      child: Text("Ciao, ${userData["name"]}!")),
                 ],
               ),
             ),
@@ -101,7 +105,7 @@ class _HomePageState extends State<HomePage> {
                       fontWeight: FontWeight.bold,
                     ),
                     child: Text(
-                      "${userData["dummyBalance"]} ore", //todo: torna indietro a "${userData["dummyBalance"]} euro",
+                      "${userData["balance"]} ore",
                     ),
                   ),
                 ],
