@@ -27,7 +27,7 @@ class BottomBar extends StatelessWidget {
           Navigator.pushReplacementNamed(context, '/welcome',
               arguments: logged_user!);
         } else if (index == 3) {
-          Navigator.pushReplacementNamed(context, '/profile',
+          Navigator.pushReplacementNamed(context, '/pers_profile',
               arguments: Profile_Passage("Andrea", "Developer", "", ""));
         } else if (index == 4) {
           Navigator.pushReplacementNamed(context, '/servizi');
