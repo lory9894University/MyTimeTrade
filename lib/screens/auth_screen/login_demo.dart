@@ -110,11 +110,14 @@ class _LoginPageState extends State<LoginPage> {
                                   arguments: user);
                             }
                           } else {
-                            print("Login failed");
-                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                                content: Center(
-                                    child:
-                                        Text('wrong username or password'))));
+                            if (mounted) {
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(const SnackBar(
+                                      content: Text(
+                                'wrong username or password',
+                                textAlign: TextAlign.center,
+                              )));
+                            }
                           }
                         }
                         setState(() => {});
