@@ -7,33 +7,28 @@ import '../screens/Profile_Passage.dart';
 
 class BottomBar extends StatelessWidget {
   var index;
-
   var context;
 
   BottomBar({Key? key, required this.index, required this.context});
 
   @override
-  Widget build(context) {
+  Widget build(context2) {
     return CurvedNavigationBar(
       index: index,
       backgroundColor: Colors.transparent,
       height: 60,
       onTap: (index) {
-        if(index == 0) {
+        if (index == 0) {
           Navigator.pushReplacementNamed(context, '/amici');
-        }
-        else if(index == 1) {
+        } else if (index == 1) {
           Navigator.pushReplacementNamed(context, '/accetta');
-        }
-        else if(index == 2) {
+        } else if (index == 2) {
           Navigator.pushReplacementNamed(context, '/welcome',
               arguments: logged_user!);
-        }
-        else if(index == 3) {
+        } else if (index == 3) {
           Navigator.pushReplacementNamed(context, '/profile',
-            arguments: Profile_Passage("Andrea", "Developer", "", ""));
-        }
-        else if(index == 4) {
+              arguments: Profile_Passage("Andrea", "Developer", "", ""));
+        } else if (index == 4) {
           Navigator.pushReplacementNamed(context, '/servizi');
         }
       },
