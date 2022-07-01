@@ -13,6 +13,7 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+  late Verificator validator = Verificator(emailController, passwordController);
 
   Future<FirebaseApp> initializeFirebase() async {
     await Firebase.initializeApp(
@@ -59,10 +60,13 @@ class _LoginPageState extends State<LoginPage> {
                     padding: const EdgeInsets.symmetric(horizontal: 15),
                     child: TextField(
                       controller: emailController,
-                      decoration: const InputDecoration(
+                      decoration: InputDecoration(
                           border: const OutlineInputBorder(),
                           labelText: 'Email',
-                          hintText: 'Enter valid email id as abc@gmail.com'),
+                          hintText: 'Enter email as abc@gmail.com',
+                          errorText: validator._validEmail
+                              ? null
+                              : validator._emailError),
                     ),
                   ),
                   Padding(
@@ -72,10 +76,13 @@ class _LoginPageState extends State<LoginPage> {
                     child: TextField(
                       controller: passwordController,
                       obscureText: true,
-                      decoration: const InputDecoration(
+                      decoration: InputDecoration(
                           border: const OutlineInputBorder(),
                           labelText: 'Password',
-                          hintText: 'Enter secure password'),
+                          hintText: 'Enter password',
+                          errorText: validator._validPassword
+                              ? null
+                              : "Password is required"),
                     ),
                   ),
                   TextButton(
@@ -95,21 +102,29 @@ class _LoginPageState extends State<LoginPage> {
                         borderRadius: BorderRadius.circular(20)),
                     child: TextButton(
                       onPressed: () async {
-                        User? user = await AuthOperation.signInUsingEmailPassword(
-                            email: emailController.text,
-                            password: passwordController.text,
-                            context:
-                                context); // ritorna null se l'autenticazione non è riuscita
-                        if (user != null) {
-                          await Future.delayed(
-                              const Duration(milliseconds: 500));
-                          if (mounted) {
-                            Navigator.pushReplacementNamed(context, '/welcome',
-                                arguments: user);
+                        if (validator.validate()) {
+                          User? user = await AuthOperation.signInUsingEmailPassword(
+                              email: emailController.text,
+                              password: passwordController.text,
+                              context:
+                                  context); // ritorna null se l'autenticazione non è riuscita
+                          if (user != null) {
+                            await Future.delayed(
+                                const Duration(milliseconds: 500));
+                            if (mounted) {
+                              Navigator.pushReplacementNamed(
+                                  context, '/welcome',
+                                  arguments: user);
+                            }
+                          } else {
+                            print("Login failed");
+                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                                content: Center(
+                                    child:
+                                        Text('wrong username or password'))));
                           }
-                        } else {
-                          //TODO: implementare qualche errore di password errata/ email non esistente
                         }
+                        setState(() => {});
                       },
                       child: const Text(
                         'Login',
@@ -133,8 +148,6 @@ class _LoginPageState extends State<LoginPage> {
                             Navigator.pushReplacementNamed(context, '/welcome',
                                 arguments: user);
                           }
-                        } else {
-                          //TODO: implementare qualche errore di password errata/ email non esistente
                         }
                       },
                       child: const Text(
@@ -165,5 +178,49 @@ class _LoginPageState extends State<LoginPage> {
             );
           }),
     );
+  }
+}
+
+class Verificator {
+  TextEditingController emailController;
+  TextEditingController passwordController;
+  bool _validPassword = true;
+  bool _validEmail = true;
+  String _emailError = 'Email is required';
+
+  Verificator(TextEditingController this.emailController,
+      TextEditingController this.passwordController);
+
+  bool validatePassword(String value) {
+    if (value.isEmpty) {
+      _validPassword = false;
+    } else {
+      _validPassword = true;
+    }
+    return _validPassword;
+  }
+
+  //validate email
+  validateEmail(String value) {
+    RegExp regex = RegExp(
+        r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$');
+    if (value.isEmpty) {
+      _emailError = 'Email is required';
+    } else if (!regex.hasMatch(value)) {
+      _emailError = 'Invalid email';
+    } else {
+      _validEmail = true;
+      return true;
+    }
+
+    _validEmail = false;
+    return false;
+  }
+
+  bool validate() {
+    validateEmail(emailController.text);
+    validatePassword(passwordController.text);
+
+    return _validEmail && _validPassword;
   }
 }

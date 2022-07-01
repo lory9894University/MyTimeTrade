@@ -556,17 +556,17 @@ class _AccettaState extends State<Accetta> {
               height: 60,
               onTap: (index) {
                 if (index == 0) {
-                  Navigator.pushNamed(context, '/amici');
+                  Navigator.pushReplacementNamed(context, '/amici');
                 } else if (index == 1) {
-                  Navigator.pushNamed(context, '/accetta');
+                  Navigator.pushReplacementNamed(context, '/accetta');
                 } else if (index == 2) {
-                  Navigator.pushNamed(context, '/welcome',
+                  Navigator.pushReplacementNamed(context, '/welcome',
                       arguments: logged_user!);
                 } else if (index == 3) {
-                  Navigator.pushNamed(context, '/profile',
+                  Navigator.pushReplacementNamed(context, '/profile',
                       arguments: Profile_Passage("Andrea", "D'Angelo", "", ""));
                 } else if (index == 4) {
-                  Navigator.pushNamed(context, '/servizi');
+                  Navigator.pushReplacementNamed(context, '/servizi');
                 }
               },
               items: const <Widget>[

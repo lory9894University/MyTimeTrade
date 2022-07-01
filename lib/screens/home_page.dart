@@ -19,7 +19,9 @@ class _HomePageState extends State<HomePage> {
   @override
   void didChangeDependencies() {
     user = ModalRoute.of(context)?.settings.arguments as User;
+    userData["name"] = user.displayName;
     logged_user = user;
+    setState(() => {});
     super.didChangeDependencies();
 
     DatabaseReference userRef =
