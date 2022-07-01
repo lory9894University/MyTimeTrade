@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:mytimetrade/screens/Profile_Passage.dart';
 import 'package:share_plus/share_plus.dart';
 
@@ -56,8 +57,9 @@ class _PersonalProfileState extends State<PersonalProfile> {
             Padding(padding: EdgeInsets.only(top: 30)),
             Container(
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: const [
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: const <Widget>[
                   DefaultTextStyle(
                     style: TextStyle(
                       fontSize: 20.0,
@@ -66,6 +68,8 @@ class _PersonalProfileState extends State<PersonalProfile> {
                     ),
                     child: Text("Indirizzo"),
                   ),
+                  Padding(padding: EdgeInsets.only(left: 10)),
+                  Icon(FontAwesomeIcons.pen, size: 10)
                 ],
               ),
             ),
@@ -92,8 +96,9 @@ class _PersonalProfileState extends State<PersonalProfile> {
             Padding(padding: EdgeInsets.only(top: 30)),
             Container(
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: const [
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: const <Widget>[
                   DefaultTextStyle(
                     style: TextStyle(
                       fontSize: 20.0,
@@ -102,11 +107,13 @@ class _PersonalProfileState extends State<PersonalProfile> {
                     ),
                     child: Text("Interessi"),
                   ),
+                  Padding(padding: EdgeInsets.only(left: 10)),
+                  Icon(FontAwesomeIcons.plus, size: 10)
                 ],
               ),
             ),
             ListView(
-              //TODO: Impostare il ListView.builder(), https://www.javatpoint.com/flutter-lists, dopo aver collegato DB
+              //TODO: Inserire il simbolo "-" a fianco a ogni testo, per eliminarlo (e far diventare le Icon delle IconButton
               shrinkWrap: true,
               children: const <Widget>[
                 ListTile(
@@ -190,5 +197,8 @@ class _PersonalProfileState extends State<PersonalProfile> {
       ),
       bottomNavigationBar: BottomBar(index: index, context: context),
     );
+  }
+  ShowDialog() {
+
   }
 }
