@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:mytimetrade/screens/auth_screen/forgot_password.dart';
+import 'package:mytimetrade/screens/personal_profile.dart';
 
 import 'firebase/firebase_options.dart';
 import 'screens/accetta.dart';
@@ -35,6 +36,7 @@ class MyApp extends StatelessWidget {
         '/lostpw': (context) => forgotPassword(),
         '/welcome': (context) => HomePage(),
         '/profile': (context) => Profile(),
+        '/pers_profile': (context) => PersonalProfile(),
         '/ore': (context) => Ore(),
         '/servizi': (context) => ServiziElenco(),
         '/amici': (context) => InvitaAmici(),
