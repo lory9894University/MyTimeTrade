@@ -1,9 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:mytimetrade/firebase/auth_operations.dart';
-
-import '../../firebase/firebase_options.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -15,10 +12,7 @@ class _LoginPageState extends State<LoginPage> {
   TextEditingController passwordController = TextEditingController();
   late Verificator validator = Verificator(emailController, passwordController);
 
-  Future<FirebaseApp> initializeFirebase() async {
-    await Firebase.initializeApp(
-        options: DefaultFirebaseOptions.currentPlatform);
-    FirebaseApp firebaseApp = await Firebase.initializeApp();
+  initializeFirebase() async {
     User? user = FirebaseAuth.instance.currentUser;
     if (user != null) {
       await Future.delayed(const Duration(milliseconds: 500));
@@ -26,7 +20,6 @@ class _LoginPageState extends State<LoginPage> {
         Navigator.pushReplacementNamed(context, '/welcome', arguments: user);
       }
     }
-    return firebaseApp;
   }
 
   @override
