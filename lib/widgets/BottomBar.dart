@@ -18,57 +18,31 @@ class BottomBar extends StatelessWidget {
       index: index,
       backgroundColor: Colors.transparent,
       height: 60,
-      items: <Widget>[
-        IconButton(
-          iconSize: 30,
-          onPressed: () {
-            Navigator.pushReplacementNamed(context, '/amici');
-          },
-          icon: const Icon(Icons.handshake),
-          tooltip: 'Invita i tuoi amici',
-        ),
-        IconButton(
-          iconSize: 30,
-          onPressed: () {
-            Navigator.pushReplacementNamed(context, '/accetta');
-          },
-          icon: const Icon(Icons.check_outlined),
-          tooltip: 'Accetta',
-        ),
-        IconButton(
-          iconSize: 30,
-          onPressed: () {
-            Navigator.pushReplacementNamed(context, '/welcome',
-                arguments: logged_user!);
-          },
-          icon: const Icon(Icons.home),
-          tooltip: 'Home',
-        ),
-        IconButton(
-          iconSize: 30,
-          onPressed: () {
-            Navigator.pushReplacementNamed(
-              context,
-              '/profile',
-              arguments: Profile_Passage(
-                "Andrea",
-                "Developer",
-                "",
-                "",
-              ),
-            );
-          },
-          icon: const Icon(Icons.person),
-          tooltip: 'Profilo',
-        ),
-        IconButton(
-          iconSize: 30,
-          onPressed: () {
-            Navigator.pushReplacementNamed(context, '/servizi');
-          },
-          icon: const Icon(Icons.map),
-          tooltip: 'Servizi',
-        ),
+      onTap: (index) {
+        if(index == 0) {
+          Navigator.pushReplacementNamed(context, '/amici');
+        }
+        else if(index == 1) {
+          Navigator.pushReplacementNamed(context, '/accetta');
+        }
+        else if(index == 2) {
+          Navigator.pushReplacementNamed(context, '/welcome',
+              arguments: logged_user!);
+        }
+        else if(index == 3) {
+          Navigator.pushReplacementNamed(context, '/profile',
+            arguments: Profile_Passage("Andrea", "Developer", "", ""));
+        }
+        else if(index == 4) {
+          Navigator.pushReplacementNamed(context, '/servizi');
+        }
+      },
+      items: const <Widget>[
+        Icon(Icons.handshake, size: 30),
+        Icon(Icons.check_outlined, size: 30),
+        Icon(Icons.home, size: 30),
+        Icon(Icons.person, size: 30),
+        Icon(Icons.map, size: 30),
       ],
     );
   }
