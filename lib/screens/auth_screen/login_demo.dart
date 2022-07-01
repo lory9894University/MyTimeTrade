@@ -80,7 +80,8 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                   TextButton(
                     onPressed: () {
-                      //TODO FORGOT PASSWORD SCREEN GOES HERE
+                      Navigator.pushReplacementNamed(
+                          context, '/lostpw');
                     },
                     child: const Text(
                       'Forgot Password',
