@@ -149,9 +149,7 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                     ),
                   ),
-                  const SizedBox(
-                    height: 130,
-                  ),
+                  const Padding(padding: EdgeInsets.only(top: 60)),
                   const Text('Non ti sei ancora registrato?'),
                   TextButton(
                     onPressed: () {
