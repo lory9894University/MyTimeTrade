@@ -1,5 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_signin_button/button_list.dart';
+import 'package:flutter_signin_button/button_view.dart';
 import 'package:mytimetrade/firebase/auth_operations.dart';
 
 class LoginPage extends StatefulWidget {
@@ -129,13 +131,18 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                     ),
                   ),
+                  const Padding(padding: EdgeInsets.only(top: 15)),
                   Container(
                     height: 50,
                     width: 250,
                     decoration: BoxDecoration(
                         color: Colors.black,
                         borderRadius: BorderRadius.circular(20)),
-                    child: TextButton(
+                    child: SignInButton(
+                      Buttons.Google,
+                      text: "Sign up with Google",
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20)),
                       onPressed: () async {
                         User? user = await AuthOperation.signInWithGoogle();
                         if (user != null) {
@@ -147,10 +154,6 @@ class _LoginPageState extends State<LoginPage> {
                           }
                         }
                       },
-                      child: const Text(
-                        'Login with google',
-                        style: TextStyle(color: Colors.white, fontSize: 25),
-                      ),
                     ),
                   ),
                   const Padding(padding: EdgeInsets.only(top: 60)),
