@@ -21,7 +21,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
   //validate password
   bool validatePassword(String value) {
     bool valid = false;
-    RegExp regex = RegExp(r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$');
+    RegExp regex = RegExp(r'^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$');
     if (value.isEmpty) {
       _passwordError = 'Password is required';
     } else if (!regex.hasMatch(value)) {
