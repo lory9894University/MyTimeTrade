@@ -1,9 +1,10 @@
 import 'dart:ui';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:mytimetrade/screens/Profile_Passage.dart';
-import 'package:share_plus/share_plus.dart';
+import 'package:mytimetrade/widgets/userSingleton.dart';
 
 import '../widgets/BottomBar.dart';
 
@@ -30,13 +31,13 @@ class _PersonalProfileState extends State<PersonalProfile> {
       body: Container(
         decoration: BoxDecoration(
             gradient: LinearGradient(
-              colors: [
-                Colors.greenAccent,
-                Colors.blueAccent,
-              ],
-              begin: Alignment.topRight,
-              end: Alignment.bottomLeft,
-            )),
+          colors: [
+            Colors.greenAccent,
+            Colors.blueAccent,
+          ],
+          begin: Alignment.topRight,
+          end: Alignment.bottomLeft,
+        )),
         child: Column(
           children: <Widget>[
             Padding(padding: EdgeInsets.only(top: 60)),
@@ -181,7 +182,9 @@ class _PersonalProfileState extends State<PersonalProfile> {
                         borderRadius: BorderRadius.circular(20)),
                     child: TextButton(
                       onPressed: () async {
-                        //TODO:
+                        FirebaseAuth.instance.signOut();
+                        logged_user = null;
+                        Navigator.pushReplacementNamed(context, '/');
                       },
                       child: const Text(
                         'Logout',
@@ -198,7 +201,6 @@ class _PersonalProfileState extends State<PersonalProfile> {
       bottomNavigationBar: BottomBar(index: index, context: context),
     );
   }
-  ShowDialog() {
 
-  }
+  ShowDialog() {}
 }
