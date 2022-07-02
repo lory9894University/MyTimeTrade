@@ -3,7 +3,6 @@ import 'dart:ui';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:mytimetrade/screens/Profile_Passage.dart';
 import 'package:mytimetrade/widgets/userSingleton.dart';
 
 import '../widgets/BottomBar.dart';
@@ -16,12 +15,6 @@ class PersonalProfile extends StatefulWidget {
 class _PersonalProfileState extends State<PersonalProfile> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
-  Profile_Passage args = Profile_Passage('', '', '', '');
-
-  void didChangeDependencies() {
-    args = ModalRoute.of(context)?.settings.arguments as Profile_Passage;
-    super.didChangeDependencies();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +44,7 @@ class _PersonalProfileState extends State<PersonalProfile> {
                         fontSize: 27.0,
                         color: Colors.black,
                       ),
-                      child: Text('${args.nome} ${args.cognome}'))
+                      child: Text('${global_user_data!.name}'))
                 ],
               ),
             ),
@@ -82,13 +75,14 @@ class _PersonalProfileState extends State<PersonalProfile> {
                 children: <Widget>[
                   Container(
                     constraints: BoxConstraints(minWidth: 100, maxWidth: 350),
-                    child: const DefaultTextStyle(
+                    child: DefaultTextStyle(
                       style: TextStyle(
                         fontStyle: FontStyle.italic,
                         fontSize: 15.0,
                         color: Colors.black,
                       ),
-                      child: Text("Via Tal dei Tali, 65, 13478, Bergamo"),
+                      child: Text(
+                          "${global_user_data!.address == null ? "inserisci indirizzo" : global_user_data!.address!}"),
                     ),
                   ),
                 ],
@@ -182,8 +176,9 @@ class _PersonalProfileState extends State<PersonalProfile> {
                         borderRadius: BorderRadius.circular(20)),
                     child: TextButton(
                       onPressed: () async {
-                        FirebaseAuth.instance.signOut();
+                        await FirebaseAuth.instance.signOut();
                         logged_user = null;
+                        global_user_data = null;
                         Navigator.pushReplacementNamed(context, '/');
                       },
                       child: const Text(

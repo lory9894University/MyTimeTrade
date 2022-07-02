@@ -3,8 +3,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mytimetrade/widgets/userSingleton.dart';
 
-import '../screens/Profile_Passage.dart';
-
 class BottomBar extends StatelessWidget {
   var index;
 
@@ -25,10 +23,9 @@ class BottomBar extends StatelessWidget {
           Navigator.pushReplacementNamed(context, '/accetta');
         } else if (index == 2) {
           Navigator.pushReplacementNamed(context, '/welcome',
-              arguments: logged_user!);
+              arguments: logged_user);
         } else if (index == 3) {
-          Navigator.pushReplacementNamed(context, '/pers_profile',
-              arguments: Profile_Passage("Andrea", "Developer", "", ""));
+          Navigator.pushReplacementNamed(context, '/pers_profile');
         } else if (index == 4) {
           Navigator.pushReplacementNamed(context, '/servizi');
         }

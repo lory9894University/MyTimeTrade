@@ -11,39 +11,40 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  int _selectedIndex = 1;
   late User user;
-  Map<dynamic, dynamic> userData = Map.from({"name": "", "balance": "0"});
+  Map<dynamic, dynamic> pageData = Map.from({"name": "", "balance": "0"});
   List<dynamic> transactions = List.empty(growable: true);
 
   @override
-  void didChangeDependencies() {
+  void initState() {
+    super.initState();
+    loadUserData();
+  }
+
+  @override
+  Future<void> didChangeDependencies() async {
     user = ModalRoute.of(context)?.settings.arguments as User;
-    userData["name"] = user.displayName;
-    logged_user = user;
+    pageData["name"] = user.displayName;
     setState(() => {});
     super.didChangeDependencies();
 
     DatabaseReference userRef =
         FirebaseDatabase.instance.ref('users/${user.uid}');
     userRef.onValue.listen((DatabaseEvent event) {
-      userData = event.snapshot.value as Map<dynamic, dynamic>;
+      pageData = event.snapshot.value as Map<dynamic, dynamic>;
 
-      if (userData["transactions"] != null) {
-        List<Object?> trans_id = userData["transactions"] as List<Object?>;
+      if (pageData["transactions"] != null) {
+        List<Object?> trans_id = pageData["transactions"] as List<Object?>;
         transactions.clear();
         trans_id.forEach((value) {
           DatabaseReference transaction_ref =
               FirebaseDatabase.instance.ref('transaction/${value}');
           transaction_ref.onValue.listen((DatabaseEvent event) {
-            print(event.snapshot.value);
             transactions.add(event.snapshot.value);
             setState(() => {});
           });
         });
       }
-
-      setState(() => {});
     });
 
     //Query transactions_query = ;
@@ -75,7 +76,7 @@ class _HomePageState extends State<HomePage> {
                         fontSize: 27.0,
                         color: Colors.black,
                       ),
-                      child: Text("Ciao, ${userData["name"]}!")),
+                      child: Text("Ciao, ${pageData["name"]}!")),
                 ],
               ),
             ),
@@ -107,7 +108,7 @@ class _HomePageState extends State<HomePage> {
                       fontWeight: FontWeight.bold,
                     ),
                     child: Text(
-                      "${userData["balance"]} ore",
+                      "${pageData["balance"]} ore",
                     ),
                   ),
                 ],
@@ -139,5 +140,24 @@ class _HomePageState extends State<HomePage> {
           index: index,
           context: context,
         ));
+  }
+
+  loadUserData() async {
+    if (logged_user == null) {
+      FirebaseAuth.instance.authStateChanges().listen((User? user) {
+        if (user != null) {
+          logged_user = user;
+          DatabaseReference userRef =
+              FirebaseDatabase.instance.ref('users/${user.uid}');
+          userRef.onValue.listen((DatabaseEvent event) {
+            var snapshot = event.snapshot.value as Map<dynamic, dynamic>;
+            global_user_data =
+                UserData(snapshot["address"], snapshot["services"], user);
+          });
+        }
+      });
+    } else {
+      user = logged_user!;
+    }
   }
 }

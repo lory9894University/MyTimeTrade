@@ -82,8 +82,7 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                   TextButton(
                     onPressed: () {
-                      Navigator.pushReplacementNamed(
-                          context, '/lostpw');
+                      Navigator.pushReplacementNamed(context, '/lostpw');
                     },
                     child: const Text(
                       'Forgot Password',
@@ -99,29 +98,29 @@ class _LoginPageState extends State<LoginPage> {
                     child: TextButton(
                       onPressed: () async {
                         if (validator.validate()) {
-                          User? user = await AuthOperation.signInUsingEmailPassword(
-                              email: emailController.text,
-                              password: passwordController.text,
-                              context:
-                                  context); // ritorna null se l'autenticazione non è riuscita
-                          if (user != null) {
-                            await Future.delayed(
-                                const Duration(milliseconds: 500));
-                            if (mounted) {
-                              Navigator.pushReplacementNamed(
-                                  context, '/welcome',
-                                  arguments: user);
+                          await AuthOperation.signInUsingEmailPassword(
+                                  email: emailController.text,
+                                  password: passwordController.text,
+                                  context: context)
+                              .then((user) {
+                            // ritorna null se l'autenticazione non è riuscita
+                            if (user != null) {
+                              if (mounted) {
+                                Navigator.pushReplacementNamed(
+                                    context, '/welcome',
+                                    arguments: user);
+                              }
+                            } else {
+                              if (mounted) {
+                                ScaffoldMessenger.of(context)
+                                    .showSnackBar(const SnackBar(
+                                        content: Text(
+                                  'wrong username or password',
+                                  textAlign: TextAlign.center,
+                                )));
+                              }
                             }
-                          } else {
-                            if (mounted) {
-                              ScaffoldMessenger.of(context)
-                                  .showSnackBar(const SnackBar(
-                                      content: Text(
-                                'wrong username or password',
-                                textAlign: TextAlign.center,
-                              )));
-                            }
-                          }
+                          });
                         }
                         setState(() => {});
                       },
@@ -144,15 +143,17 @@ class _LoginPageState extends State<LoginPage> {
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(20)),
                       onPressed: () async {
-                        User? user = await AuthOperation.signInWithGoogle();
-                        if (user != null) {
-                          await Future.delayed(
-                              const Duration(milliseconds: 500));
-                          if (mounted) {
-                            Navigator.pushReplacementNamed(context, '/welcome',
-                                arguments: user);
-                          }
-                        }
+                        AuthOperation.signInWithGoogle().then((user) => {
+                              if (user != null)
+                                {
+                                  if (mounted)
+                                    {
+                                      Navigator.pushReplacementNamed(
+                                          context, '/welcome',
+                                          arguments: user)
+                                    }
+                                }
+                            });
                       },
                     ),
                   ),
