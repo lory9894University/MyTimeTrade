@@ -1,8 +1,11 @@
 import 'dart:ui';
 
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:geocoding/geocoding.dart' as geocoding;
+import 'package:location/location.dart';
 import 'package:mytimetrade/widgets/userSingleton.dart';
 
 import '../widgets/BottomBar.dart';
@@ -13,9 +16,6 @@ class PersonalProfile extends StatefulWidget {
 }
 
 class _PersonalProfileState extends State<PersonalProfile> {
-  TextEditingController emailController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
-
   @override
   Widget build(BuildContext context) {
     var index = 3;
@@ -53,7 +53,7 @@ class _PersonalProfileState extends State<PersonalProfile> {
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: const <Widget>[
+                children: <Widget>[
                   DefaultTextStyle(
                     style: TextStyle(
                       fontSize: 20.0,
@@ -63,7 +63,11 @@ class _PersonalProfileState extends State<PersonalProfile> {
                     child: Text("Indirizzo"),
                   ),
                   Padding(padding: EdgeInsets.only(left: 10)),
-                  Icon(FontAwesomeIcons.pen, size: 10)
+                  IconButton(
+                    icon: const Icon(FontAwesomeIcons.pen, size: 10),
+                    onPressed: modifyAddress,
+                    tooltip: "Modifica indirizzo",
+                  ),
                 ],
               ),
             ),
@@ -197,5 +201,71 @@ class _PersonalProfileState extends State<PersonalProfile> {
     );
   }
 
-  ShowDialog() {}
+  modifyAddress() {
+    TextEditingController addressController = TextEditingController();
+
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text("Modifica indirizzo"),
+            content: TextField(
+              //TODO: trasformalo in testo modificabile
+              controller: addressController,
+              decoration: InputDecoration(
+                labelText: "Indirizzo",
+              ),
+            ),
+            actions: <Widget>[
+              TextButton(
+                child: Text("usa posizione corrente"),
+                onPressed: () async {
+                  String address = await currentLocation();
+                  addressController.text = address;
+                  setState(() {});
+                },
+              ),
+              TextButton(
+                child: Text("Conferma"),
+                onPressed: () {
+                  FirebaseDatabase.instance
+                      .ref()
+                      .child("users")
+                      .child(logged_user!.uid)
+                      .update({
+                    "address": addressController.text,
+                  });
+                  global_user_data!.address = addressController.text;
+                  setState(() {});
+                  Navigator.pop(context);
+                },
+              ),
+            ],
+          );
+        });
+  }
+
+  Future<String> currentLocation() async {
+    Location location = new Location();
+    bool _serviceEnabled;
+    PermissionStatus _permissionGranted;
+    LocationData _locationData;
+
+    _serviceEnabled = await location.serviceEnabled();
+    if (!_serviceEnabled) {
+      _serviceEnabled = await location.requestService();
+    }
+
+    _permissionGranted = await location.hasPermission();
+    if (_permissionGranted == PermissionStatus.denied) {
+      _permissionGranted = await location.requestPermission();
+    }
+
+    _locationData = await location.getLocation();
+
+    List<geocoding.Placemark> placemarks =
+        await geocoding.placemarkFromCoordinates(
+            _locationData.latitude!, _locationData.longitude!);
+    return "${placemarks[0].thoroughfare}, ${placemarks[0].subThoroughfare}, ${placemarks[0].locality}, ${placemarks[0].postalCode}, ${placemarks[0].country}";
+  }
 }
