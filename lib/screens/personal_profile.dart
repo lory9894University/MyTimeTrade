@@ -9,6 +9,7 @@ import 'package:location/location.dart';
 import 'package:mytimetrade/widgets/userSingleton.dart';
 
 import '../widgets/BottomBar.dart';
+import '../widgets/custom_dialog_box.dart';
 
 class PersonalProfile extends StatefulWidget {
   @override
@@ -65,7 +66,19 @@ class _PersonalProfileState extends State<PersonalProfile> {
                   Padding(padding: EdgeInsets.only(left: 10)),
                   IconButton(
                     icon: const Icon(FontAwesomeIcons.pen, size: 10),
-                    onPressed: modifyAddress,
+                    //onPressed: modifyAddress,
+                    onPressed: (){
+                      showDialog(
+                          context: context,
+                          builder: (BuildContext context){
+                            return CustomDialogBox(
+                              title: "Modifica indirizzo",
+                              descriptions: "Hii all this is a custom dialog in flutter and you will be use in your flutter applications",
+                              img: Image.asset("assets/img/handshake.png"),
+                            );
+                          }
+                      );
+                    },
                     tooltip: "Modifica indirizzo",
                   ),
                 ],
@@ -86,7 +99,7 @@ class _PersonalProfileState extends State<PersonalProfile> {
                         color: Colors.black,
                       ),
                       child: Text(
-                          "${global_user_data!.address == null ? "inserisci indirizzo" : global_user_data!.address!}"),
+                          global_user_data!.address == null ? "inserisci indirizzo" : global_user_data!.address!),
                     ),
                   ),
                 ],
@@ -202,8 +215,11 @@ class _PersonalProfileState extends State<PersonalProfile> {
   }
 
   modifyAddress() {
-    TextEditingController addressController = TextEditingController();
 
+  }
+
+  /*modifyAddress() {
+    TextEditingController addressController = TextEditingController();
     showDialog(
         context: context,
         builder: (BuildContext context) {
@@ -267,5 +283,5 @@ class _PersonalProfileState extends State<PersonalProfile> {
         await geocoding.placemarkFromCoordinates(
             _locationData.latitude!, _locationData.longitude!);
     return "${placemarks[0].thoroughfare}, ${placemarks[0].subThoroughfare}, ${placemarks[0].locality}, ${placemarks[0].postalCode}, ${placemarks[0].country}";
-  }
+  }*/
 }
