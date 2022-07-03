@@ -1,18 +1,24 @@
 import 'dart:ui';
+
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:mytimetrade/widgets/userSingleton.dart';
-
-import '../costanti.dart';
 import 'package:geocoding/geocoding.dart' as geocoding;
 import 'package:location/location.dart';
+import 'package:mytimetrade/widgets/global.dart';
 
 class CustomDialogBox extends StatefulWidget {
   final String title, descriptions;
   final Image img;
+  final Function() callback;
 
-  const CustomDialogBox({Key? key, required this.title, required this.descriptions, required this.img}) : super(key: key);
+  const CustomDialogBox(
+      {Key? key,
+      required this.title,
+      required this.descriptions,
+      required this.img,
+      required this.callback})
+      : super(key: key);
 
   @override
   _CustomDialogBoxState createState() => _CustomDialogBoxState();
@@ -32,29 +38,35 @@ class _CustomDialogBoxState extends State<CustomDialogBox> {
       child: contentBox(context),
     );
   }
-  contentBox(context){
+
+  contentBox(context) {
     return Stack(
       children: <Widget>[
         Container(
-          padding: EdgeInsets.only(left: Constants.padding,top: Constants.avatarRadius
-              + Constants.padding, right: Constants.padding,bottom: Constants.padding
-          ),
+          padding: EdgeInsets.only(
+              left: Constants.padding,
+              top: Constants.avatarRadius + Constants.padding,
+              right: Constants.padding,
+              bottom: Constants.padding),
           margin: EdgeInsets.only(top: Constants.avatarRadius),
           decoration: BoxDecoration(
               shape: BoxShape.rectangle,
               color: Colors.white,
               borderRadius: BorderRadius.circular(Constants.padding),
               boxShadow: [
-                BoxShadow(color: Colors.black,offset: Offset(0,10),
-                    blurRadius: 10
-                ),
-              ]
-          ),
+                BoxShadow(
+                    color: Colors.black, offset: Offset(0, 10), blurRadius: 10),
+              ]),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
-              Text(widget.title,style: TextStyle(fontSize: 22,fontWeight: FontWeight.w600),),
-              SizedBox(height: 10,),
+              Text(
+                widget.title,
+                style: TextStyle(fontSize: 22, fontWeight: FontWeight.w600),
+              ),
+              SizedBox(
+                height: 10,
+              ),
               //Text(widget.descriptions,style: TextStyle(fontSize: 14),textAlign: TextAlign.center,),
               TextField(
                 //TODO: trasformalo in testo modificabile
@@ -63,36 +75,44 @@ class _CustomDialogBoxState extends State<CustomDialogBox> {
                   labelText: "Indirizzo",
                 ),
               ),
-              SizedBox(height: 22,),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: <Widget>[
-              Container(
-                child: FlatButton(
-                    onPressed: () async {
-                      String address = await currentLocation();
-                      addressController.text = address;
-                      setState(() {});
-                    },
-                    child: Text("Usa posizione",style: TextStyle(fontSize: 18),)),
+              SizedBox(
+                height: 22,
               ),
-              Container(
-                child: FlatButton(
-                    onPressed: (){
-                      FirebaseDatabase.instance
-                          .ref()
-                          .child("users")
-                          .child(logged_user!.uid)
-                          .update({
-                        "address": addressController.text,
-                      });
-                      global_user_data!.address = addressController.text;
-                      setState(() {});
-                      Navigator.pop(context);
-                    },
-                    child: Text("Conferma",style: TextStyle(fontSize: 18),)),
-              ),
-              /*Align(
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: <Widget>[
+                  Container(
+                    child: FlatButton(
+                        onPressed: () async {
+                          String address = await currentLocation();
+                          addressController.text = address;
+                          setState(() {});
+                        },
+                        child: Text(
+                          "Usa posizione",
+                          style: TextStyle(fontSize: 18),
+                        )),
+                  ),
+                  Container(
+                    child: FlatButton(
+                        onPressed: () {
+                          FirebaseDatabase.instance
+                              .ref()
+                              .child("users")
+                              .child(logged_user!.uid)
+                              .update({
+                            "address": addressController.text,
+                          });
+                          global_user_data!.address = addressController.text;
+                          widget.callback();
+                          Navigator.pop(context);
+                        },
+                        child: Text(
+                          "Conferma",
+                          style: TextStyle(fontSize: 18),
+                        )),
+                  ),
+                  /*Align(
                 alignment: Alignment.bottomRight,
                 child: FlatButton(
                     onPressed: (){
@@ -100,10 +120,10 @@ class _CustomDialogBoxState extends State<CustomDialogBox> {
                     },
                     child: Text(widget.text,style: TextStyle(fontSize: 18),)),
               ),*/
+                ],
+              ),
             ],
           ),
-          ],
-        ),
         ),
         Positioned(
           left: Constants.padding,
@@ -112,9 +132,9 @@ class _CustomDialogBoxState extends State<CustomDialogBox> {
             backgroundColor: Colors.transparent,
             radius: Constants.avatarRadius,
             child: ClipRRect(
-                borderRadius: BorderRadius.all(Radius.circular(Constants.avatarRadius)),
-                child: Image.asset("assets/img/handshake.png")
-            ),
+                borderRadius:
+                    BorderRadius.all(Radius.circular(Constants.avatarRadius)),
+                child: Image.asset("assets/img/handshake.png")),
           ),
         ),
       ],
@@ -140,8 +160,8 @@ class _CustomDialogBoxState extends State<CustomDialogBox> {
     _locationData = await location.getLocation();
 
     List<geocoding.Placemark> placemarks =
-    await geocoding.placemarkFromCoordinates(
-        _locationData.latitude!, _locationData.longitude!);
+        await geocoding.placemarkFromCoordinates(
+            _locationData.latitude!, _locationData.longitude!);
     return "${placemarks[0].thoroughfare}, ${placemarks[0].subThoroughfare}, ${placemarks[0].locality}, ${placemarks[0].postalCode}, ${placemarks[0].country}";
   }
 }

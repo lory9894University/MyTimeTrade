@@ -3,7 +3,7 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 
 import '../widgets/BottomBar.dart';
-import '../widgets/userSingleton.dart';
+import '../widgets/global.dart';
 
 class HomePage extends StatefulWidget {
   @override

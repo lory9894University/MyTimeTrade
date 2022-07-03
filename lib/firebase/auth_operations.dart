@@ -28,12 +28,7 @@ class AuthOperation {
     FirebaseAuth auth = FirebaseAuth.instance;
     User? user;
     //firebase Create user
-    try {
-      final credential = await auth.createUserWithEmailAndPassword(
-        email: emailAddress,
-        password: password,
-      );
-    } on FirebaseAuthException catch (e) {
+    try {} on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
         debugPrint('The password provided is too weak.');
       } else if (e.code == 'email-already-in-use') {

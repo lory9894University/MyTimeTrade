@@ -1,12 +1,9 @@
 import 'dart:ui';
 
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:geocoding/geocoding.dart' as geocoding;
-import 'package:location/location.dart';
-import 'package:mytimetrade/widgets/userSingleton.dart';
+import 'package:mytimetrade/widgets/global.dart';
 
 import '../widgets/BottomBar.dart';
 import '../widgets/custom_dialog_box.dart';
@@ -17,6 +14,10 @@ class PersonalProfile extends StatefulWidget {
 }
 
 class _PersonalProfileState extends State<PersonalProfile> {
+  callback() {
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     var index = 3;
@@ -67,17 +68,17 @@ class _PersonalProfileState extends State<PersonalProfile> {
                   IconButton(
                     icon: const Icon(FontAwesomeIcons.pen, size: 10),
                     //onPressed: modifyAddress,
-                    onPressed: (){
+                    onPressed: () {
                       showDialog(
                           context: context,
-                          builder: (BuildContext context){
+                          builder: (BuildContext context) {
                             return CustomDialogBox(
                               title: "Modifica indirizzo",
-                              descriptions: "Hii all this is a custom dialog in flutter and you will be use in your flutter applications",
+                              descriptions: "modifica indirizzo",
                               img: Image.asset("assets/img/handshake.png"),
+                              callback: callback,
                             );
-                          }
-                      );
+                          });
                     },
                     tooltip: "Modifica indirizzo",
                   ),
@@ -98,8 +99,9 @@ class _PersonalProfileState extends State<PersonalProfile> {
                         fontSize: 15.0,
                         color: Colors.black,
                       ),
-                      child: Text(
-                          global_user_data!.address == null ? "inserisci indirizzo" : global_user_data!.address!),
+                      child: Text(global_user_data!.address == null
+                          ? "inserisci indirizzo"
+                          : global_user_data!.address!),
                     ),
                   ),
                 ],
@@ -213,75 +215,4 @@ class _PersonalProfileState extends State<PersonalProfile> {
       bottomNavigationBar: BottomBar(index: index, context: context),
     );
   }
-
-  modifyAddress() {
-
-  }
-
-  /*modifyAddress() {
-    TextEditingController addressController = TextEditingController();
-    showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: Text("Modifica indirizzo"),
-            content: TextField(
-              //TODO: trasformalo in testo modificabile
-              controller: addressController,
-              decoration: InputDecoration(
-                labelText: "Indirizzo",
-              ),
-            ),
-            actions: <Widget>[
-              TextButton(
-                child: Text("usa posizione corrente"),
-                onPressed: () async {
-                  String address = await currentLocation();
-                  addressController.text = address;
-                  setState(() {});
-                },
-              ),
-              TextButton(
-                child: Text("Conferma"),
-                onPressed: () {
-                  FirebaseDatabase.instance
-                      .ref()
-                      .child("users")
-                      .child(logged_user!.uid)
-                      .update({
-                    "address": addressController.text,
-                  });
-                  global_user_data!.address = addressController.text;
-                  setState(() {});
-                  Navigator.pop(context);
-                },
-              ),
-            ],
-          );
-        });
-  }
-
-  Future<String> currentLocation() async {
-    Location location = new Location();
-    bool _serviceEnabled;
-    PermissionStatus _permissionGranted;
-    LocationData _locationData;
-
-    _serviceEnabled = await location.serviceEnabled();
-    if (!_serviceEnabled) {
-      _serviceEnabled = await location.requestService();
-    }
-
-    _permissionGranted = await location.hasPermission();
-    if (_permissionGranted == PermissionStatus.denied) {
-      _permissionGranted = await location.requestPermission();
-    }
-
-    _locationData = await location.getLocation();
-
-    List<geocoding.Placemark> placemarks =
-        await geocoding.placemarkFromCoordinates(
-            _locationData.latitude!, _locationData.longitude!);
-    return "${placemarks[0].thoroughfare}, ${placemarks[0].subThoroughfare}, ${placemarks[0].locality}, ${placemarks[0].postalCode}, ${placemarks[0].country}";
-  }*/
 }
