@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:mytimetrade/firebase/auth_operations.dart';
@@ -21,7 +20,8 @@ class _RegistrationPageState extends State<RegistrationPage> {
   //validate password
   bool validatePassword(String value) {
     bool valid = false;
-    RegExp regex = RegExp(r'^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$');
+    RegExp regex =
+        RegExp(r'^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$');
     if (value.isEmpty) {
       _passwordError = 'Password is required';
     } else if (!regex.hasMatch(value)) {
@@ -133,21 +133,24 @@ class _RegistrationPageState extends State<RegistrationPage> {
               child: TextButton(
                 onPressed: () async {
                   if (validateForm()) {
-                    User? user = await AuthOperation.registerUserAndSignIn(
-                        emailController.text, passwordController.text);
-                    DatabaseReference ref = FirebaseDatabase.instance
-                        .ref()
-                        .child("users/${user?.uid}");
-                    await ref.set({
-                      "name": usernameController.text,
-                      "balance": 0,
-                      "transactions": [],
-                      "referral": user?.uid.substring(0, 5)
+                    AuthOperation.registerUserAndSignIn(
+                            emailController.text, passwordController.text)
+                        .then((user) {
+                      DatabaseReference ref = FirebaseDatabase.instance
+                          .ref()
+                          .child("users/${user?.uid}");
+                      ref.set({
+                        "name": usernameController.text,
+                        "balance": 0,
+                        "transactions": [],
+                        "referral": user?.uid.substring(0, 5)
+                      }).then((value) {
+                        if (user != null) {
+                          Navigator.pushReplacementNamed(context, '/',
+                              arguments: user);
+                        }
+                      });
                     });
-                    if (user != null) {
-                      Navigator.pushReplacementNamed(context, '/',
-                          arguments: user);
-                    }
                   }
                 },
                 child: const Text(

@@ -24,8 +24,6 @@ class _HomePageState extends State<HomePage> {
   @override
   Future<void> didChangeDependencies() async {
     user = ModalRoute.of(context)?.settings.arguments as User;
-    pageData["name"] = user.displayName;
-    setState(() => {});
     super.didChangeDependencies();
 
     DatabaseReference userRef =
@@ -45,6 +43,7 @@ class _HomePageState extends State<HomePage> {
           });
         });
       }
+      setState(() => {});
     });
 
     //Query transactions_query = ;
@@ -151,8 +150,8 @@ class _HomePageState extends State<HomePage> {
               FirebaseDatabase.instance.ref('users/${user.uid}');
           userRef.onValue.listen((DatabaseEvent event) {
             var snapshot = event.snapshot.value as Map<dynamic, dynamic>;
-            global_user_data =
-                UserData(snapshot["address"], snapshot["services"], user);
+            global_user_data = UserData(snapshot["address"],
+                snapshot["services"], snapshot["name"], user);
           });
         }
       });

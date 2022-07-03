@@ -15,13 +15,13 @@ class _LoginPageState extends State<LoginPage> {
   late Verificator validator = Verificator(emailController, passwordController);
 
   initializeFirebase() async {
-    User? user = FirebaseAuth.instance.currentUser;
-    if (user != null) {
-      await Future.delayed(const Duration(milliseconds: 500));
-      if (mounted) {
-        Navigator.pushReplacementNamed(context, '/welcome', arguments: user);
+    FirebaseAuth.instance.authStateChanges().listen((User? user) {
+      if (user != null) {
+        if (mounted) {
+          Navigator.pushReplacementNamed(context, '/welcome', arguments: user);
+        }
       }
-    }
+    });
   }
 
   @override
