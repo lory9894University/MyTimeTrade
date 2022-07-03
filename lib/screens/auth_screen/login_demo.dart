@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_signin_button/button_list.dart';
 import 'package:flutter_signin_button/button_view.dart';
@@ -143,17 +144,27 @@ class _LoginPageState extends State<LoginPage> {
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(20)),
                       onPressed: () async {
-                        AuthOperation.signInWithGoogle().then((user) => {
-                              if (user != null)
-                                {
-                                  if (mounted)
-                                    {
-                                      Navigator.pushReplacementNamed(
-                                          context, '/welcome',
-                                          arguments: user)
-                                    }
-                                }
+                        AuthOperation.signInWithGoogle().then((user) {
+                          if (user != null) {
+                            DatabaseReference ref = FirebaseDatabase.instance
+                                .ref()
+                                .child("users/${user.uid}");
+                            ref.set({
+                              "name": user.displayName,
+                              "balance": 0,
+                              "transactions": [],
+                              "referral": user.uid.substring(0, 5),
+                              "phoneNr": user.phoneNumber != null
+                                  ? user.phoneNumber
+                                  : "", //TODO: add phone nr
                             });
+                            if (mounted) {
+                              Navigator.pushReplacementNamed(
+                                  context, '/welcome',
+                                  arguments: user);
+                            }
+                          }
+                        });
                       },
                     ),
                   ),
