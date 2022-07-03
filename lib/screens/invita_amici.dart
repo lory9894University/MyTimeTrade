@@ -16,7 +16,7 @@ class _InvitaAmiciState extends State<InvitaAmici> {
     return Scaffold(
         extendBody: true,
         body: Container(
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
               gradient: LinearGradient(
             colors: [
               Colors.greenAccent,
@@ -47,7 +47,7 @@ class _InvitaAmiciState extends State<InvitaAmici> {
               Container(
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: <Widget>[
+                  children: const <Widget>[
                     DefaultTextStyle(
                       style: TextStyle(
                         fontSize: 20.0,
@@ -70,7 +70,7 @@ class _InvitaAmiciState extends State<InvitaAmici> {
                         shape: RoundedRectangleBorder(
                             side: BorderSide(color: Colors.black, width: 3),
                             borderRadius: BorderRadius.circular(10)),
-                        title: Center(
+                        title: const Center(
                             child: DefaultTextStyle(
                                 style: TextStyle(
                                     fontStyle: FontStyle.italic,
@@ -84,7 +84,7 @@ class _InvitaAmiciState extends State<InvitaAmici> {
                         shape: RoundedRectangleBorder(
                             side: BorderSide(color: Colors.black, width: 3),
                             borderRadius: BorderRadius.circular(10)),
-                        title: Center(
+                        title: const Center(
                             child: DefaultTextStyle(
                                 style: TextStyle(
                                     fontStyle: FontStyle.italic,
@@ -98,7 +98,7 @@ class _InvitaAmiciState extends State<InvitaAmici> {
                         shape: RoundedRectangleBorder(
                             side: BorderSide(color: Colors.black, width: 3),
                             borderRadius: BorderRadius.circular(10)),
-                        title: Center(
+                        title: const Center(
                             child: DefaultTextStyle(
                                 style: TextStyle(
                                     fontStyle: FontStyle.italic,
@@ -112,7 +112,7 @@ class _InvitaAmiciState extends State<InvitaAmici> {
                         shape: RoundedRectangleBorder(
                             side: BorderSide(color: Colors.black, width: 3),
                             borderRadius: BorderRadius.circular(10)),
-                        title: Center(
+                        title: const Center(
                             child: DefaultTextStyle(
                                 style: TextStyle(
                                     fontStyle: FontStyle.italic,
@@ -126,7 +126,7 @@ class _InvitaAmiciState extends State<InvitaAmici> {
                         shape: RoundedRectangleBorder(
                             side: BorderSide(color: Colors.black, width: 3),
                             borderRadius: BorderRadius.circular(10)),
-                        title: Center(
+                        title: const Center(
                             child: DefaultTextStyle(
                                 style: TextStyle(
                                     fontStyle: FontStyle.italic,

@@ -29,16 +29,16 @@ class _AccettaState extends State<Accetta> {
           extendBody: true,
           appBar: AppBar(
             toolbarHeight: 0.5,
-            bottom: TabBar(
+            bottom: const TabBar(
               tabs: [
-                Tab(text: "Da accettare"),
-                Tab(text: "Accettate"),
-                Tab(text: "Da pagare")
+                const Tab(text: "Da accettare"),
+                const Tab(text: "Accettate"),
+                const Tab(text: "Da pagare")
               ],
             ),
           ),
           body: Container(
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
                 gradient: LinearGradient(
               colors: [
                 Colors.greenAccent,
@@ -52,7 +52,7 @@ class _AccettaState extends State<Accetta> {
                 Center(
                     child: Column(children: <Widget>[
                   Container(
-                    margin: EdgeInsets.all(20),
+                    margin: const EdgeInsets.all(20),
                     child: Table(
                       defaultVerticalAlignment:
                           TableCellVerticalAlignment.middle,
@@ -108,9 +108,9 @@ class _AccettaState extends State<Accetta> {
                           ),
                           Column(children: [
                             Container(
-                              margin: EdgeInsets.all(25),
+                              margin: const EdgeInsets.all(25),
                               child: FlatButton(
-                                child: Text(
+                                child: const Text(
                                   'Conferma',
                                   style: TextStyle(fontSize: 20.0),
                                 ),
@@ -158,9 +158,9 @@ class _AccettaState extends State<Accetta> {
                           ),
                           Column(children: [
                             Container(
-                              margin: EdgeInsets.all(25),
+                              margin: const EdgeInsets.all(25),
                               child: FlatButton(
-                                child: Text(
+                                child: const Text(
                                   'Conferma',
                                   style: TextStyle(fontSize: 20.0),
                                 ),
@@ -208,9 +208,9 @@ class _AccettaState extends State<Accetta> {
                           ),
                           Column(children: [
                             Container(
-                              margin: EdgeInsets.all(25),
+                              margin: const EdgeInsets.all(25),
                               child: FlatButton(
-                                child: Text(
+                                child: const Text(
                                   'Conferma',
                                   style: TextStyle(fontSize: 20.0),
                                 ),
@@ -228,7 +228,7 @@ class _AccettaState extends State<Accetta> {
                 Center(
                     child: Column(children: <Widget>[
                   Container(
-                    margin: EdgeInsets.all(20),
+                    margin: const EdgeInsets.all(20),
                     child: Table(
                       defaultVerticalAlignment:
                           TableCellVerticalAlignment.middle,
@@ -358,7 +358,7 @@ class _AccettaState extends State<Accetta> {
                 Center(
                     child: Column(children: <Widget>[
                   Container(
-                    margin: EdgeInsets.all(20),
+                    margin: const EdgeInsets.all(20),
                     child: Table(
                       defaultVerticalAlignment:
                           TableCellVerticalAlignment.middle,
@@ -390,14 +390,14 @@ class _AccettaState extends State<Accetta> {
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    DefaultTextStyle(
-                                      style: const TextStyle(
+                                    const DefaultTextStyle(
+                                      style: TextStyle(
                                         fontSize: 16.0,
                                         color: Colors.black,
                                         fontWeight: FontWeight.bold,
                                       ),
                                       child: //TODO: Change to Text(args.servizio)
-                                          Text('Unity'),
+                                          const Text('Unity'),
                                     ),
                                   ],
                                 ),
@@ -406,9 +406,9 @@ class _AccettaState extends State<Accetta> {
                           ),
                           Column(children: [
                             Container(
-                              margin: EdgeInsets.all(25),
+                              margin: const EdgeInsets.all(25),
                               child: FlatButton(
-                                child: Text(
+                                child: const Text(
                                   'Paga',
                                   style: TextStyle(fontSize: 20.0),
                                 ),
@@ -456,9 +456,9 @@ class _AccettaState extends State<Accetta> {
                           ),
                           Column(children: [
                             Container(
-                              margin: EdgeInsets.all(25),
+                              margin: const EdgeInsets.all(25),
                               child: FlatButton(
-                                child: Text(
+                                child: const Text(
                                   'Paga',
                                   style: TextStyle(fontSize: 20.0),
                                 ),
@@ -517,9 +517,9 @@ class _AccettaState extends State<Accetta> {
                           ),
                           Column(children: [
                             Container(
-                              margin: EdgeInsets.all(25),
+                              margin: const EdgeInsets.all(25),
                               child: FlatButton(
-                                child: Text(
+                                child: const Text(
                                   'Paga',
                                   style: TextStyle(fontSize: 20.0),
                                 ),
