@@ -10,7 +10,7 @@ class UserData {
   String? address;
   User authObject;
   List<String>? services;
-
+  //TODO: add phone Nr
   UserData(this.address, this.services, this.name, this.authObject) {
     email = authObject.email!;
     uid = authObject.uid;
