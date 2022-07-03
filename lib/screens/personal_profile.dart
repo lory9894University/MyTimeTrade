@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:mytimetrade/widgets/global.dart';
+import 'package:accordion/accordion.dart';
 
 import '../widgets/BottomBar.dart';
 import '../widgets/custom_dialog_box.dart';
@@ -50,139 +51,215 @@ class _PersonalProfileState extends State<PersonalProfile> {
                 ],
               ),
             ),
-            Padding(padding: EdgeInsets.only(top: 30)),
-            Container(
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: <Widget>[
-                  DefaultTextStyle(
-                    style: TextStyle(
-                      fontSize: 20.0,
-                      color: Colors.black,
-                      fontWeight: FontWeight.bold,
+            Padding(padding: EdgeInsets.only(top: 20)),
+            Accordion(
+                maxOpenSections: 1,
+                scaleWhenAnimating: false,
+                openAndCloseAnimation: true,
+                headerBackgroundColor: Colors.transparent,
+                headerBackgroundColorOpened: Colors.transparent,
+                children: [
+                  AccordionSection(
+                    leftIcon: Icon(FontAwesomeIcons.locationArrow),
+                    header: const Center(
+                        child: DefaultTextStyle(
+                          style: TextStyle(
+                            fontSize: 20.0,
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold,
+                          ),
+                          child: Text("Indirizzo"),
+                        )
                     ),
-                    child: Text("Indirizzo"),
-                  ),
-                  Padding(padding: EdgeInsets.only(left: 10)),
-                  IconButton(
-                    icon: const Icon(FontAwesomeIcons.pen, size: 10),
-                    //onPressed: modifyAddress,
-                    onPressed: () {
-                      showDialog(
-                          context: context,
-                          builder: (BuildContext context) {
-                            return CustomDialogBox(
-                              title: "Modifica indirizzo",
-                              descriptions: "modifica indirizzo",
-                              img: Image.asset("assets/img/handshake.png"),
-                              callback: callback,
-                            );
-                          });
-                    },
-                    tooltip: "Modifica indirizzo",
-                  ),
-                ],
-              ),
-            ),
-            Padding(padding: EdgeInsets.only(top: 15)),
-            Container(
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Container(
-                    constraints: BoxConstraints(minWidth: 100, maxWidth: 350),
-                    child: DefaultTextStyle(
-                      style: TextStyle(
-                        fontStyle: FontStyle.italic,
-                        fontSize: 15.0,
-                        color: Colors.black,
-                      ),
-                      child: Text(global_user_data!.address == null
-                          ? "inserisci indirizzo"
-                          : global_user_data!.address!),
+                    content: Column(
+                      children: [
+                        DefaultTextStyle(
+                          style: const TextStyle(
+                            fontStyle: FontStyle.italic,
+                            fontSize: 15.0,
+                            color: Colors.black,
+                          ),
+                          child: Text(global_user_data!.address == null
+                              ? "inserisci indirizzo" : global_user_data!.address!),
+                        ),
+                        Padding(padding: EdgeInsets.only(top: 5)),
+                        IconButton(
+                          icon: const Icon(FontAwesomeIcons.pen, size: 20),
+                          //onPressed: modifyAddress,
+                          onPressed: () {
+                            showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return CustomDialogBox(
+                                    title: "Modifica indirizzo",
+                                    descriptions: "modifica indirizzo",
+                                    img: Image.asset("assets/img/handshake.png"),
+                                    callback: callback,
+                                  );
+                                });
+                          },
+                          tooltip: "Modifica indirizzo",
+                        ),
+                      ],
                     ),
                   ),
-                ],
-              ),
-            ),
-            Padding(padding: EdgeInsets.only(top: 30)),
-            Container(
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: const <Widget>[
-                  DefaultTextStyle(
-                    style: TextStyle(
-                      fontSize: 20.0,
-                      color: Colors.black,
-                      fontWeight: FontWeight.bold,
+                  AccordionSection(
+                    leftIcon: Icon(FontAwesomeIcons.phone),
+                    header: const Center(
+                        child: DefaultTextStyle(
+                          style: TextStyle(
+                            fontSize: 20.0,
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold,
+                          ),
+                          child: Text("Telefono"),
+                        )
                     ),
-                    child: Text("Interessi"),
+                    content: Column(
+                      children: [
+                        DefaultTextStyle(
+                          style: TextStyle(
+                            fontStyle: FontStyle.italic,
+                            fontSize: 15.0,
+                            color: Colors.black,
+                          ),
+                          child: Text("3425934167"),
+                        ),
+                        Padding(padding: EdgeInsets.only(top: 5)),
+                        IconButton(
+                          icon: const Icon(FontAwesomeIcons.pen, size: 20),
+                          //onPressed: modifyAddress,
+                          onPressed: () {
+                          },
+                          tooltip: "Modifica telefono",
+                        ),
+                      ],
+                    ),
                   ),
-                  Padding(padding: EdgeInsets.only(left: 10)),
-                  Icon(FontAwesomeIcons.plus, size: 10)
-                ],
-              ),
+                  AccordionSection(
+                    leftIcon: Icon(FontAwesomeIcons.briefcase),
+                    header: const Center(
+                        child: DefaultTextStyle(
+                          style: TextStyle(
+                            fontSize: 20.0,
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold,
+                          ),
+                          child: Text("Interessi"),
+                        )
+                    ),
+                    content: Container(
+                      height: 230,
+                      child: ListView(
+                      //TODO: Inserire il simbolo "-" a fianco a ogni testo, per eliminarlo (e far diventare le Icon delle IconButton
+                      shrinkWrap: true,
+                      children: const <Widget>[
+                        ListTile(
+                          dense: true,
+                          title: Center(
+                              child: DefaultTextStyle(
+                                  style: TextStyle(
+                                      fontStyle: FontStyle.italic,
+                                      color: Colors.black,
+                                      fontSize: 15),
+                                  child: Text('Inglese'))),
+                        ),
+                        ListTile(
+                          dense: true,
+                          title: Center(
+                              child: DefaultTextStyle(
+                                  style: TextStyle(
+                                      fontStyle: FontStyle.italic,
+                                      color: Colors.black,
+                                      fontSize: 15),
+                                  child: Text('Spagnolo'))),
+                        ),
+                        ListTile(
+                          dense: true,
+                          title: Center(
+                              child: DefaultTextStyle(
+                                  style: TextStyle(
+                                      fontStyle: FontStyle.italic,
+                                      color: Colors.black,
+                                      fontSize: 15),
+                                  child: Text('Dolci freddi'))),
+                        ),
+                        ListTile(
+                          dense: true,
+                          title: Center(
+                              child: DefaultTextStyle(
+                                  style: TextStyle(
+                                      fontStyle: FontStyle.italic,
+                                      color: Colors.black,
+                                      fontSize: 15),
+                                  child: Text('Elettronica'))),
+                        ),
+                        ListTile(
+                          dense: true,
+                          title: Center(
+                              child: DefaultTextStyle(
+                                  style: TextStyle(
+                                      fontStyle: FontStyle.italic,
+                                      color: Colors.black,
+                                      fontSize: 15),
+                                  child: Text('Make-up Artist'))),
+                        ),
+                        ListTile(
+                          dense: true,
+                          title: Center(
+                              child: DefaultTextStyle(
+                                  style: TextStyle(
+                                      fontStyle: FontStyle.italic,
+                                      color: Colors.black,
+                                      fontSize: 15),
+                                  child: Text('Inglese'))),
+                        ),
+                        ListTile(
+                          dense: true,
+                          title: Center(
+                              child: DefaultTextStyle(
+                                  style: TextStyle(
+                                      fontStyle: FontStyle.italic,
+                                      color: Colors.black,
+                                      fontSize: 15),
+                                  child: Text('Spagnolo'))),
+                        ),
+                        ListTile(
+                          dense: true,
+                          title: Center(
+                              child: DefaultTextStyle(
+                                  style: TextStyle(
+                                      fontStyle: FontStyle.italic,
+                                      color: Colors.black,
+                                      fontSize: 15),
+                                  child: Text('Dolci freddi'))),
+                        ),
+                        ListTile(
+                          dense: true,
+                          title: Center(
+                              child: DefaultTextStyle(
+                                  style: TextStyle(
+                                      fontStyle: FontStyle.italic,
+                                      color: Colors.black,
+                                      fontSize: 15),
+                                  child: Text('Elettronica'))),
+                        ),
+                        ListTile(
+                          dense: true,
+                          title: Center(
+                              child: DefaultTextStyle(
+                                  style: TextStyle(
+                                      fontStyle: FontStyle.italic,
+                                      color: Colors.black,
+                                      fontSize: 15),
+                                  child: Text('Make-up Artist'))),
+                        ),
+                      ],
+                    ),
+                    ),
+                  )
+                ]
             ),
-            ListView(
-              //TODO: Inserire il simbolo "-" a fianco a ogni testo, per eliminarlo (e far diventare le Icon delle IconButton
-              shrinkWrap: true,
-              children: const <Widget>[
-                ListTile(
-                  dense: true,
-                  title: Center(
-                      child: DefaultTextStyle(
-                          style: TextStyle(
-                              fontStyle: FontStyle.italic,
-                              color: Colors.black,
-                              fontSize: 15),
-                          child: Text('Inglese'))),
-                ),
-                ListTile(
-                  dense: true,
-                  title: Center(
-                      child: DefaultTextStyle(
-                          style: TextStyle(
-                              fontStyle: FontStyle.italic,
-                              color: Colors.black,
-                              fontSize: 15),
-                          child: Text('Spagnolo'))),
-                ),
-                ListTile(
-                  dense: true,
-                  title: Center(
-                      child: DefaultTextStyle(
-                          style: TextStyle(
-                              fontStyle: FontStyle.italic,
-                              color: Colors.black,
-                              fontSize: 15),
-                          child: Text('Dolci freddi'))),
-                ),
-                ListTile(
-                  dense: true,
-                  title: Center(
-                      child: DefaultTextStyle(
-                          style: TextStyle(
-                              fontStyle: FontStyle.italic,
-                              color: Colors.black,
-                              fontSize: 15),
-                          child: Text('Elettronica'))),
-                ),
-                ListTile(
-                  dense: true,
-                  title: Center(
-                      child: DefaultTextStyle(
-                          style: TextStyle(
-                              fontStyle: FontStyle.italic,
-                              color: Colors.black,
-                              fontSize: 15),
-                          child: Text('Make-up Artist'))),
-                ),
-              ],
-            ),
-            Padding(padding: EdgeInsets.only(top: 5)),
             Container(
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
