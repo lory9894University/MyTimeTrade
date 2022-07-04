@@ -6,6 +6,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:geoflutterfire/geoflutterfire.dart';
 import 'package:mytimetrade/widgets/global.dart';
 
 import '../widgets/BottomBar.dart';
@@ -18,6 +19,9 @@ class PersonalProfile extends StatefulWidget {
 
 class _PersonalProfileState extends State<PersonalProfile> {
   TextEditingController phoneController = TextEditingController();
+  TextEditingController _controller =
+      TextEditingController(); //TODO: questo dovrà essere spostato se la dialog box è un nuovo widget
+
   List<dynamic> interests = List<dynamic>.empty(growable: true);
   var db = FirebaseFirestore.instance;
 
@@ -253,6 +257,68 @@ class _PersonalProfileState extends State<PersonalProfile> {
                     ),
                   )
                 ],
+              ),
+            ),
+            Container(
+              child: Padding(
+                padding: const EdgeInsets.only(
+                    left: 15.0, right: 15.0, top: 15, bottom: 0),
+                //padding: EdgeInsets.symmetric(horizontal: 15),
+                child: TextField(
+                  controller: _controller,
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(),
+                    labelText: 'interessi',
+                    hintText: 'Inserire interessi',
+                  ),
+                ),
+              ),
+            ),
+            Container(
+              height: 50,
+              width: 250,
+              decoration: BoxDecoration(
+                  color: Colors.blue, borderRadius: BorderRadius.circular(20)),
+              child: TextButton(
+                onPressed: () async {
+                  if (_controller.text.isEmpty) {
+                    if (mounted) {
+                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                          content: Text(
+                        'specifica interesse',
+                        textAlign: TextAlign.center,
+                      )));
+                    }
+                    return;
+                  }
+                  if (global_user_data!.lat != null &&
+                      global_user_data!.lng != null) {
+                    final _geo = Geoflutterfire();
+                    final _firestore = FirebaseFirestore.instance;
+                    GeoFirePoint myLocation = _geo.point(
+                        latitude: global_user_data!.lat!,
+                        longitude: global_user_data!.lng!);
+                    final interest = <String, dynamic>{
+                      'interest': _controller.text,
+                      'user': global_user_data!.name,
+                      'user_id': global_user_data!.uid,
+                      'position': myLocation.data,
+                    };
+                    _firestore.collection('interests').add(interest);
+                  } else {
+                    if (mounted) {
+                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                          content: Text(
+                        'prima imposta il tuo indirizzo',
+                        textAlign: TextAlign.center,
+                      )));
+                    }
+                  }
+                },
+                child: const Text(
+                  'Send',
+                  style: TextStyle(color: Colors.white, fontSize: 25),
+                ),
               ),
             ),
           ],

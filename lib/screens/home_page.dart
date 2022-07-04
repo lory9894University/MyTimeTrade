@@ -155,7 +155,9 @@ class _HomePageState extends State<HomePage> {
                 snapshot["services"],
                 snapshot["name"],
                 user,
-                snapshot["phoneNr"]);
+                snapshot["phoneNr"],
+                snapshot["lat"],
+                snapshot["lng"]);
           });
         }
       });

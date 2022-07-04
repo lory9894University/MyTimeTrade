@@ -10,9 +10,10 @@ class UserData {
   String? address, phoneNr;
   User authObject;
   List<String>? services;
+  double? lat, lng;
 
-  UserData(
-      this.address, this.services, this.name, this.authObject, this.phoneNr) {
+  UserData(this.address, this.services, this.name, this.authObject,
+      this.phoneNr, this.lat, this.lng) {
     email = authObject.email!;
     uid = authObject.uid;
   }
