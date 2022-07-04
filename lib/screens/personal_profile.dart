@@ -117,13 +117,15 @@ class _PersonalProfileState extends State<PersonalProfile> {
                     ),
                     content: Column(
                       children: [
-                        DefaultTextStyle(
-                          style: TextStyle(
-                            fontStyle: FontStyle.italic,
-                            fontSize: 15.0,
-                            color: Colors.black,
+                        const TextField(
+                          decoration: InputDecoration(
+                              border: OutlineInputBorder(),
+                              labelText: 'Telefono',
+                              hintText: '3425934167',
+                              /*errorText: validator._validEmail
+                                  ? null
+                                  : validator._emailError*/
                           ),
-                          child: Text("3425934167"),
                         ),
                         Padding(padding: EdgeInsets.only(top: 5)),
                         IconButton(
