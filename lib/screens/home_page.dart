@@ -150,8 +150,12 @@ class _HomePageState extends State<HomePage> {
               FirebaseDatabase.instance.ref('users/${user.uid}');
           userRef.onValue.listen((DatabaseEvent event) {
             var snapshot = event.snapshot.value as Map<dynamic, dynamic>;
-            global_user_data = UserData(snapshot["address"],
-                snapshot["services"], snapshot["name"], user);
+            global_user_data = UserData(
+                snapshot["address"],
+                snapshot["services"],
+                snapshot["name"],
+                user,
+                snapshot["phoneNr"]);
           });
         }
       });

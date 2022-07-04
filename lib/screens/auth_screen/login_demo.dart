@@ -146,23 +146,22 @@ class _LoginPageState extends State<LoginPage> {
                       onPressed: () async {
                         AuthOperation.signInWithGoogle().then((user) {
                           if (user != null) {
+                            //TODO: if user is not registered, register him/her
                             DatabaseReference ref = FirebaseDatabase.instance
-                                .ref()
-                                .child("users/${user.uid}");
+                                .ref("users")
+                                .child(user.uid);
+                            //in questo modo però sovrascrive i dati ad ogni accesso.
                             ref.set({
                               "name": user.displayName,
                               "balance": 0,
                               "transactions": [],
                               "referral": user.uid.substring(0, 5),
-                              "phoneNr": user.phoneNumber != null
-                                  ? user.phoneNumber
-                                  : "", //TODO: add phone nr
+                              "phoneNr": user.phoneNumber ?? "",
                             });
-                            if (mounted) {
-                              Navigator.pushReplacementNamed(
-                                  context, '/welcome',
-                                  arguments: user);
-                            }
+                          }
+                          if (mounted) {
+                            Navigator.pushReplacementNamed(context, '/welcome',
+                                arguments: user);
                           }
                         });
                       },

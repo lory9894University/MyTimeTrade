@@ -1,10 +1,11 @@
 import 'dart:ui';
 
+import 'package:accordion/accordion.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:mytimetrade/widgets/global.dart';
-import 'package:accordion/accordion.dart';
 
 import '../widgets/BottomBar.dart';
 import '../widgets/custom_dialog_box.dart';
@@ -15,6 +16,15 @@ class PersonalProfile extends StatefulWidget {
 }
 
 class _PersonalProfileState extends State<PersonalProfile> {
+  TextEditingController phoneController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    phoneController.text =
+        global_user_data!.phoneNr == null ? "" : global_user_data!.phoneNr!;
+  }
+
   callback() {
     setState(() {});
   }
@@ -63,14 +73,13 @@ class _PersonalProfileState extends State<PersonalProfile> {
                     leftIcon: Icon(FontAwesomeIcons.locationArrow),
                     header: const Center(
                         child: DefaultTextStyle(
-                          style: TextStyle(
-                            fontSize: 20.0,
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold,
-                          ),
-                          child: Text("Indirizzo"),
-                        )
-                    ),
+                      style: TextStyle(
+                        fontSize: 20.0,
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold,
+                      ),
+                      child: Text("Indirizzo"),
+                    )),
                     content: Column(
                       children: [
                         DefaultTextStyle(
@@ -80,7 +89,8 @@ class _PersonalProfileState extends State<PersonalProfile> {
                             color: Colors.black,
                           ),
                           child: Text(global_user_data!.address == null
-                              ? "inserisci indirizzo" : global_user_data!.address!),
+                              ? "inserisci indirizzo"
+                              : global_user_data!.address!),
                         ),
                         Padding(padding: EdgeInsets.only(top: 5)),
                         IconButton(
@@ -93,7 +103,8 @@ class _PersonalProfileState extends State<PersonalProfile> {
                                   return CustomDialogBox(
                                     title: "Modifica indirizzo",
                                     descriptions: "modifica indirizzo",
-                                    img: Image.asset("assets/img/handshake.png"),
+                                    img:
+                                        Image.asset("assets/img/handshake.png"),
                                     callback: callback,
                                   );
                                 });
@@ -107,31 +118,37 @@ class _PersonalProfileState extends State<PersonalProfile> {
                     leftIcon: Icon(FontAwesomeIcons.phone),
                     header: const Center(
                         child: DefaultTextStyle(
-                          style: TextStyle(
-                            fontSize: 20.0,
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold,
-                          ),
-                          child: Text("Telefono"),
-                        )
-                    ),
+                      style: TextStyle(
+                        fontSize: 20.0,
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold,
+                      ),
+                      child: Text("Telefono"),
+                    )),
                     content: Column(
                       children: [
-                        const TextField(
-                          decoration: InputDecoration(
-                              border: OutlineInputBorder(),
-                              labelText: 'Telefono',
-                              hintText: '3425934167',
-                              /*errorText: validator._validEmail
-                                  ? null
-                                  : validator._emailError*/
+                        TextField(
+                          controller: phoneController,
+                          decoration: const InputDecoration(
+                            border: OutlineInputBorder(),
+                            labelText: 'Telefono',
+                            hintText: '##########',
+                            prefixText: '+ 39',
                           ),
                         ),
                         Padding(padding: EdgeInsets.only(top: 5)),
                         IconButton(
                           icon: const Icon(FontAwesomeIcons.pen, size: 20),
-                          //onPressed: modifyAddress,
                           onPressed: () {
+                            FirebaseDatabase.instance
+                                .ref()
+                                .child("users")
+                                .child(logged_user!.uid)
+                                .update({
+                              "phoneNr": phoneController.text,
+                            });
+                            global_user_data!.phoneNr = phoneController.text;
+                            setState(() {});
                           },
                           tooltip: "Modifica telefono",
                         ),
@@ -142,175 +159,183 @@ class _PersonalProfileState extends State<PersonalProfile> {
                     leftIcon: Icon(FontAwesomeIcons.briefcase),
                     header: const Center(
                         child: DefaultTextStyle(
-                          style: TextStyle(
-                            fontSize: 20.0,
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold,
-                          ),
-                          child: Text("Interessi"),
-                        )
-                    ),
-                    content: Column(children: [
-                      Container(
-                      height: 180,
-                      child: ListView(
-                      shrinkWrap: true,
-                      children: <Widget>[
-                        ListTile(
-                          dense: true,
-                          leading: const Icon(FontAwesomeIcons.ban, size: 20),
-                          onTap: () {}, //TODO: Chiedere conferma eliminazione con dialogBox
-                          title: const Center(
-                            child: DefaultTextStyle(
-                                style: TextStyle(
-                                    fontStyle: FontStyle.italic,
-                                    color: Colors.black,
-                                    fontSize: 15),
-                                child: Text('Inglese')
-                            ),
+                      style: TextStyle(
+                        fontSize: 20.0,
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold,
+                      ),
+                      child: Text("Interessi"),
+                    )),
+                    content: Column(
+                      children: [
+                        Container(
+                          height: 180,
+                          child: ListView(
+                            shrinkWrap: true,
+                            children: <Widget>[
+                              ListTile(
+                                dense: true,
+                                leading:
+                                    const Icon(FontAwesomeIcons.ban, size: 20),
+                                onTap:
+                                    () {}, //TODO: Chiedere conferma eliminazione con dialogBox
+                                title: const Center(
+                                  child: DefaultTextStyle(
+                                      style: TextStyle(
+                                          fontStyle: FontStyle.italic,
+                                          color: Colors.black,
+                                          fontSize: 15),
+                                      child: Text('Inglese')),
+                                ),
+                              ),
+                              ListTile(
+                                dense: true,
+                                leading:
+                                    const Icon(FontAwesomeIcons.ban, size: 20),
+                                onTap:
+                                    () {}, //TODO: Chiedere conferma eliminazione con dialogBox
+                                title: const Center(
+                                  child: DefaultTextStyle(
+                                      style: TextStyle(
+                                          fontStyle: FontStyle.italic,
+                                          color: Colors.black,
+                                          fontSize: 15),
+                                      child: Text('Spagnolo')),
+                                ),
+                              ),
+                              ListTile(
+                                dense: true,
+                                leading:
+                                    const Icon(FontAwesomeIcons.ban, size: 20),
+                                onTap:
+                                    () {}, //TODO: Chiedere conferma eliminazione con dialogBox
+                                title: const Center(
+                                  child: DefaultTextStyle(
+                                      style: TextStyle(
+                                          fontStyle: FontStyle.italic,
+                                          color: Colors.black,
+                                          fontSize: 15),
+                                      child: Text('Dolci freddi')),
+                                ),
+                              ),
+                              ListTile(
+                                dense: true,
+                                leading:
+                                    const Icon(FontAwesomeIcons.ban, size: 20),
+                                onTap:
+                                    () {}, //TODO: Chiedere conferma eliminazione con dialogBox
+                                title: const Center(
+                                  child: DefaultTextStyle(
+                                      style: TextStyle(
+                                          fontStyle: FontStyle.italic,
+                                          color: Colors.black,
+                                          fontSize: 15),
+                                      child: Text('Elettronica')),
+                                ),
+                              ),
+                              ListTile(
+                                dense: true,
+                                leading:
+                                    const Icon(FontAwesomeIcons.ban, size: 20),
+                                onTap:
+                                    () {}, //TODO: Chiedere conferma eliminazione con dialogBox
+                                title: const Center(
+                                  child: DefaultTextStyle(
+                                      style: TextStyle(
+                                          fontStyle: FontStyle.italic,
+                                          color: Colors.black,
+                                          fontSize: 15),
+                                      child: Text('Make-up Artist')),
+                                ),
+                              ),
+                              ListTile(
+                                dense: true,
+                                leading:
+                                    const Icon(FontAwesomeIcons.ban, size: 20),
+                                onTap:
+                                    () {}, //TODO: Chiedere conferma eliminazione con dialogBox
+                                title: const Center(
+                                  child: DefaultTextStyle(
+                                      style: TextStyle(
+                                          fontStyle: FontStyle.italic,
+                                          color: Colors.black,
+                                          fontSize: 15),
+                                      child: Text('Inglese')),
+                                ),
+                              ),
+                              ListTile(
+                                dense: true,
+                                leading:
+                                    const Icon(FontAwesomeIcons.ban, size: 20),
+                                onTap:
+                                    () {}, //TODO: Chiedere conferma eliminazione con dialogBox
+                                title: const Center(
+                                  child: DefaultTextStyle(
+                                      style: TextStyle(
+                                          fontStyle: FontStyle.italic,
+                                          color: Colors.black,
+                                          fontSize: 15),
+                                      child: Text('Spagnolo')),
+                                ),
+                              ),
+                              ListTile(
+                                dense: true,
+                                leading:
+                                    const Icon(FontAwesomeIcons.ban, size: 20),
+                                onTap:
+                                    () {}, //TODO: Chiedere conferma eliminazione con dialogBox
+                                title: const Center(
+                                  child: DefaultTextStyle(
+                                      style: TextStyle(
+                                          fontStyle: FontStyle.italic,
+                                          color: Colors.black,
+                                          fontSize: 15),
+                                      child: Text('Dolci freddi')),
+                                ),
+                              ),
+                              ListTile(
+                                dense: true,
+                                leading:
+                                    const Icon(FontAwesomeIcons.ban, size: 20),
+                                onTap:
+                                    () {}, //TODO: Chiedere conferma eliminazione con dialogBox
+                                title: const Center(
+                                  child: DefaultTextStyle(
+                                      style: TextStyle(
+                                          fontStyle: FontStyle.italic,
+                                          color: Colors.black,
+                                          fontSize: 15),
+                                      child: Text('Elettronica')),
+                                ),
+                              ),
+                              ListTile(
+                                dense: true,
+                                leading:
+                                    const Icon(FontAwesomeIcons.ban, size: 20),
+                                onTap:
+                                    () {}, //TODO: Chiedere conferma eliminazione con dialogBox
+                                title: const Center(
+                                  child: DefaultTextStyle(
+                                      style: TextStyle(
+                                          fontStyle: FontStyle.italic,
+                                          color: Colors.black,
+                                          fontSize: 15),
+                                      child: Text('Make-up Artist')),
+                                ),
+                              ),
+                            ],
                           ),
                         ),
-                        ListTile(
-                          dense: true,
-                          leading: const Icon(FontAwesomeIcons.ban, size: 20),
-                          onTap: () {}, //TODO: Chiedere conferma eliminazione con dialogBox
-                          title: const Center(
-                            child: DefaultTextStyle(
-                                style: TextStyle(
-                                    fontStyle: FontStyle.italic,
-                                    color: Colors.black,
-                                    fontSize: 15),
-                                child: Text('Spagnolo')
-                            ),
-                          ),
-                        ),
-                        ListTile(
-                          dense: true,
-                          leading: const Icon(FontAwesomeIcons.ban, size: 20),
-                          onTap: () {}, //TODO: Chiedere conferma eliminazione con dialogBox
-                          title: const Center(
-                            child: DefaultTextStyle(
-                                style: TextStyle(
-                                    fontStyle: FontStyle.italic,
-                                    color: Colors.black,
-                                    fontSize: 15),
-                                child: Text('Dolci freddi')
-                            ),
-                          ),
-                        ),
-                        ListTile(
-                          dense: true,
-                          leading: const Icon(FontAwesomeIcons.ban, size: 20),
-                          onTap: () {}, //TODO: Chiedere conferma eliminazione con dialogBox
-                          title: const Center(
-                            child: DefaultTextStyle(
-                                style: TextStyle(
-                                    fontStyle: FontStyle.italic,
-                                    color: Colors.black,
-                                    fontSize: 15),
-                                child: Text('Elettronica')
-                            ),
-                          ),
-                        ),
-                        ListTile(
-                          dense: true,
-                          leading: const Icon(FontAwesomeIcons.ban, size: 20),
-                          onTap: () {}, //TODO: Chiedere conferma eliminazione con dialogBox
-                          title: const Center(
-                            child: DefaultTextStyle(
-                                style: TextStyle(
-                                    fontStyle: FontStyle.italic,
-                                    color: Colors.black,
-                                    fontSize: 15),
-                                child: Text('Make-up Artist')
-                            ),
-                          ),
-                        ),
-                        ListTile(
-                          dense: true,
-                          leading: const Icon(FontAwesomeIcons.ban, size: 20),
-                          onTap: () {}, //TODO: Chiedere conferma eliminazione con dialogBox
-                          title: const Center(
-                            child: DefaultTextStyle(
-                                style: TextStyle(
-                                    fontStyle: FontStyle.italic,
-                                    color: Colors.black,
-                                    fontSize: 15),
-                                child: Text('Inglese')
-                            ),
-                          ),
-                        ),
-                        ListTile(
-                          dense: true,
-                          leading: const Icon(FontAwesomeIcons.ban, size: 20),
-                          onTap: () {}, //TODO: Chiedere conferma eliminazione con dialogBox
-                          title: const Center(
-                            child: DefaultTextStyle(
-                                style: TextStyle(
-                                    fontStyle: FontStyle.italic,
-                                    color: Colors.black,
-                                    fontSize: 15),
-                                child: Text('Spagnolo')
-                            ),
-                          ),
-                        ),
-                        ListTile(
-                          dense: true,
-                          leading: const Icon(FontAwesomeIcons.ban, size: 20),
-                          onTap: () {}, //TODO: Chiedere conferma eliminazione con dialogBox
-                          title: const Center(
-                            child: DefaultTextStyle(
-                                style: TextStyle(
-                                    fontStyle: FontStyle.italic,
-                                    color: Colors.black,
-                                    fontSize: 15),
-                                child: Text('Dolci freddi')
-                            ),
-                          ),
-                        ),
-                        ListTile(
-                          dense: true,
-                          leading: const Icon(FontAwesomeIcons.ban, size: 20),
-                          onTap: () {}, //TODO: Chiedere conferma eliminazione con dialogBox
-                          title: const Center(
-                            child: DefaultTextStyle(
-                                style: TextStyle(
-                                    fontStyle: FontStyle.italic,
-                                    color: Colors.black,
-                                    fontSize: 15),
-                                child: Text('Elettronica')
-                            ),
-                          ),
-                        ),
-                        ListTile(
-                          dense: true,
-                          leading: const Icon(FontAwesomeIcons.ban, size: 20),
-                          onTap: () {}, //TODO: Chiedere conferma eliminazione con dialogBox
-                          title: const Center(
-                            child: DefaultTextStyle(
-                                style: TextStyle(
-                                    fontStyle: FontStyle.italic,
-                                    color: Colors.black,
-                                    fontSize: 15),
-                                child: Text('Make-up Artist')
-                            ),
-                          ),
+                        IconButton(
+                          icon: const Icon(FontAwesomeIcons.plus, size: 20),
+                          //onPressed: modifyAddress,
+                          onPressed: () {},
+                          tooltip: "Aggiungi nuovo interesse",
                         ),
                       ],
                     ),
-                    ),
-                      IconButton(
-                        icon: const Icon(FontAwesomeIcons.plus, size: 20),
-                        //onPressed: modifyAddress,
-                        onPressed: () {
-                        },
-                        tooltip: "Aggiungi nuovo interesse",
-                      ),
-                    ],
-                    ),
                   )
-                ]
-            ),
+                ]),
             Container(
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,

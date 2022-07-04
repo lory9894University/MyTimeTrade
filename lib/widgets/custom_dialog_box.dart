@@ -67,9 +67,7 @@ class _CustomDialogBoxState extends State<CustomDialogBox> {
               SizedBox(
                 height: 10,
               ),
-              //Text(widget.descriptions,style: TextStyle(fontSize: 14),textAlign: TextAlign.center,),
               TextField(
-                //TODO: trasformalo in testo modificabile
                 controller: addressController,
                 decoration: InputDecoration(
                   labelText: "Indirizzo",
