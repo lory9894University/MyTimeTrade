@@ -95,17 +95,8 @@ class _CustomDialogBoxState extends State<CustomDialogBox> {
                   ),
                   Container(
                     child: FlatButton(
-                        onPressed: () {
-                          FirebaseDatabase.instance
-                              .ref()
-                              .child("users")
-                              .child(logged_user!.uid)
-                              .update({
-                            "address": addressController.text,
-                          });
-                          global_user_data!.address = addressController.text;
-                          widget.callback();
-                          Navigator.pop(context);
+                        onPressed: () async {
+                          await updateDb(addressController.text);
                         },
                         child: Text(
                           "Conferma",
@@ -163,5 +154,35 @@ class _CustomDialogBoxState extends State<CustomDialogBox> {
         await geocoding.placemarkFromCoordinates(
             _locationData.latitude!, _locationData.longitude!);
     return "${placemarks[0].thoroughfare}, ${placemarks[0].subThoroughfare}, ${placemarks[0].locality}, ${placemarks[0].postalCode}, ${placemarks[0].country}";
+  }
+
+  updateDb(String address) async {
+    try {
+      List<geocoding.Location> locations =
+          await geocoding.locationFromAddress(address);
+      geocoding.Location location = locations[0];
+      FirebaseDatabase.instance
+          .ref()
+          .child("users")
+          .child(logged_user!.uid)
+          .update({
+        "address": address,
+        "lat": location.latitude,
+        "lng": location.longitude,
+      });
+      global_user_data!.address = addressController.text;
+      global_user_data!.lat = location.latitude;
+      global_user_data!.lng = location.longitude;
+      widget.callback();
+      Navigator.pop(context);
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+            content: Text(
+          'l\'indirizzo non esiste',
+          textAlign: TextAlign.center,
+        )));
+      }
+    }
   }
 }

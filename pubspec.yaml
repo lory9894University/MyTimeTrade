@@ -50,6 +50,7 @@ dependencies:
   flutter_launcher_icons: ^0.9.3
   location: ^4.4.0
   geocoding: ^2.0.4
+  cloud_firestore: ^3.2.1
 
 
 
