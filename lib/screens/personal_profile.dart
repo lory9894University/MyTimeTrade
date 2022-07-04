@@ -34,6 +34,7 @@ class _PersonalProfileState extends State<PersonalProfile> {
 
   @override
   void didChangeDependencies() {
+    interests.clear();
     db
         .collection("interests")
         .where("user_id", isEqualTo: global_user_data!.uid)
@@ -177,6 +178,7 @@ class _PersonalProfileState extends State<PersonalProfile> {
                     ),
                   ),
                   AccordionSection(
+                    //TODO: l'accordion collassa quando modifico un elemento.
                     leftIcon: Icon(FontAwesomeIcons.briefcase),
                     header: const Center(
                         child: DefaultTextStyle(
@@ -209,7 +211,7 @@ class _PersonalProfileState extends State<PersonalProfile> {
                                           onError: (e) => print(
                                               "Error updating document $e"),
                                         );
-                                    setState(() {});
+                                    didChangeDependencies();
                                   }, //TODO: Chiedere conferma eliminazione con dialogBox
                                   title: Center(
                                     child: DefaultTextStyle(
@@ -305,6 +307,7 @@ class _PersonalProfileState extends State<PersonalProfile> {
                       'position': myLocation.data,
                     };
                     _firestore.collection('interests').add(interest);
+                    didChangeDependencies();
                   } else {
                     if (mounted) {
                       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
