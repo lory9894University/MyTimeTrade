@@ -51,6 +51,7 @@ dependencies:
   location: ^4.4.0
   geocoding: ^2.0.4
   accordion: ^2.5.0
+  cloud_firestore: ^3.2.1
 
 
 
