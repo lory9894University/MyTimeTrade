@@ -1,12 +1,9 @@
 import 'dart:ui';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:geocoding/geocoding.dart' as geocoding;
 import 'package:geoflutterfire/geoflutterfire.dart';
-import 'package:location/location.dart';
 import 'package:mytimetrade/widgets/global.dart';
 
 class InteressiDialogBox extends StatefulWidget {
@@ -82,11 +79,12 @@ class _InteressiDialogBoxState extends State<InteressiDialogBox> {
                   onPressed: () async {
                     if (_controller.text.isEmpty) {
                       if (mounted) {
-                        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                            content: Text(
-                              'specifica interesse',
-                              textAlign: TextAlign.center,
-                            )));
+                        ScaffoldMessenger.of(context)
+                            .showSnackBar(const SnackBar(
+                                content: Text(
+                          'specifica interesse',
+                          textAlign: TextAlign.center,
+                        )));
                       }
                       return;
                     }
@@ -104,16 +102,18 @@ class _InteressiDialogBoxState extends State<InteressiDialogBox> {
                         'position': myLocation.data,
                       };
                       _firestore.collection('interests').add(interest);
-                      didChangeDependencies();
+                      widget.callback();
                     } else {
                       if (mounted) {
-                        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                            content: Text(
-                              'prima imposta il tuo indirizzo',
-                              textAlign: TextAlign.center,
-                            )));
+                        ScaffoldMessenger.of(context)
+                            .showSnackBar(const SnackBar(
+                                content: Text(
+                          'prima imposta il tuo indirizzo',
+                          textAlign: TextAlign.center,
+                        )));
                       }
                     }
+                    Navigator.pop(context);
                   },
                   child: const Text(
                     "Aggiungi",

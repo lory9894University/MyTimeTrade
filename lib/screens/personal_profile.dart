@@ -6,7 +6,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:geoflutterfire/geoflutterfire.dart';
 import 'package:mytimetrade/widgets/custom_dialog_box_interessi.dart';
 import 'package:mytimetrade/widgets/global.dart';
 
@@ -49,7 +48,7 @@ class _PersonalProfileState extends State<PersonalProfile> {
   }
 
   callback() {
-    setState(() {});
+    didChangeDependencies();
   }
 
   @override
@@ -207,10 +206,10 @@ class _PersonalProfileState extends State<PersonalProfile> {
                                         .delete()
                                         .then(
                                           (doc) => print(
-                                          "Document deleted"), //TODO: modificare in una snackbar
-                                      onError: (e) => print(
-                                          "Error updating document $e"),
-                                    );
+                                              "Document deleted"), //TODO: modificare in una snackbar
+                                          onError: (e) => print(
+                                              "Error updating document $e"),
+                                        );
                                     didChangeDependencies();
                                   }, //TODO: Chiedere conferma eliminazione con dialogBox
                                   title: Center(
@@ -220,7 +219,7 @@ class _PersonalProfileState extends State<PersonalProfile> {
                                             color: Colors.black,
                                             fontSize: 15),
                                         child: Text(interests[index]["data"]
-                                        ["interest"])),
+                                            ["interest"])),
                                   ),
                                 );
                               }),
@@ -234,76 +233,14 @@ class _PersonalProfileState extends State<PersonalProfile> {
                                 builder: (BuildContext context) {
                                   return InteressiDialogBox(
                                     title: "Inserisci nuovo interesse",
-                                    img: Image.asset("assets/img/handshake.png"),
+                                    img:
+                                        Image.asset("assets/img/handshake.png"),
                                     callback: callback,
                                   );
                                 });
                           },
                           tooltip: "Aggiungi nuovo interesse",
                         ),
-                        /*Container(
-                          child: Padding(
-                            padding: const EdgeInsets.only(
-                                left: 15.0, right: 15.0, top: 15, bottom: 0),
-                            //padding: EdgeInsets.symmetric(horizontal: 15),
-                            child: TextField(
-                              controller: _controller,
-                              decoration: InputDecoration(
-                                border: OutlineInputBorder(),
-                                labelText: 'interessi',
-                                hintText: 'Inserire interessi',
-                              ),
-                            ),
-                          ),
-                        ),
-                        Container(
-                          height: 50,
-                          width: 250,
-                          decoration: BoxDecoration(
-                              color: Colors.blue, borderRadius: BorderRadius.circular(20)),
-                          child: TextButton(
-                            onPressed: () async {
-                              if (_controller.text.isEmpty) {
-                                if (mounted) {
-                                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                                      content: Text(
-                                        'specifica interesse',
-                                        textAlign: TextAlign.center,
-                                      )));
-                                }
-                                return;
-                              }
-                              if (global_user_data!.lat != null &&
-                                  global_user_data!.lng != null) {
-                                final _geo = Geoflutterfire();
-                                final _firestore = FirebaseFirestore.instance;
-                                GeoFirePoint myLocation = _geo.point(
-                                    latitude: global_user_data!.lat!,
-                                    longitude: global_user_data!.lng!);
-                                final interest = <String, dynamic>{
-                                  'interest': _controller.text,
-                                  'user': global_user_data!.name,
-                                  'user_id': global_user_data!.uid,
-                                  'position': myLocation.data,
-                                };
-                                _firestore.collection('interests').add(interest);
-                                didChangeDependencies();
-                              } else {
-                                if (mounted) {
-                                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                                      content: Text(
-                                        'prima imposta il tuo indirizzo',
-                                        textAlign: TextAlign.center,
-                                      )));
-                                }
-                              }
-                            },
-                            child: const Text(
-                              'Send',
-                              style: TextStyle(color: Colors.white, fontSize: 25),
-                            ),
-                          ),
-                        ),*/
                       ],
                     ),
                   )
