@@ -177,6 +177,7 @@ class _PersonalProfileState extends State<PersonalProfile> {
                     ),
                   ),
                   AccordionSection(
+                    isOpen: true,
                     //TODO: l'accordion collassa quando modifico un elemento.
                     leftIcon: Icon(FontAwesomeIcons.briefcase),
                     header: const Center(
@@ -277,6 +278,4 @@ class _PersonalProfileState extends State<PersonalProfile> {
       bottomNavigationBar: BottomBar(index: index, context: context),
     );
   }
-
-  modifyAddress() {}
 }
