@@ -1,7 +1,6 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:mytimetrade/screens/Profile_Passage.dart';
 import 'package:share_plus/share_plus.dart';
 
 import '../widgets/BottomBar.dart';
@@ -12,12 +11,11 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
-  TextEditingController emailController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
-  Profile_Passage args = Profile_Passage('', '', '', '');
+  Map<String, String> args = Map<String, String>.from(
+      {"name": "", "phone": "", "address": "", "interest": ""});
 
   void didChangeDependencies() {
-    args = ModalRoute.of(context)?.settings.arguments as Profile_Passage;
+    args = ModalRoute.of(context)?.settings.arguments as Map<String, String>;
     super.didChangeDependencies();
   }
 
@@ -49,11 +47,11 @@ class _ProfileState extends State<Profile> {
                         fontSize: 27.0,
                         color: Colors.black,
                       ),
-                      child: Text('${args.nome} ${args.cognome}'))
+                      child: Text('${args['name']}'))
                 ],
               ),
             ),
-            Padding(padding: EdgeInsets.only(top: 30)),
+            Padding(padding: EdgeInsets.only(top: 100)),
             Container(
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -77,13 +75,13 @@ class _ProfileState extends State<Profile> {
                 children: <Widget>[
                   Container(
                     constraints: BoxConstraints(minWidth: 100, maxWidth: 350),
-                    child: const DefaultTextStyle(
+                    child: DefaultTextStyle(
                       style: TextStyle(
                         fontStyle: FontStyle.italic,
                         fontSize: 15.0,
                         color: Colors.black,
                       ),
-                      child: Text("Via Tal dei Tali, 65, 13478, Bergamo"),
+                      child: Text('${args['address']}'),
                     ),
                   ),
                 ],
@@ -100,68 +98,68 @@ class _ProfileState extends State<Profile> {
                       color: Colors.black,
                       fontWeight: FontWeight.bold,
                     ),
-                    child: Text("Interessi"),
+                    child: Text("Telefono"),
                   ),
                 ],
               ),
             ),
-            ListView(
-              //TODO: Impostare il ListView.builder(), https://www.javatpoint.com/flutter-lists, dopo aver collegato DB
-              shrinkWrap: true,
-              children: const <Widget>[
-                ListTile(
-                  dense: true,
-                  title: Center(
-                      child: DefaultTextStyle(
-                          style: TextStyle(
-                              fontStyle: FontStyle.italic,
-                              color: Colors.black,
-                              fontSize: 15),
-                          child: Text('Inglese'))),
-                ),
-                ListTile(
-                  dense: true,
-                  title: Center(
-                      child: DefaultTextStyle(
-                          style: TextStyle(
-                              fontStyle: FontStyle.italic,
-                              color: Colors.black,
-                              fontSize: 15),
-                          child: Text('Spagnolo'))),
-                ),
-                ListTile(
-                  dense: true,
-                  title: Center(
-                      child: DefaultTextStyle(
-                          style: TextStyle(
-                              fontStyle: FontStyle.italic,
-                              color: Colors.black,
-                              fontSize: 15),
-                          child: Text('Dolci freddi'))),
-                ),
-                ListTile(
-                  dense: true,
-                  title: Center(
-                      child: DefaultTextStyle(
-                          style: TextStyle(
-                              fontStyle: FontStyle.italic,
-                              color: Colors.black,
-                              fontSize: 15),
-                          child: Text('Elettronica'))),
-                ),
-                ListTile(
-                  dense: true,
-                  title: Center(
-                      child: DefaultTextStyle(
-                          style: TextStyle(
-                              fontStyle: FontStyle.italic,
-                              color: Colors.black,
-                              fontSize: 15),
-                          child: Text('Make-up Artist'))),
-                ),
-              ],
+            Padding(padding: EdgeInsets.only(top: 15)),
+            Container(
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Container(
+                    constraints: BoxConstraints(minWidth: 100, maxWidth: 350),
+                    child: DefaultTextStyle(
+                      style: TextStyle(
+                        fontStyle: FontStyle.italic,
+                        fontSize: 15.0,
+                        color: Colors.black,
+                      ),
+                      child: Text('${args['phone']}'),
+                    ),
+                  ),
+                ],
+              ),
             ),
-            Padding(padding: EdgeInsets.only(top: 5)),
+            Padding(padding: EdgeInsets.only(top: 30)),
+            Container(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: const [
+                  DefaultTextStyle(
+                    style: TextStyle(
+                      fontSize: 20.0,
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold,
+                    ),
+                    child: Text("lavoro richiesto"),
+                  ),
+                ],
+              ),
+            ),
+            Padding(padding: EdgeInsets.only(top: 15)),
+            Container(
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Container(
+                    //constraints: BoxConstraints(minWidth: 100, maxWidth: 350),
+                    child: DefaultTextStyle(
+                      style: TextStyle(
+                        fontStyle: FontStyle.italic,
+                        fontSize: 15.0,
+                        color: Colors.black,
+                      ),
+                      child: Text("${args['interest']}"),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Padding(padding: EdgeInsets.only(top: 100)),
             Container(
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -201,7 +199,7 @@ class _ProfileState extends State<Profile> {
                         borderRadius: BorderRadius.circular(20)),
                     child: TextButton(
                       onPressed: () {
-                        if (args.servizio != '') {
+                        /*if (args.servizio != '') {
                           Navigator.pushNamed(
                             context,
                             '/ore',
@@ -214,7 +212,7 @@ class _ProfileState extends State<Profile> {
                           );
                         } else {
                           null;
-                        }
+                        }*/
                       },
                       child: const Text(
                         'Richiedi ore',
