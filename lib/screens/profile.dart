@@ -12,12 +12,12 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
-  Profile_Passage args = Profile_Passage('', '', '', '');
+  //Profile_Passage args = Profile_Passage('', '', '', '');
 
-  void didChangeDependencies() {
+  /*void didChangeDependencies() {
     args = ModalRoute.of(context)?.settings.arguments as Profile_Passage;
     super.didChangeDependencies();
-  }
+  }*/
 
   @override
   Widget build(BuildContext context) {
@@ -47,11 +47,11 @@ class _ProfileState extends State<Profile> {
                         fontSize: 27.0,
                         color: Colors.black,
                       ),
-                      child: Text('${args.nome} ${args.cognome}'))
+                      child: Text("Andrea D'Agnello")) //Text('${args.nome} ${args.cognome}'))
                 ],
               ),
             ),
-            Padding(padding: EdgeInsets.only(top: 30)),
+            Padding(padding: EdgeInsets.only(top: 100)),
             Container(
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -98,13 +98,69 @@ class _ProfileState extends State<Profile> {
                       color: Colors.black,
                       fontWeight: FontWeight.bold,
                     ),
+                    child: Text("Telefono"),
+                  ),
+                ],
+              ),
+            ),
+            Padding(padding: EdgeInsets.only(top: 15)),
+            Container(
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Container(
+                    constraints: BoxConstraints(minWidth: 100, maxWidth: 350),
+                    child: const DefaultTextStyle(
+                      style: TextStyle(
+                        fontStyle: FontStyle.italic,
+                        fontSize: 15.0,
+                        color: Colors.black,
+                      ),
+                      child: Text("3425934167"),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Padding(padding: EdgeInsets.only(top: 30)),
+            Container(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: const [
+                  DefaultTextStyle(
+                    style: TextStyle(
+                      fontSize: 20.0,
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold,
+                    ),
                     child: Text("Interessi"),
                   ),
                 ],
               ),
             ),
-            ListView(
-              //TODO: Impostare il ListView.builder(), https://www.javatpoint.com/flutter-lists, dopo aver collegato DB
+            Padding(padding: EdgeInsets.only(top: 15)),
+            Container(
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Container(
+                    //constraints: BoxConstraints(minWidth: 100, maxWidth: 350),
+                    child: const DefaultTextStyle(
+                      style: TextStyle(
+                        fontStyle: FontStyle.italic,
+                        fontSize: 15.0,
+                        color: Colors.black,
+                      ),
+                      child: Text("Unity"),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Padding(padding: EdgeInsets.only(top: 100)),
+            /*ListView(
               shrinkWrap: true,
               children: const <Widget>[
                 ListTile(
@@ -158,7 +214,7 @@ class _ProfileState extends State<Profile> {
                           child: Text('Make-up Artist'))),
                 ),
               ],
-            ),
+            ),*/
             Padding(padding: EdgeInsets.only(top: 5)),
             Container(
               child: Row(
@@ -199,7 +255,7 @@ class _ProfileState extends State<Profile> {
                         borderRadius: BorderRadius.circular(20)),
                     child: TextButton(
                       onPressed: () {
-                        if (args.servizio != '') {
+                        /*if (args.servizio != '') {
                           Navigator.pushNamed(
                             context,
                             '/ore',
@@ -212,7 +268,7 @@ class _ProfileState extends State<Profile> {
                           );
                         } else {
                           null;
-                        }
+                        }*/
                       },
                       child: const Text(
                         'Richiedi ore',
