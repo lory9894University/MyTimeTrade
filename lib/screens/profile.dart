@@ -12,8 +12,6 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
-  TextEditingController emailController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
   Profile_Passage args = Profile_Passage('', '', '', '');
 
   void didChangeDependencies() {

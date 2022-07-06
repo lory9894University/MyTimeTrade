@@ -11,6 +11,7 @@ class UserData {
   User authObject;
   List<String>? services;
   double? lat, lng;
+  int distance = 10;
 
   UserData(this.address, this.services, this.name, this.authObject,
       this.phoneNr, this.lat, this.lng) {

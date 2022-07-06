@@ -1,4 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:geoflutterfire/geoflutterfire.dart';
+import 'package:location/location.dart';
 
 import '../widgets/BottomBar.dart';
 import 'Profile_Passage.dart';
@@ -10,14 +13,8 @@ class ServiziElenco extends StatefulWidget {
 
 class _ServiziElencoState extends State<ServiziElenco> {
   String servizio = '';
-  var items = [
-    'Unity',
-    'Unreal Engine',
-    'C++',
-    'Dart',
-    'JavaScript',
-  ];
-  String dropdownvalue = 'Unity';
+  List<dynamic> interests = List<dynamic>.empty(growable: true);
+  FirebaseFirestore db = FirebaseFirestore.instance;
 
   void _goToProfilo(String nome, String cognome) {
     Navigator.pushNamed(
@@ -25,6 +22,27 @@ class _ServiziElencoState extends State<ServiziElenco> {
       '/profile',
       arguments: Profile_Passage(nome, cognome, "", "Unity"),
     );
+  }
+
+  void checkInterests() async {
+    Geoflutterfire geo = Geoflutterfire();
+    LocationData location = await currentLocation();
+    GeoFirePoint center =
+        geo.point(latitude: location.latitude!, longitude: location.longitude!);
+
+    interests.clear();
+    db.collection("interests").get().then((event) {
+      for (var doc in event.docs) {
+        interests.add(<String, dynamic>{"id": doc.id, "data": doc.data()});
+      }
+      setState(() {});
+    });
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    checkInterests();
   }
 
   @override
@@ -61,37 +79,6 @@ class _ServiziElencoState extends State<ServiziElenco> {
                 ),
               ),
               Padding(padding: EdgeInsets.only(top: 20)),
-              Container(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    DropdownButton(
-                      value: dropdownvalue,
-                      icon: const Icon(Icons.keyboard_arrow_down),
-                      items: items.map((String items) {
-                        return DropdownMenuItem(
-                          value: items,
-                          child: Center(
-                              child: DefaultTextStyle(
-                                  style: TextStyle(
-                                      fontStyle: FontStyle.italic,
-                                      color: Colors.black,
-                                      fontSize: 18),
-                                  child: Text(items))),
-                        );
-                      }).toList(),
-                      // After selecting the desired option,it will
-                      // change button value to selected value
-                      onChanged: (String? newValue) {
-                        setState(() {
-                          dropdownvalue = newValue!;
-                        });
-                      },
-                    ),
-                  ],
-                ),
-              ),
-              Padding(padding: EdgeInsets.only(top: 20)),
               Row(
                 children: <Widget>[
                   Expanded(
@@ -114,81 +101,22 @@ class _ServiziElencoState extends State<ServiziElenco> {
               ),
               Container(
                 child: Flexible(
-                  //TODO: Cambiare in lista infinita
-                  child: ListView(
+                  child: ListView.builder(
                     shrinkWrap: true,
-                    children: <Widget>[
-                      ListTile(
-                        onTap: () => _goToProfilo("Andrea", "D'Angelo"),
+                    itemCount: interests.length,
+                    itemBuilder: (context, index) {
+                      return ListTile(
+                        onTap: () {},
                         dense: true,
                         leading: Icon(Icons.person, size: 35),
                         title: Center(
                             child: DefaultTextStyle(
                                 style: TextStyle(
                                     color: Colors.black, fontSize: 20),
-                                child: Text("Andrea D'Angelo"))),
-                      ),
-                      ListTile(
-                        onTap: () => _goToProfilo("Lorenzo", "Dentis"),
-                        dense: true,
-                        leading: Icon(Icons.person, size: 35),
-                        title: Center(
-                            child: DefaultTextStyle(
-                                style: TextStyle(
-                                    color: Colors.black, fontSize: 20),
-                                child: Text("Lorenzo Dentis"))),
-                      ),
-                      ListTile(
-                        onTap: () => _goToProfilo("Francesca", "Rinaldi"),
-                        dense: true,
-                        leading: Icon(Icons.person, size: 35),
-                        title: Center(
-                            child: DefaultTextStyle(
-                                style: TextStyle(
-                                    color: Colors.black, fontSize: 20),
-                                child: Text("Francesca Rinaldi"))),
-                      ),
-                      ListTile(
-                        onTap: () => _goToProfilo("Marta", "Meroni"),
-                        dense: true,
-                        leading: Icon(Icons.person, size: 35),
-                        title: Center(
-                            child: DefaultTextStyle(
-                                style: TextStyle(
-                                    color: Colors.black, fontSize: 20),
-                                child: Text("Marta Meroni"))),
-                      ),
-                      ListTile(
-                        onTap: () => _goToProfilo("Matteo", "Filisti"),
-                        dense: true,
-                        leading: Icon(Icons.person, size: 35),
-                        title: Center(
-                            child: DefaultTextStyle(
-                                style: TextStyle(
-                                    color: Colors.black, fontSize: 20),
-                                child: Text("Matteo Filisti"))),
-                      ),
-                      ListTile(
-                        onTap: () => _goToProfilo("Sandra", "Keyhole"),
-                        dense: true,
-                        leading: Icon(Icons.person, size: 35),
-                        title: Center(
-                            child: DefaultTextStyle(
-                                style: TextStyle(
-                                    color: Colors.black, fontSize: 20),
-                                child: Text("Sandra Keyhole"))),
-                      ),
-                      ListTile(
-                        onTap: () => _goToProfilo("Marco", "Demasi"),
-                        dense: true,
-                        leading: Icon(Icons.person, size: 35),
-                        title: Center(
-                            child: DefaultTextStyle(
-                                style: TextStyle(
-                                    color: Colors.black, fontSize: 20),
-                                child: Text("Marco Demasi"))),
-                      ),
-                    ],
+                                child: Text(
+                                    "${interests[index]["data"]["user"]} \n ${interests[index]["data"]["interest"]}"))),
+                      );
+                    },
                   ),
                 ),
               ),
@@ -199,5 +127,25 @@ class _ServiziElencoState extends State<ServiziElenco> {
           index: index,
           context: context,
         ));
+  }
+
+  Future<LocationData> currentLocation() async {
+    Location location = new Location();
+    bool _serviceEnabled;
+    PermissionStatus _permissionGranted;
+    LocationData _locationData;
+
+    _serviceEnabled = await location.serviceEnabled();
+    if (!_serviceEnabled) {
+      _serviceEnabled = await location.requestService();
+    }
+
+    _permissionGranted = await location.hasPermission();
+    if (_permissionGranted == PermissionStatus.denied) {
+      _permissionGranted = await location.requestPermission();
+    }
+
+    _locationData = await location.getLocation();
+    return _locationData;
   }
 }

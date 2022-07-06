@@ -19,8 +19,6 @@ class PersonalProfile extends StatefulWidget {
 
 class _PersonalProfileState extends State<PersonalProfile> {
   TextEditingController phoneController = TextEditingController();
-  TextEditingController _controller =
-      TextEditingController(); //TODO: questo dovrà essere spostato se la dialog box è un nuovo widget
 
   List<dynamic> interests = List<dynamic>.empty(growable: true);
   var db = FirebaseFirestore.instance;
