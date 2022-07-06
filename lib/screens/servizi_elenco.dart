@@ -5,7 +5,6 @@ import 'package:location/location.dart';
 import 'package:mytimetrade/widgets/global.dart';
 
 import '../widgets/BottomBar.dart';
-import 'Profile_Passage.dart';
 
 class ServiziElenco extends StatefulWidget {
   @override
@@ -15,17 +14,32 @@ class ServiziElenco extends StatefulWidget {
 class _ServiziElencoState extends State<ServiziElenco> {
   String servizio = '';
   List<dynamic> interests = List<dynamic>.empty(growable: true);
+  TextEditingController _controller = TextEditingController();
   FirebaseFirestore db = FirebaseFirestore.instance;
 
-  void _goToProfilo(String nome, String cognome) {
-    Navigator.pushNamed(
-      context,
-      '/profile',
-      arguments: Profile_Passage(nome, cognome, "", "Unity"),
-    );
-  }
-
   void checkInterests() async {
+    FocusManager.instance.primaryFocus?.unfocus();
+    showDialog(
+        barrierColor: Colors.black.withOpacity(0),
+        context: context,
+        builder: (BuildContext context) {
+          return Container(
+            width: double.infinity,
+            height: double.infinity,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Container(
+                  width: 100,
+                  height: 100,
+                  child:
+                      const CircularProgressIndicator(), //TODO: scegliere un bel colore
+                )
+              ],
+            ),
+          );
+        });
     Geoflutterfire geo = Geoflutterfire();
     LocationData location = await currentLocation();
     GeoFirePoint center =
@@ -42,25 +56,19 @@ class _ServiziElencoState extends State<ServiziElenco> {
       for (DocumentSnapshot document in documentList) {
         var data = document.data() as Map<dynamic, dynamic>;
         if (data['user_id'] != global_user_data!.uid) {
-          interests.add(
-              <String, dynamic>{"id": document.id, "data": document.data()});
+          String interestDescription = data['interest'];
+          if (_controller.text.isEmpty ||
+              interestDescription
+                  .toLowerCase()
+                  .contains(_controller.text.toLowerCase())) {
+            interests.add(
+                <String, dynamic>{"id": document.id, "data": document.data()});
+          }
         }
       }
       setState(() {});
     });
-    /*
-    db.collection("interests").get().then((event) {
-      for (var doc in event.docs) {
-        interests.add(<String, dynamic>{"id": doc.id, "data": doc.data()});
-      }
-      setState(() {});
-    });*/
-  }
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    checkInterests();
+    Navigator.pop(context);
   }
 
   @override
@@ -69,8 +77,8 @@ class _ServiziElencoState extends State<ServiziElenco> {
     return Scaffold(
         extendBody: true,
         body: Container(
-          decoration: BoxDecoration(
-              gradient: LinearGradient(
+          decoration: const BoxDecoration(
+              gradient: const LinearGradient(
             colors: [
               Colors.greenAccent,
               Colors.blueAccent,
@@ -80,7 +88,7 @@ class _ServiziElencoState extends State<ServiziElenco> {
           )),
           child: Column(
             children: <Widget>[
-              Padding(padding: EdgeInsets.only(top: 60)),
+              const Padding(padding: const EdgeInsets.only(top: 60)),
               Container(
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -96,25 +104,31 @@ class _ServiziElencoState extends State<ServiziElenco> {
                   ],
                 ),
               ),
-              Padding(padding: EdgeInsets.only(top: 20)),
+              const Padding(padding: EdgeInsets.only(top: 20)),
               Row(
                 children: <Widget>[
                   Expanded(
                     child: Column(
-                      children: const <Widget>[
+                      children: <Widget>[
                         Center(
                           child: TextField(
-                            decoration: InputDecoration(
+                            controller: _controller,
+                            decoration: const InputDecoration(
                               contentPadding:
                                   EdgeInsets.symmetric(horizontal: 40),
                               hintText:
-                                  'Inserisci la specifica categoria che ti interessa',
+                                  'Inserisci la specifica categoria che ti interessa, lascia vuoto per cercare ovunque',
                             ),
                           ),
                         ),
                       ],
                     ),
                   ),
+                  Expanded(
+                      child: ElevatedButton.icon(
+                          onPressed: checkInterests,
+                          icon: Icon(Icons.search),
+                          label: Text('Cerca'))),
                 ],
               ),
               Container(
@@ -124,12 +138,15 @@ class _ServiziElencoState extends State<ServiziElenco> {
                     itemCount: interests.length,
                     itemBuilder: (context, index) {
                       return ListTile(
-                        onTap: () {},
+                        onTap: () {
+                          Navigator.pushNamed(context, '/profile',
+                              arguments: interests[index]["data"]);
+                        },
                         dense: true,
-                        leading: Icon(Icons.person, size: 35),
+                        leading: const Icon(Icons.person, size: 35),
                         title: Center(
                             child: DefaultTextStyle(
-                                style: TextStyle(
+                                style: const TextStyle(
                                     color: Colors.black, fontSize: 20),
                                 child: Text(
                                     "${interests[index]["data"]["user"]} \n ${interests[index]["data"]["interest"]}"))),
