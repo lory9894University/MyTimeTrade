@@ -1,4 +1,6 @@
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:mytimetrade/widgets/global.dart';
 
 import '../widgets/BottomBar.dart';
 import 'Profile_Passage.dart';
@@ -9,15 +11,43 @@ class Accetta extends StatefulWidget {
 }
 
 class _AccettaState extends State<Accetta> {
-  //Profile_Passage args = Profile_Passage('', '', '', '');
+  List<dynamic> transactionsPending = List.empty(growable: true);
+  List<dynamic> transactionsAccepted = List.empty(growable: true);
+  List<dynamic> transactionsToPay = List.empty(growable: true);
 
-  /*void didChangeDependencies() {
-    args = ModalRoute
-        .of(context)
-        ?.settings
-        .arguments as Profile_Passage;
+  @override
+  didChangeDependencies() async {
+    DatabaseReference userRef = FirebaseDatabase.instance
+        .ref('users/${global_user_data!.uid}/transactions');
+    userRef.onValue.listen((DatabaseEvent event) async {
+      transactionsPending.clear();
+      if (!event.snapshot.exists) {
+        return;
+      }
+      var pageData = event.snapshot.value as Map<dynamic, dynamic>;
+
+      for (var value in pageData.values) {
+        DatabaseReference ref =
+            FirebaseDatabase.instance.ref('transactions/${value}');
+        event = await userRef.once();
+        var transaction = event.snapshot.value as Map<dynamic, dynamic>;
+        if (transaction['status'] == 'waiting_payment' &&
+            transaction['supplier'] != global_user_data!.uid) {
+          transactionsToPay.add(transaction);
+        } else if (transaction['status'] == 'pending' &&
+            transaction['supplier'] == global_user_data!.uid) {
+          transactionsPending.add(transaction);
+        } else if (transaction['status'] == 'working' &&
+            transaction['supplier'] == global_user_data!.uid) {
+          transactionsAccepted.add(transaction);
+        }
+      }
+
+      setState(() => {});
+    });
+
     super.didChangeDependencies();
-  }*/
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -67,15 +97,14 @@ class _AccettaState extends State<Accetta> {
                               Container(
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
-                                  children: const [
+                                  children: [
                                     DefaultTextStyle(
                                       style: TextStyle(
                                         fontSize: 20.0,
                                         color: Colors.black,
                                         fontWeight: FontWeight.bold,
                                       ),
-                                      child: //TODO: Change to Text('${args.cognome} ${args.nome}')
-                                          Text('Fallino Francesco'),
+                                      child: Text('Fallino Fraco'),
                                       /*Text((() {
                                           if(args.nome != ''){
                                             return '${args.cognome} ${args.nome}';
@@ -381,7 +410,7 @@ class _AccettaState extends State<Accetta> {
                                         fontWeight: FontWeight.bold,
                                       ),
                                       child: //TODO: Change to Text('${args.cognome} ${args.nome}')
-                                          Text('Fallino Francesco'),
+                                          Text('Fallino '),
                                     ),
                                   ],
                                 ),

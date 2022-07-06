@@ -36,7 +36,7 @@ class _HomePageState extends State<HomePage> {
       transactions.clear();
       trans_id.forEach((value) {
         DatabaseReference transaction_ref =
-            FirebaseDatabase.instance.ref('transaction/${value}');
+            FirebaseDatabase.instance.ref('transactions/${value}');
         transaction_ref.onValue.listen((DatabaseEvent event) {
           var transaction = event.snapshot.value as Map<dynamic, dynamic>;
           if (transaction['status'] == 'completed') {
