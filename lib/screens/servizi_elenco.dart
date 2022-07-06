@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:geoflutterfire/geoflutterfire.dart';
 import 'package:location/location.dart';
@@ -138,9 +139,13 @@ class _ServiziElencoState extends State<ServiziElenco> {
                     itemCount: interests.length,
                     itemBuilder: (context, index) {
                       return ListTile(
-                        onTap: () {
+                        onTap: () async {
+                          var interest = await selectedInterest(
+                              uid: interests[index]['data']['user_id'],
+                              interestName: interests[index]['data']
+                                  ['interest']);
                           Navigator.pushNamed(context, '/profile',
-                              arguments: interests[index]["data"]);
+                              arguments: interest);
                         },
                         dense: true,
                         leading: const Icon(Icons.person, size: 35),
@@ -182,5 +187,19 @@ class _ServiziElencoState extends State<ServiziElenco> {
 
     _locationData = await location.getLocation();
     return _locationData;
+  }
+
+  Future<Map<String, String>> selectedInterest(
+      {required String uid, required String interestName}) async {
+    DatabaseReference ref = FirebaseDatabase.instance.ref('users/${uid}');
+    DatabaseEvent event = await ref.once();
+    var snapshot = event.snapshot.value as Map<dynamic, dynamic>;
+
+    return Map<String, String>.from({
+      "name": snapshot['name'],
+      "phone": snapshot['phoneNr'],
+      "address": snapshot['address'],
+      "interest": interestName
+    });
   }
 }
