@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:geoflutterfire/geoflutterfire.dart';
 import 'package:location/location.dart';
+import 'package:mytimetrade/widgets/global.dart';
 
 import '../widgets/BottomBar.dart';
 import 'Profile_Passage.dart';
@@ -31,12 +32,29 @@ class _ServiziElencoState extends State<ServiziElenco> {
         geo.point(latitude: location.latitude!, longitude: location.longitude!);
 
     interests.clear();
+    Stream<List<DocumentSnapshot>> stream = geo
+        .collection(collectionRef: db.collection('interests'))
+        .within(
+            center: center,
+            radius: global_user_data!.radius,
+            field: 'position');
+    stream.listen((List<DocumentSnapshot> documentList) {
+      for (DocumentSnapshot document in documentList) {
+        var data = document.data() as Map<dynamic, dynamic>;
+        if (data['user_id'] != global_user_data!.uid) {
+          interests.add(
+              <String, dynamic>{"id": document.id, "data": document.data()});
+        }
+      }
+      setState(() {});
+    });
+    /*
     db.collection("interests").get().then((event) {
       for (var doc in event.docs) {
         interests.add(<String, dynamic>{"id": doc.id, "data": doc.data()});
       }
       setState(() {});
-    });
+    });*/
   }
 
   @override
