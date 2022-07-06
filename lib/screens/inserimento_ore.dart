@@ -1,5 +1,6 @@
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
-import 'package:mytimetrade/screens/Profile_Passage.dart';
+import 'package:mytimetrade/widgets/global.dart';
 
 class Ore extends StatefulWidget {
   @override
@@ -11,10 +12,11 @@ class _OreState extends State<Ore> {
   String ore = '';
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
-  Profile_Passage args = Profile_Passage('', '', '', '');
+  Map<String, String> args = Map<String, String>.from(
+      {"name": "", "phone": "", "address": "", "interest": ""});
 
   void didChangeDependencies() {
-    args = ModalRoute.of(context)?.settings.arguments as Profile_Passage;
+    args = ModalRoute.of(context)?.settings.arguments as Map<String, String>;
     super.didChangeDependencies();
   }
 
@@ -24,7 +26,7 @@ class _OreState extends State<Ore> {
     return Scaffold(
       extendBody: true,
       body: Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
             gradient: LinearGradient(
           colors: [
             Colors.greenAccent,
@@ -35,7 +37,7 @@ class _OreState extends State<Ore> {
         )),
         child: Column(
           children: <Widget>[
-            Padding(padding: EdgeInsets.only(top: 60)),
+            const Padding(padding: EdgeInsets.only(top: 60)),
             Container(
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -51,7 +53,7 @@ class _OreState extends State<Ore> {
                 ],
               ),
             ),
-            Padding(padding: EdgeInsets.only(top: 60)),
+            const Padding(padding: EdgeInsets.only(top: 60)),
             Container(
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -113,7 +115,7 @@ class _OreState extends State<Ore> {
                 ],
               ),
             ),
-            Padding(padding: EdgeInsets.only(top: 60)),
+            const Padding(padding: EdgeInsets.only(top: 60)),
             Container(
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -175,7 +177,7 @@ class _OreState extends State<Ore> {
                 ],
               ),
             ),
-            Padding(padding: EdgeInsets.only(top: 60)),
+            const Padding(padding: EdgeInsets.only(top: 60)),
             Container(
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -237,7 +239,7 @@ class _OreState extends State<Ore> {
                 ],
               ),
             ),
-            Padding(padding: EdgeInsets.only(top: 60)),
+            const Padding(padding: EdgeInsets.only(top: 60)),
             Container(
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -263,7 +265,7 @@ class _OreState extends State<Ore> {
                 ],
               ),
             ),
-            Padding(padding: EdgeInsets.only(top: 35)),
+            const Padding(padding: EdgeInsets.only(top: 35)),
             Row(
               children: <Widget>[
                 Expanded(
@@ -271,10 +273,10 @@ class _OreState extends State<Ore> {
                     children: <Widget>[
                       Center(
                           child: DefaultTextStyle(
-                              style:
-                                  TextStyle(color: Colors.black, fontSize: 20),
+                              style: const TextStyle(
+                                  color: Colors.black, fontSize: 20),
                               child: Text("$ore"))),
-                      Divider(
+                      const Divider(
                         color: Colors.black,
                       ),
                     ],
@@ -282,7 +284,7 @@ class _OreState extends State<Ore> {
                 ),
               ],
             ),
-            Padding(padding: EdgeInsets.only(top: 10)),
+            const Padding(padding: EdgeInsets.only(top: 10)),
             Container(
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -295,16 +297,43 @@ class _OreState extends State<Ore> {
                         borderRadius: BorderRadius.circular(20)),
                     child: TextButton(
                       onPressed: () async {
-                        Navigator.pushNamed(
-                          context,
-                          '/accetta',
-                          arguments: Profile_Passage(
-                            args.nome,
-                            args.cognome,
-                            ore,
-                            args.servizio,
-                          ),
-                        );
+                        if (ore.length > 0) {
+                          var timestamp =
+                              DateTime.now().millisecondsSinceEpoch.toString();
+                          DatabaseReference ref = FirebaseDatabase.instance
+                              .ref()
+                              .child("transactions/${timestamp}");
+                          final Map<String, Map> updates = {};
+                          updates['/transactions/${timestamp}'] = {
+                            "ore": ore,
+                            "timestamp": timestamp,
+                            "client": global_user_data!.uid,
+                            "supplier": args['uid'],
+                            "status": "pending",
+                            "description": args['interest']
+                          };
+                          DatabaseReference clientRef =
+                              FirebaseDatabase.instance.ref().child(
+                                  "users/${global_user_data!.uid}/transactions/");
+                          final clientKey = clientRef.push().key;
+                          DatabaseReference serverRef = FirebaseDatabase
+                              .instance
+                              .ref()
+                              .child("users/${args['uid']}/transactions/");
+                          final serverKey = clientRef.push().key;
+
+                          updates[
+                              'users/${global_user_data!.uid}/transactions/'] = {
+                            clientKey: timestamp
+                          };
+                          updates["users/${args['uid']}/transactions/"] = {
+                            serverKey: timestamp
+                          };
+                          FirebaseDatabase.instance.ref().update(updates);
+                          Navigator.pop(context);
+                        } else {
+                          //TODO: show snackbar
+                        }
                       },
                       child: const Text('Richiedi!',
                           style: TextStyle(color: Colors.white, fontSize: 20)),
