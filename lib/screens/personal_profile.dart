@@ -56,6 +56,7 @@ class _PersonalProfileState extends State<PersonalProfile> {
     return Scaffold(
       extendBody: true,
       body: Container(
+        height: 1000,
         decoration: const BoxDecoration(
             gradient: LinearGradient(
           colors: [
@@ -65,7 +66,7 @@ class _PersonalProfileState extends State<PersonalProfile> {
           begin: Alignment.topRight,
           end: Alignment.bottomLeft,
         )),
-        child: Column(
+        child: SingleChildScrollView(child: Column(
           children: <Widget>[
             const Padding(padding: EdgeInsets.only(top: 60)),
             Container(
@@ -267,6 +268,7 @@ class _PersonalProfileState extends State<PersonalProfile> {
                 ),
               ],
             ),
+            Padding(padding: EdgeInsets.only(top: 20)),
             Container(
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -293,9 +295,11 @@ class _PersonalProfileState extends State<PersonalProfile> {
                 ],
               ),
             ),
+            Padding(padding: EdgeInsets.only(top: 80)),
           ],
         ),
-    ),
+        ),
+      ),
       bottomNavigationBar: BottomBar(index: index, context: context),
     );
   }
