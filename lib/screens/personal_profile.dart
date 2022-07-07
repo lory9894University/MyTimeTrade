@@ -19,8 +19,7 @@ class PersonalProfile extends StatefulWidget {
 
 class _PersonalProfileState extends State<PersonalProfile> {
   TextEditingController phoneController = TextEditingController();
-  TextEditingController _controller =
-      TextEditingController(); //TODO: questo dovrà essere spostato se la dialog box è un nuovo widget
+  TextEditingController _controller = TextEditingController(); //TODO: questo dovrà essere spostato se la dialog box è un nuovo widget
 
   List<dynamic> interests = List<dynamic>.empty(growable: true);
   var db = FirebaseFirestore.instance;
@@ -57,7 +56,7 @@ class _PersonalProfileState extends State<PersonalProfile> {
     return Scaffold(
       extendBody: true,
       body: Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
             gradient: LinearGradient(
           colors: [
             Colors.greenAccent,
@@ -68,184 +67,206 @@ class _PersonalProfileState extends State<PersonalProfile> {
         )),
         child: Column(
           children: <Widget>[
-            Padding(padding: EdgeInsets.only(top: 60)),
+            const Padding(padding: EdgeInsets.only(top: 60)),
             Container(
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: <Widget>[
-                  Icon(Icons.person, size: 35),
+                  const Icon(Icons.person, size: 35),
                   DefaultTextStyle(
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 27.0,
                         color: Colors.black,
                       ),
-                      child: Text('${global_user_data!.name}'))
+                      child: Text(global_user_data!.name))
                 ],
               ),
             ),
-            Padding(padding: EdgeInsets.only(top: 20)),
-            Accordion(
-                maxOpenSections: 1,
-                scaleWhenAnimating: false,
-                openAndCloseAnimation: true,
-                headerBackgroundColor: Colors.transparent,
-                headerBackgroundColorOpened: Colors.transparent,
-                children: [
-                  AccordionSection(
-                    leftIcon: Icon(FontAwesomeIcons.locationArrow),
-                    header: const Center(
-                        child: DefaultTextStyle(
-                      style: TextStyle(
-                        fontSize: 20.0,
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold,
-                      ),
-                      child: Text("Indirizzo"),
-                    )),
-                    content: Column(
-                      children: [
-                        DefaultTextStyle(
-                          style: const TextStyle(
-                            fontStyle: FontStyle.italic,
-                            fontSize: 15.0,
-                            color: Colors.black,
-                          ),
-                          child: Text(global_user_data!.address == null
-                              ? "inserisci indirizzo"
-                              : global_user_data!.address!),
-                        ),
-                        Padding(padding: EdgeInsets.only(top: 5)),
-                        IconButton(
-                          icon: const Icon(FontAwesomeIcons.pen, size: 20),
-                          onPressed: () {
-                            showDialog(
-                                context: context,
-                                builder: (BuildContext context) {
-                                  return CustomDialogBox(
-                                    title: "Modifica indirizzo",
-                                    descriptions: "modifica indirizzo",
-                                    img:
-                                        Image.asset("assets/img/handshake.png"),
-                                    callback: callback,
-                                  );
-                                });
-                          },
-                          tooltip: "Modifica indirizzo",
-                        ),
-                      ],
-                    ),
+            const Padding(padding: EdgeInsets.only(top: 20)),
+            ExpansionTile(
+                title: Container(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: const <Widget>[
+                      Icon(FontAwesomeIcons.locationArrow),
+                      Padding(padding: EdgeInsets.only(left: 0)),
+                      Center(
+                          child: DefaultTextStyle(
+                            style: TextStyle(
+                              fontSize: 20.0,
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold,
+                            ),
+                            child: Text("Indirizzo"),
+                          )),
+                      Padding(padding: EdgeInsets.only(left: 45)),
+                    ],
                   ),
-                  AccordionSection(
-                    leftIcon: Icon(FontAwesomeIcons.phone),
-                    header: const Center(
-                        child: DefaultTextStyle(
-                      style: TextStyle(
-                        fontSize: 20.0,
+                ),
+              children: [
+                Column(
+                  children: [
+                    DefaultTextStyle(
+                      style: const TextStyle(
+                        fontStyle: FontStyle.italic,
+                        fontSize: 15.0,
                         color: Colors.black,
-                        fontWeight: FontWeight.bold,
                       ),
-                      child: Text("Telefono"),
-                    )),
-                    content: Column(
-                      children: [
-                        TextField(
-                          controller: phoneController,
-                          decoration: const InputDecoration(
-                            border: OutlineInputBorder(),
-                            labelText: 'Telefono',
-                            hintText: '##########',
-                            prefixText: '+ 39',
-                          ),
-                        ),
-                        Padding(padding: EdgeInsets.only(top: 5)),
-                        IconButton(
-                          icon: const Icon(FontAwesomeIcons.pen, size: 20),
-                          onPressed: () {
-                            FirebaseDatabase.instance
-                                .ref()
-                                .child("users")
-                                .child(logged_user!.uid)
-                                .update({
-                              "phoneNr": phoneController.text,
+                      child: Text(global_user_data!.address == null
+                          ? "inserisci indirizzo"
+                          : global_user_data!.address!),
+                    ),
+                    const Padding(padding: EdgeInsets.only(top: 5)),
+                    IconButton(
+                      icon: const Icon(FontAwesomeIcons.pen, size: 20),
+                      onPressed: () {
+                        showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return CustomDialogBox(
+                                title: "Modifica indirizzo",
+                                descriptions: "modifica indirizzo",
+                                img:
+                                Image.asset("assets/img/handshake.png"),
+                                callback: callback,
+                              );
                             });
-                            global_user_data!.phoneNr = phoneController.text;
-                            setState(() {});
-                          },
-                          tooltip: "Modifica telefono",
-                        ),
-                      ],
+                      },
+                      tooltip: "Modifica indirizzo",
                     ),
-                  ),
-                  AccordionSection(
-                    isOpen: true,
-                    //TODO: l'accordion collassa quando modifico un elemento.
-                    leftIcon: Icon(FontAwesomeIcons.briefcase),
-                    header: const Center(
+                  ],
+                ),
+              ],
+            ),
+            ExpansionTile(
+              title: Container(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: const <Widget>[
+                    Icon(FontAwesomeIcons.phone),
+                    Padding(padding: EdgeInsets.only(left: 0)),
+                    Center(
                         child: DefaultTextStyle(
-                      style: TextStyle(
-                        fontSize: 20.0,
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold,
+                          style: TextStyle(
+                            fontSize: 20.0,
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold,
+                          ),
+                          child: Text("Telefono"),
+                        )),
+                    Padding(padding: EdgeInsets.only(left: 45)),
+                  ],
+                ),
+              ),
+              children: [
+                Column(
+                  children: [
+                    TextField(
+                    controller: phoneController,
+                      decoration: const InputDecoration(
+                        border: OutlineInputBorder(),
+                        hintText: '##########',
+                        prefixText: '+ 39',
                       ),
-                      child: Text("Interessi"),
-                    )),
-                    content: Column(
-                      children: [
-                        Container(
-                          height: 180,
-                          child: ListView.builder(
-                              itemCount: interests.length,
-                              itemBuilder: (context, index) {
-                                return ListTile(
-                                  dense: true,
-                                  leading: const Icon(FontAwesomeIcons.ban,
-                                      size: 20),
-                                  onTap: () {
-                                    db
-                                        .collection("interests")
-                                        .doc(interests[index]["id"])
-                                        .delete()
-                                        .then(
-                                          (doc) => print(
-                                              "Document deleted"), //TODO: modificare in una snackbar
-                                          onError: (e) => print(
-                                              "Error updating document $e"),
-                                        );
-                                    didChangeDependencies();
-                                  }, //TODO: Chiedere conferma eliminazione con dialogBox
-                                  title: Center(
-                                    child: DefaultTextStyle(
-                                        style: const TextStyle(
-                                            fontStyle: FontStyle.italic,
-                                            color: Colors.black,
-                                            fontSize: 15),
-                                        child: Text(interests[index]["data"]
-                                            ["interest"])),
-                                  ),
-                                );
-                              }),
-                        ),
-                        IconButton(
-                          icon: const Icon(FontAwesomeIcons.plus, size: 20),
-                          //onPressed: modifyAddress,
-                          onPressed: () {
-                            showDialog(
-                                context: context,
-                                builder: (BuildContext context) {
-                                  return InteressiDialogBox(
-                                    title: "Inserisci nuovo interesse",
-                                    img:
-                                        Image.asset("assets/img/handshake.png"),
-                                    callback: callback,
-                                  );
-                                });
-                          },
-                          tooltip: "Aggiungi nuovo interesse",
-                        ),
-                      ],
                     ),
-                  )
-                ]),
+                    const Padding(padding: EdgeInsets.only(top: 5)),
+                    IconButton(
+                      icon: const Icon(FontAwesomeIcons.check, size: 20),
+                      onPressed: () {
+                        FirebaseDatabase.instance
+                            .ref()
+                            .child("users")
+                            .child(logged_user!.uid)
+                            .update({
+                          "phoneNr": phoneController.text,
+                        });
+                        global_user_data!.phoneNr = phoneController.text;
+                        setState(() {});
+                      },
+                      tooltip: "Modifica telefono",
+                    ),
+                  ],
+                ),
+              ],
+            ),
+            ExpansionTile(
+              title: Container(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: const <Widget>[
+                    Icon(FontAwesomeIcons.briefcase),
+                    Padding(padding: EdgeInsets.only(left: 0)),
+                    Center(
+                        child: DefaultTextStyle(
+                          style: TextStyle(
+                            fontSize: 20.0,
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold,
+                          ),
+                          child: Text("Interessi"),
+                        )),
+                    Padding(padding: EdgeInsets.only(left: 45)),
+                  ],
+                ),
+              ),
+              children: [
+                Column(
+                  children: [
+                    Container(
+                      height: 180,
+                      child: ListView.builder(
+                          itemCount: interests.length,
+                          itemBuilder: (context, index) {
+                            return ListTile(
+                              dense: true,
+                              leading: const Icon(FontAwesomeIcons.ban,
+                                  size: 20),
+                              onTap: () {
+                                db
+                                    .collection("interests")
+                                    .doc(interests[index]["id"])
+                                    .delete()
+                                    .then(
+                                      (doc) => print(
+                                      "Document deleted"), //TODO: modificare in una snackbar
+                                  onError: (e) => print(
+                                      "Error updating document $e"),
+                                );
+                                didChangeDependencies();
+                              }, //TODO: Chiedere conferma eliminazione con dialogBox
+                              title: Center(
+                                child: DefaultTextStyle(
+                                    style: const TextStyle(
+                                        fontStyle: FontStyle.italic,
+                                        color: Colors.black,
+                                        fontSize: 15),
+                                    child: Text(interests[index]["data"]
+                                    ["interest"])),
+                              ),
+                            );
+                          }),
+                    ),
+                    IconButton(
+                      icon: const Icon(FontAwesomeIcons.plus, size: 20),
+                      //onPressed: modifyAddress,
+                      onPressed: () {
+                        showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return InteressiDialogBox(
+                                title: "Inserisci nuovo interesse",
+                                img:
+                                Image.asset("assets/img/handshake.png"),
+                                callback: callback,
+                              );
+                            });
+                      },
+                      tooltip: "Aggiungi nuovo interesse",
+                    ),
+                  ],
+                ),
+              ],
+            ),
             Container(
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -274,7 +295,7 @@ class _PersonalProfileState extends State<PersonalProfile> {
             ),
           ],
         ),
-      ),
+    ),
       bottomNavigationBar: BottomBar(index: index, context: context),
     );
   }
