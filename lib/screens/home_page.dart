@@ -32,9 +32,10 @@ class _HomePageState extends State<HomePage> {
     pageData = event.snapshot.value as Map<dynamic, dynamic>;
 
     if (pageData["transactions"] != null) {
-      List<Object?> trans_id = pageData["transactions"] as List<Object?>;
+      Map<dynamic, dynamic> trans_id =
+          pageData["transactions"] as Map<dynamic, dynamic>;
       transactions.clear();
-      trans_id.forEach((value) {
+      trans_id.forEach((key, value) {
         DatabaseReference transaction_ref =
             FirebaseDatabase.instance.ref('transactions/${value}');
         transaction_ref.onValue.listen((DatabaseEvent event) {

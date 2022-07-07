@@ -300,9 +300,6 @@ class _OreState extends State<Ore> {
                         if (ore.length > 0) {
                           var timestamp =
                               DateTime.now().millisecondsSinceEpoch.toString();
-                          DatabaseReference ref = FirebaseDatabase.instance
-                              .ref()
-                              .child("transactions/${timestamp}");
                           final Map<String, Map> updates = {};
                           updates['/transactions/${timestamp}'] = {
                             "ore": ore,
@@ -310,7 +307,9 @@ class _OreState extends State<Ore> {
                             "client": global_user_data!.uid,
                             "supplier": args['uid'],
                             "status": "pending",
-                            "description": args['interest']
+                            "description": args['interest'],
+                            "supplier_name": args['name'],
+                            "client_name": global_user_data!.name,
                           };
                           DatabaseReference clientRef =
                               FirebaseDatabase.instance.ref().child(
@@ -320,16 +319,11 @@ class _OreState extends State<Ore> {
                               .instance
                               .ref()
                               .child("users/${args['uid']}/transactions/");
-                          final serverKey = clientRef.push().key;
+                          final serverKey = serverRef.push().key;
 
-                          updates[
-                              'users/${global_user_data!.uid}/transactions/'] = {
-                            clientKey: timestamp
-                          };
-                          updates["users/${args['uid']}/transactions/"] = {
-                            serverKey: timestamp
-                          };
                           FirebaseDatabase.instance.ref().update(updates);
+                          clientRef.child(clientKey!).set(timestamp);
+                          serverRef.child(serverKey!).set(timestamp);
                           Navigator.pop(context);
                         } else {
                           //TODO: show snackbar

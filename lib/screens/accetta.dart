@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:mytimetrade/widgets/global.dart';
 
 import '../widgets/BottomBar.dart';
-import 'Profile_Passage.dart';
 
 class Accetta extends StatefulWidget {
   @override
@@ -21,6 +20,8 @@ class _AccettaState extends State<Accetta> {
         .ref('users/${global_user_data!.uid}/transactions');
     userRef.onValue.listen((DatabaseEvent event) async {
       transactionsPending.clear();
+      transactionsAccepted.clear();
+      transactionsToPay.clear();
       if (!event.snapshot.exists) {
         return;
       }
@@ -29,9 +30,9 @@ class _AccettaState extends State<Accetta> {
       for (var value in pageData.values) {
         DatabaseReference ref =
             FirebaseDatabase.instance.ref('transactions/${value}');
-        event = await userRef.once();
+        event = await ref.once();
         var transaction = event.snapshot.value as Map<dynamic, dynamic>;
-        if (transaction['status'] == 'waiting_payment' &&
+        if (transaction['status'] == 'working' &&
             transaction['supplier'] != global_user_data!.uid) {
           transactionsToPay.add(transaction);
         } else if (transaction['status'] == 'pending' &&
@@ -91,165 +92,64 @@ class _AccettaState extends State<Accetta> {
                           style: BorderStyle.solid,
                           width: 2),
                       children: [
-                        TableRow(children: [
-                          Column(
-                            children: <Widget>[
-                              Container(
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    DefaultTextStyle(
-                                      style: TextStyle(
-                                        fontSize: 20.0,
-                                        color: Colors.black,
-                                        fontWeight: FontWeight.bold,
+                        for (var transaction in transactionsPending)
+                          TableRow(children: [
+                            Column(
+                              children: <Widget>[
+                                Container(
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      DefaultTextStyle(
+                                        style: TextStyle(
+                                          fontSize: 20.0,
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                        child:
+                                            Text(transaction['supplier_name']),
                                       ),
-                                      child: Text('Fallino Fraco'),
-                                      /*Text((() {
-                                          if(args.nome != ''){
-                                            return '${args.cognome} ${args.nome}';
-                                          }
-                                          else {
-                                            return "Fallino Francesco";
-                                          }
-                                        })()),*/
-                                    ),
-                                  ],
+                                    ],
+                                  ),
                                 ),
-                              ),
-                              Container(
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: const [
-                                    DefaultTextStyle(
-                                      style: TextStyle(
-                                        fontSize: 16.0,
-                                        color: Colors.black,
-                                        fontWeight: FontWeight.bold,
+                                Container(
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      DefaultTextStyle(
+                                        style: TextStyle(
+                                          fontSize: 16.0,
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                        child: Text(transaction['description']),
                                       ),
-                                      child: //TODO: Change to Text(args.servizio)
-                                          Text('Unity'),
-                                    ),
-                                  ],
+                                    ],
+                                  ),
                                 ),
-                              ),
-                            ],
-                          ),
-                          Column(children: [
-                            Container(
-                              margin: const EdgeInsets.all(25),
-                              child: FlatButton(
-                                child: const Text(
-                                  'Conferma',
-                                  style: TextStyle(fontSize: 20.0),
-                                ),
-                                color: Colors.green,
-                                textColor: Colors.white,
-                                onPressed: () {},
-                              ),
+                              ],
                             ),
+                            Column(children: [
+                              Container(
+                                margin: const EdgeInsets.all(25),
+                                child: FlatButton(
+                                  child: const Text(
+                                    'Conferma',
+                                    style: TextStyle(fontSize: 20.0),
+                                  ),
+                                  color: Colors.green,
+                                  textColor: Colors.white,
+                                  onPressed: () {
+                                    DatabaseReference ref =
+                                        FirebaseDatabase.instance.ref(
+                                            'transactions/${transaction['timestamp']}');
+                                    ref.update({'status': 'working'});
+                                    didChangeDependencies();
+                                  },
+                                ),
+                              ),
+                            ]),
                           ]),
-                        ]),
-                        TableRow(children: [
-                          Column(
-                            children: <Widget>[
-                              Container(
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: const [
-                                    DefaultTextStyle(
-                                      style: TextStyle(
-                                        fontSize: 20.0,
-                                        color: Colors.black,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                      child: Text("Filippone Erik"),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Container(
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: const [
-                                    DefaultTextStyle(
-                                      style: TextStyle(
-                                        fontSize: 16.0,
-                                        color: Colors.black,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                      child: Text("Tortillas fritte"),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
-                          Column(children: [
-                            Container(
-                              margin: const EdgeInsets.all(25),
-                              child: FlatButton(
-                                child: const Text(
-                                  'Conferma',
-                                  style: TextStyle(fontSize: 20.0),
-                                ),
-                                color: Colors.green,
-                                textColor: Colors.white,
-                                onPressed: () {},
-                              ),
-                            ),
-                          ]),
-                        ]),
-                        TableRow(children: [
-                          Column(
-                            children: <Widget>[
-                              Container(
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: const [
-                                    DefaultTextStyle(
-                                      style: TextStyle(
-                                        fontSize: 20.0,
-                                        color: Colors.black,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                      child: Text("Filippone Erik"),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Container(
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: const [
-                                    DefaultTextStyle(
-                                      style: TextStyle(
-                                        fontSize: 16.0,
-                                        color: Colors.black,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                      child: Text("Lampadina"),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
-                          Column(children: [
-                            Container(
-                              margin: const EdgeInsets.all(25),
-                              child: FlatButton(
-                                child: const Text(
-                                  'Conferma',
-                                  style: TextStyle(fontSize: 20.0),
-                                ),
-                                color: Colors.green,
-                                textColor: Colors.white,
-                                onPressed: () {},
-                              ),
-                            ),
-                          ]),
-                        ]),
                       ],
                     ),
                   ),
@@ -266,120 +166,46 @@ class _AccettaState extends State<Accetta> {
                           style: BorderStyle.solid,
                           width: 2),
                       children: [
-                        TableRow(children: [
-                          Column(
-                            children: <Widget>[
+                        for (var transaction in transactionsAccepted)
+                          TableRow(children: [
+                            Column(
+                              children: <Widget>[
+                                Container(
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      DefaultTextStyle(
+                                        style: TextStyle(
+                                          fontSize: 20.0,
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                        child:
+                                            Text(transaction['supplier_name']),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                            Column(children: [
                               Container(
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
-                                  children: const [
+                                  children: [
                                     DefaultTextStyle(
                                       style: TextStyle(
-                                        fontSize: 20.0,
+                                        fontSize: 16.0,
                                         color: Colors.black,
                                         fontWeight: FontWeight.bold,
                                       ),
-                                      child: Text("Filippone Erik"),
+                                      child: Text(transaction['description']),
                                     ),
                                   ],
                                 ),
                               ),
-                            ],
-                          ),
-                          Column(children: [
-                            Container(
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: const [
-                                  DefaultTextStyle(
-                                    style: TextStyle(
-                                      fontSize: 16.0,
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                    child: Text("Website builder"),
-                                  ),
-                                ],
-                              ),
-                            ),
+                            ]),
                           ]),
-                        ]),
-                        TableRow(children: [
-                          Column(
-                            children: <Widget>[
-                              Container(
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: const [
-                                    DefaultTextStyle(
-                                      style: TextStyle(
-                                        fontSize: 20.0,
-                                        color: Colors.black,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                      child: Text("Filippone Erik"),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
-                          Column(children: [
-                            Container(
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: const [
-                                  DefaultTextStyle(
-                                    style: TextStyle(
-                                      fontSize: 16.0,
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                    child: Text("Tortillas fritte"),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ]),
-                        ]),
-                        TableRow(children: [
-                          Column(
-                            children: <Widget>[
-                              Container(
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: const [
-                                    DefaultTextStyle(
-                                      style: TextStyle(
-                                        fontSize: 20.0,
-                                        color: Colors.black,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                      child: Text("Filippone Erik"),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
-                          Column(children: [
-                            Container(
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: const [
-                                  DefaultTextStyle(
-                                    style: TextStyle(
-                                      fontSize: 16.0,
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                    child: Text("Lampadina"),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ]),
-                        ]),
                       ],
                     ),
                   ),
@@ -396,180 +222,60 @@ class _AccettaState extends State<Accetta> {
                           style: BorderStyle.solid,
                           width: 2),
                       children: [
-                        TableRow(children: [
-                          Column(
-                            children: <Widget>[
-                              Container(
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: const [
-                                    DefaultTextStyle(
-                                      style: TextStyle(
-                                        fontSize: 20.0,
-                                        color: Colors.black,
-                                        fontWeight: FontWeight.bold,
+                        for (var transaction in transactionsToPay)
+                          TableRow(children: [
+                            Column(
+                              children: <Widget>[
+                                Container(
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      DefaultTextStyle(
+                                        style: TextStyle(
+                                          fontSize: 20.0,
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                        child:
+                                            Text(transaction['supplier_name']),
                                       ),
-                                      child: //TODO: Change to Text('${args.cognome} ${args.nome}')
-                                          Text('Fallino '),
-                                    ),
-                                  ],
+                                    ],
+                                  ),
                                 ),
-                              ),
-                              Container(
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    const DefaultTextStyle(
-                                      style: TextStyle(
-                                        fontSize: 16.0,
-                                        color: Colors.black,
-                                        fontWeight: FontWeight.bold,
+                                Container(
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      DefaultTextStyle(
+                                        style: TextStyle(
+                                          fontSize: 16.0,
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                        child: Text(transaction['description']),
                                       ),
-                                      child: //TODO: Change to Text(args.servizio)
-                                          const Text('Unity'),
-                                    ),
-                                  ],
+                                    ],
+                                  ),
                                 ),
-                              ),
-                            ],
-                          ),
-                          Column(children: [
-                            Container(
-                              margin: const EdgeInsets.all(25),
-                              child: FlatButton(
-                                child: const Text(
-                                  'Paga',
-                                  style: TextStyle(fontSize: 20.0),
-                                ),
-                                color: Colors.green,
-                                textColor: Colors.white,
-                                onPressed: () {},
-                              ),
+                              ],
                             ),
+                            Column(children: [
+                              Container(
+                                margin: const EdgeInsets.all(25),
+                                child: FlatButton(
+                                  child: const Text(
+                                    'Paga',
+                                    style: TextStyle(fontSize: 20.0),
+                                  ),
+                                  color: Colors.green,
+                                  textColor: Colors.white,
+                                  onPressed: () {
+                                    //TODO: implement payment
+                                  },
+                                ),
+                              ),
+                            ]),
                           ]),
-                        ]),
-                        TableRow(children: [
-                          Column(
-                            children: <Widget>[
-                              Container(
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: const [
-                                    DefaultTextStyle(
-                                      style: TextStyle(
-                                        fontSize: 20.0,
-                                        color: Colors.black,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                      child: Text("Filippone Erik"),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Container(
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: const [
-                                    DefaultTextStyle(
-                                      style: TextStyle(
-                                        fontSize: 16.0,
-                                        color: Colors.black,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                      child: Text("Tortillas fritte"),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
-                          Column(children: [
-                            Container(
-                              margin: const EdgeInsets.all(25),
-                              child: FlatButton(
-                                child: const Text(
-                                  'Paga',
-                                  style: TextStyle(fontSize: 20.0),
-                                ),
-                                color: Colors.green,
-                                textColor: Colors.white,
-                                onPressed: () {
-                                  Navigator.pushNamed(
-                                    context,
-                                    '/swipe',
-                                    arguments: Profile_Passage(
-                                      "Filippone",
-                                      "Erik",
-                                      "50",
-                                      "Tortillas fritte",
-                                    ),
-                                  );
-                                },
-                              ),
-                            ),
-                          ]),
-                        ]),
-                        TableRow(children: [
-                          Column(
-                            children: <Widget>[
-                              Container(
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: const [
-                                    DefaultTextStyle(
-                                      style: TextStyle(
-                                        fontSize: 20.0,
-                                        color: Colors.black,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                      child: Text("Filippone Erik"),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Container(
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: const [
-                                    DefaultTextStyle(
-                                      style: TextStyle(
-                                        fontSize: 16.0,
-                                        color: Colors.black,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                      child: Text("Lampadina"),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
-                          Column(children: [
-                            Container(
-                              margin: const EdgeInsets.all(25),
-                              child: FlatButton(
-                                child: const Text(
-                                  'Paga',
-                                  style: TextStyle(fontSize: 20.0),
-                                ),
-                                color: Colors.green,
-                                textColor: Colors.white,
-                                onPressed: () {
-                                  Navigator.pushNamed(
-                                    context,
-                                    '/swipe',
-                                    arguments: Profile_Passage(
-                                      "Filippone",
-                                      "Erik",
-                                      "50",
-                                      "Lampadina",
-                                    ),
-                                  );
-                                },
-                              ),
-                            ),
-                          ]),
-                        ]),
                       ],
                     ),
                   ),
