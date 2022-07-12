@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import '../widgets/BottomBar.dart';
 import 'Profile_Passage.dart';
 
+//TODO: Implementare il SingleChildScrollView, altrimenti abbiamo un limite di tre transazioni per tabella
+
 class Accetta extends StatefulWidget {
   @override
   _AccettaState createState() => _AccettaState();
@@ -68,6 +70,7 @@ class _AccettaState extends State<Accetta> {
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: const [
+                                    Expanded(child:
                                     DefaultTextStyle(
                                       style: TextStyle(
                                         fontSize: 20.0,
@@ -75,7 +78,7 @@ class _AccettaState extends State<Accetta> {
                                         fontWeight: FontWeight.bold,
                                       ),
                                       child: //TODO: Change to Text('${args.cognome} ${args.nome}')
-                                          Text('Fallino Francesco'),
+                                          Text('Fallino Francesco', textAlign: TextAlign.center),
                                       /*Text((() {
                                           if(args.nome != ''){
                                             return '${args.cognome} ${args.nome}';
@@ -85,13 +88,16 @@ class _AccettaState extends State<Accetta> {
                                           }
                                         })()),*/
                                     ),
+                                    ),
                                   ],
                                 ),
                               ),
+                              Padding(padding: EdgeInsets.only(top: 10)),
                               Container(
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: const [
+                                    Expanded(child:
                                     DefaultTextStyle(
                                       style: TextStyle(
                                         fontSize: 16.0,
@@ -99,7 +105,8 @@ class _AccettaState extends State<Accetta> {
                                         fontWeight: FontWeight.bold,
                                       ),
                                       child: //TODO: Change to Text(args.servizio)
-                                          Text('Unity'),
+                                          Text('Unity', textAlign: TextAlign.center),
+                                    ),
                                     ),
                                   ],
                                 ),
@@ -108,15 +115,16 @@ class _AccettaState extends State<Accetta> {
                           ),
                           Column(children: [
                             Container(
-                              margin: const EdgeInsets.all(25),
-                              child: FlatButton(
+                              margin: const EdgeInsets.only(left: 10, right: 10, top: 25, bottom: 25),
+                              child: Expanded(child: FlatButton(
                                 child: const Text(
                                   'Conferma',
-                                  style: TextStyle(fontSize: 20.0),
+                                  style: TextStyle(fontSize: 18.0), textAlign: TextAlign.center,
                                 ),
                                 color: Colors.green,
                                 textColor: Colors.white,
                                 onPressed: () {},
+                              ),
                               ),
                             ),
                           ]),
@@ -128,28 +136,33 @@ class _AccettaState extends State<Accetta> {
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: const [
-                                    DefaultTextStyle(
-                                      style: TextStyle(
-                                        fontSize: 20.0,
-                                        color: Colors.black,
-                                        fontWeight: FontWeight.bold,
+                                    Expanded(child:
+                                      DefaultTextStyle(
+                                        style: TextStyle(
+                                          fontSize: 20.0,
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                        child: Text("Filippone Erik", textAlign: TextAlign.center),
                                       ),
-                                      child: Text("Filippone Erik"),
                                     ),
                                   ],
                                 ),
                               ),
+                              Padding(padding: EdgeInsets.only(top: 10)),
                               Container(
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: const [
-                                    DefaultTextStyle(
-                                      style: TextStyle(
-                                        fontSize: 16.0,
-                                        color: Colors.black,
-                                        fontWeight: FontWeight.bold,
+                                    Expanded(child:
+                                      DefaultTextStyle(
+                                        style: TextStyle(
+                                          fontSize: 16.0,
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                        child: Text("Tortillas fritte", textAlign: TextAlign.center),
                                       ),
-                                      child: Text("Tortillas fritte"),
                                     ),
                                   ],
                                 ),
@@ -158,15 +171,16 @@ class _AccettaState extends State<Accetta> {
                           ),
                           Column(children: [
                             Container(
-                              margin: const EdgeInsets.all(25),
-                              child: FlatButton(
+                              margin: const EdgeInsets.only(left: 10, right: 10, top: 25, bottom: 25),
+                              child: Expanded(child: FlatButton(
                                 child: const Text(
                                   'Conferma',
-                                  style: TextStyle(fontSize: 20.0),
+                                  style: TextStyle(fontSize: 18.0), textAlign: TextAlign.center,
                                 ),
                                 color: Colors.green,
                                 textColor: Colors.white,
                                 onPressed: () {},
+                              ),
                               ),
                             ),
                           ]),
@@ -178,28 +192,33 @@ class _AccettaState extends State<Accetta> {
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: const [
+                                    Expanded(child:
                                     DefaultTextStyle(
                                       style: TextStyle(
                                         fontSize: 20.0,
                                         color: Colors.black,
                                         fontWeight: FontWeight.bold,
                                       ),
-                                      child: Text("Filippone Erik"),
+                                      child: Text("Filippone Erik", textAlign: TextAlign.center),
+                                    ),
                                     ),
                                   ],
                                 ),
                               ),
+                              Padding(padding: EdgeInsets.only(top: 10)),
                               Container(
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: const [
+                                    Expanded(child:
                                     DefaultTextStyle(
                                       style: TextStyle(
                                         fontSize: 16.0,
                                         color: Colors.black,
                                         fontWeight: FontWeight.bold,
                                       ),
-                                      child: Text("Lampadina"),
+                                      child: Text("Tortillas fritte", textAlign: TextAlign.center),
+                                    ),
                                     ),
                                   ],
                                 ),
@@ -208,15 +227,16 @@ class _AccettaState extends State<Accetta> {
                           ),
                           Column(children: [
                             Container(
-                              margin: const EdgeInsets.all(25),
-                              child: FlatButton(
+                              margin: const EdgeInsets.only(left: 10, right: 10, top: 25, bottom: 25),
+                              child: Expanded(child: FlatButton(
                                 child: const Text(
                                   'Conferma',
-                                  style: TextStyle(fontSize: 20.0),
+                                  style: TextStyle(fontSize: 18.0), textAlign: TextAlign.center,
                                 ),
                                 color: Colors.green,
                                 textColor: Colors.white,
                                 onPressed: () {},
+                              ),
                               ),
                             ),
                           ]),
@@ -361,7 +381,7 @@ class _AccettaState extends State<Accetta> {
                     margin: const EdgeInsets.all(20),
                     child: Table(
                       defaultVerticalAlignment:
-                          TableCellVerticalAlignment.middle,
+                      TableCellVerticalAlignment.middle,
                       border: TableBorder.all(
                           color: Colors.black,
                           style: BorderStyle.solid,
@@ -374,6 +394,7 @@ class _AccettaState extends State<Accetta> {
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: const [
+                                    Expanded(child:
                                     DefaultTextStyle(
                                       style: TextStyle(
                                         fontSize: 20.0,
@@ -381,23 +402,35 @@ class _AccettaState extends State<Accetta> {
                                         fontWeight: FontWeight.bold,
                                       ),
                                       child: //TODO: Change to Text('${args.cognome} ${args.nome}')
-                                          Text('Fallino Francesco'),
+                                      Text('Fallino Francesco', textAlign: TextAlign.center),
+                                      /*Text((() {
+                                          if(args.nome != ''){
+                                            return '${args.cognome} ${args.nome}';
+                                          }
+                                          else {
+                                            return "Fallino Francesco";
+                                          }
+                                        })()),*/
+                                    ),
                                     ),
                                   ],
                                 ),
                               ),
+                              Padding(padding: EdgeInsets.only(top: 10)),
                               Container(
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    const DefaultTextStyle(
+                                  children: const [
+                                    Expanded(child:
+                                    DefaultTextStyle(
                                       style: TextStyle(
                                         fontSize: 16.0,
                                         color: Colors.black,
                                         fontWeight: FontWeight.bold,
                                       ),
                                       child: //TODO: Change to Text(args.servizio)
-                                          const Text('Unity'),
+                                      Text('Unity', textAlign: TextAlign.center),
+                                    ),
                                     ),
                                   ],
                                 ),
@@ -406,15 +439,16 @@ class _AccettaState extends State<Accetta> {
                           ),
                           Column(children: [
                             Container(
-                              margin: const EdgeInsets.all(25),
-                              child: FlatButton(
+                              margin: const EdgeInsets.only(left: 10, right: 10, top: 25, bottom: 25),
+                              child: Expanded(child: FlatButton(
                                 child: const Text(
                                   'Paga',
-                                  style: TextStyle(fontSize: 20.0),
+                                  style: TextStyle(fontSize: 18.0), textAlign: TextAlign.center,
                                 ),
                                 color: Colors.green,
                                 textColor: Colors.white,
                                 onPressed: () {},
+                              ),
                               ),
                             ),
                           ]),
@@ -426,28 +460,33 @@ class _AccettaState extends State<Accetta> {
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: const [
+                                    Expanded(child:
                                     DefaultTextStyle(
                                       style: TextStyle(
                                         fontSize: 20.0,
                                         color: Colors.black,
                                         fontWeight: FontWeight.bold,
                                       ),
-                                      child: Text("Filippone Erik"),
+                                      child: Text("Filippone Erik", textAlign: TextAlign.center),
+                                    ),
                                     ),
                                   ],
                                 ),
                               ),
+                              Padding(padding: EdgeInsets.only(top: 10)),
                               Container(
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: const [
+                                    Expanded(child:
                                     DefaultTextStyle(
                                       style: TextStyle(
                                         fontSize: 16.0,
                                         color: Colors.black,
                                         fontWeight: FontWeight.bold,
                                       ),
-                                      child: Text("Tortillas fritte"),
+                                      child: Text("Tortillas fritte", textAlign: TextAlign.center),
+                                    ),
                                     ),
                                   ],
                                 ),
@@ -456,11 +495,11 @@ class _AccettaState extends State<Accetta> {
                           ),
                           Column(children: [
                             Container(
-                              margin: const EdgeInsets.all(25),
-                              child: FlatButton(
+                              margin: const EdgeInsets.only(left: 10, right: 10, top: 25, bottom: 25),
+                              child: Expanded(child: FlatButton(
                                 child: const Text(
                                   'Paga',
-                                  style: TextStyle(fontSize: 20.0),
+                                  style: TextStyle(fontSize: 18.0), textAlign: TextAlign.center,
                                 ),
                                 color: Colors.green,
                                 textColor: Colors.white,
@@ -477,6 +516,7 @@ class _AccettaState extends State<Accetta> {
                                   );
                                 },
                               ),
+                              ),
                             ),
                           ]),
                         ]),
@@ -487,28 +527,33 @@ class _AccettaState extends State<Accetta> {
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: const [
+                                    Expanded(child:
                                     DefaultTextStyle(
                                       style: TextStyle(
                                         fontSize: 20.0,
                                         color: Colors.black,
                                         fontWeight: FontWeight.bold,
                                       ),
-                                      child: Text("Filippone Erik"),
+                                      child: Text("Filippone Erik", textAlign: TextAlign.center),
+                                    ),
                                     ),
                                   ],
                                 ),
                               ),
+                              Padding(padding: EdgeInsets.only(top: 10)),
                               Container(
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: const [
+                                    Expanded(child:
                                     DefaultTextStyle(
                                       style: TextStyle(
                                         fontSize: 16.0,
                                         color: Colors.black,
                                         fontWeight: FontWeight.bold,
                                       ),
-                                      child: Text("Lampadina"),
+                                      child: Text("Tortillas fritte", textAlign: TextAlign.center),
+                                    ),
                                     ),
                                   ],
                                 ),
@@ -517,11 +562,11 @@ class _AccettaState extends State<Accetta> {
                           ),
                           Column(children: [
                             Container(
-                              margin: const EdgeInsets.all(25),
-                              child: FlatButton(
+                              margin: const EdgeInsets.only(left: 10, right: 10, top: 25, bottom: 25),
+                              child: Expanded(child: FlatButton(
                                 child: const Text(
                                   'Paga',
-                                  style: TextStyle(fontSize: 20.0),
+                                  style: TextStyle(fontSize: 18.0), textAlign: TextAlign.center,
                                 ),
                                 color: Colors.green,
                                 textColor: Colors.white,
@@ -533,10 +578,11 @@ class _AccettaState extends State<Accetta> {
                                       "Filippone",
                                       "Erik",
                                       "50",
-                                      "Lampadina",
+                                      "Tortillas fritte",
                                     ),
                                   );
                                 },
+                              ),
                               ),
                             ),
                           ]),
