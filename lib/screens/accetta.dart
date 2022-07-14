@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 
 import '../widgets/BottomBar.dart';
@@ -51,7 +53,52 @@ class _AccettaState extends State<Accetta> {
             )),
             child: TabBarView(
               children: [
-                Center(
+                Container(
+                  child: PaginatedDataTable(
+                    source: MyData(),
+                    //header: const Text('My Products'),
+                    columns: const [
+                      DataColumn(label: Text('ID')),
+                      DataColumn(label: Text('Name')),
+                      DataColumn(label: Text('Price'))
+                    ],
+                    columnSpacing: 100,
+                    horizontalMargin: 10,
+                    rowsPerPage: 10,
+                    showCheckboxColumn: false,
+                  ),
+                ),
+                Container(
+                  child: PaginatedDataTable(
+                    source: MyData(),
+                    //header: const Text('My Products'),
+                    columns: const [
+                      DataColumn(label: Text('ID')),
+                      DataColumn(label: Text('Name')),
+                      DataColumn(label: Text('Price'))
+                    ],
+                    columnSpacing: 100,
+                    horizontalMargin: 10,
+                    rowsPerPage: 10,
+                    showCheckboxColumn: false,
+                  ),
+                ),
+                Container(
+                  child: PaginatedDataTable(
+                    source: MyData(),
+                    //header: const Text('My Products'),
+                    columns: const [
+                      DataColumn(label: Text('ID')),
+                      DataColumn(label: Text('Name')),
+                      DataColumn(label: Text('Price'))
+                    ],
+                    columnSpacing: 100,
+                    horizontalMargin: 10,
+                    rowsPerPage: 10,
+                    showCheckboxColumn: false,
+                  ),
+                ),
+                /*Center(
                     child: Column(children: <Widget>[
                   Container(
                     margin: const EdgeInsets.all(20),
@@ -79,14 +126,14 @@ class _AccettaState extends State<Accetta> {
                                       ),
                                       child: //TODO: Change to Text('${args.cognome} ${args.nome}')
                                           Text('Fallino Francesco', textAlign: TextAlign.center),
-                                      /*Text((() {
+                                      *//*Text((() {
                                           if(args.nome != ''){
                                             return '${args.cognome} ${args.nome}';
                                           }
                                           else {
                                             return "Fallino Francesco";
                                           }
-                                        })()),*/
+                                        })()),*//*
                                     ),
                                     ),
                                   ],
@@ -590,7 +637,7 @@ class _AccettaState extends State<Accetta> {
                       ],
                     ),
                   ),
-                ])),
+                ])),*/
               ],
             ),
           ),
@@ -598,5 +645,35 @@ class _AccettaState extends State<Accetta> {
         ),
       ),
     );
+  }
+}
+
+class MyData extends DataTableSource {
+  // Generate some made-up data
+  final List<Map<String, dynamic>> __data = List.generate(
+      200,
+          (index) =>
+      {
+        "id": index,
+        "title": "Item $index",
+        "price": Random().nextInt(10000)
+      });
+
+  @override
+  bool get isRowCountApproximate => false;
+
+  @override
+  int get rowCount => __data.length;
+
+  @override
+  int get selectedRowCount => 0;
+
+  @override
+  DataRow getRow(int index) {
+    return DataRow(cells: [
+      DataCell(Text(__data[index]['id'].toString())),
+      DataCell(Text(__data[index]["title"])),
+      DataCell(Text(__data[index]["price"].toString())),
+    ]);
   }
 }

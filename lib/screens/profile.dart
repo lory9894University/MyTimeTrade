@@ -34,6 +34,7 @@ class _ProfileState extends State<Profile> {
     return Scaffold(
       extendBody: true,
       body: Container(
+        height: 1000,
         decoration: BoxDecoration(
             gradient: LinearGradient(
           colors: [
@@ -43,7 +44,7 @@ class _ProfileState extends State<Profile> {
           begin: Alignment.topRight,
           end: Alignment.bottomLeft,
         )),
-        child: Column(
+        child: SingleChildScrollView(child: Column(
           children: <Widget>[
             Padding(padding: EdgeInsets.only(top: 60)),
             Container(
@@ -230,7 +231,9 @@ class _ProfileState extends State<Profile> {
                 ],
               ),
             ),
+            Padding(padding: EdgeInsets.only(top: 80))
           ],
+        ),
         ),
       ),
       bottomNavigationBar: BottomBar(index: index, context: context),
