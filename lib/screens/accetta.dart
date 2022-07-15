@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:data_table_2/data_table_2.dart';
 import 'package:flutter/material.dart';
 
 import '../widgets/BottomBar.dart';
@@ -52,8 +53,129 @@ class _AccettaState extends State<Accetta> {
               end: Alignment.bottomLeft,
             )),
             child: TabBarView(
+              physics: NeverScrollableScrollPhysics(),
               children: [
-                Container(
+                /*Padding(
+                  padding: const EdgeInsets.only(top: 10, left: 5, right: 5, bottom: 80),
+                  child: PaginatedDataTable2(
+                    source: MyData(),
+                    //header: const Text('My Products'),
+                    columns: const [
+                      DataColumn2(label: Text('ID'), size: ColumnSize.S,),
+                      DataColumn2(label: Text('Name'), size: ColumnSize.L,),
+                      DataColumn2(label: Text('Price'))
+                    ],
+                    columnSpacing: 100,
+                    horizontalMargin: 10,
+                    rowsPerPage: 9,
+                    showCheckboxColumn: false,
+                  ),
+                ),*/
+                Padding(
+                  padding: const EdgeInsets.only(top: 10, left: 5, right: 5, bottom: 80),
+                  child: SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: SingleChildScrollView(
+                          scrollDirection: Axis.vertical,
+                          child: DataTable(
+                              columnSpacing: 12,
+                              horizontalMargin: 12,
+                              columns: const [
+                                DataColumn(label: Text('Nome')),
+                                DataColumn(label: Text('Servizio')),
+                                DataColumn(label: Text('Ore')),
+                                DataColumn(label: Text('Conferma')),
+                              ],
+                              rows: List<DataRow>.generate(
+                                  100,
+                                      (index) => DataRow(cells: [
+                                        DataCell(Text('A' * (10 - index % 10))),
+                                        DataCell(Text('B' * (10 - (index + 5) % 10))),
+                                        DataCell(Text('C' * (15 - (index + 5) % 10))),
+                                        DataCell(FlatButton(
+                                          child: const Text(
+                                            'Conferma',
+                                            style: TextStyle(fontSize: 18.0), textAlign: TextAlign.center,
+                                          ),
+                                          color: Colors.green,
+                                          textColor: Colors.white,
+                                          onPressed: () {},
+                                        ),
+                                        ),
+                                      ]
+                                      )
+                              )
+                          )
+                      )
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 10, left: 5, right: 5, bottom: 80),
+                  child: SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: SingleChildScrollView(
+                          scrollDirection: Axis.vertical,
+                          child: DataTable(
+                              columnSpacing: 12,
+                              horizontalMargin: 12,
+                              columns: const [
+                                DataColumn(label: Text('Nome')),
+                                DataColumn(label: Text('Servizio')),
+                                DataColumn(label: Text('Ore')),
+                              ],
+                              rows: List<DataRow>.generate(
+                                  100,
+                                      (index) => DataRow(cells: [
+                                    DataCell(Text('A' * (10 - index % 10))),
+                                    DataCell(Text('B' * (10 - (index + 5) % 10))),
+                                    DataCell(Text('C' * (15 - (index + 5) % 10))),
+                                  ]
+                                  )
+                              )
+                          )
+                      )
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 10, left: 5, right: 5, bottom: 80),
+                  child: SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: SingleChildScrollView(
+                          scrollDirection: Axis.vertical,
+                          child: DataTable(
+                              columnSpacing: 12,
+                              horizontalMargin: 12,
+                              columns: const [
+                                DataColumn(label: Text('Nome')),
+                                DataColumn(label: Text('Servizio')),
+                                DataColumn(label: Text('Ore')),
+                                DataColumn(label: Text('Paga')),
+                              ],
+                              rows: List<DataRow>.generate(
+                                  100,
+                                      (index) => DataRow(cells: [
+                                    DataCell(Text('A' * (10 - index % 10))),
+                                    DataCell(Text('B' * (10 - (index + 5) % 10))),
+                                    DataCell(Text('C' * (15 - (index + 5) % 10))),
+                                    DataCell(FlatButton(
+                                      child: const Text(
+                                        'Paga',
+                                        style: TextStyle(fontSize: 18.0), textAlign: TextAlign.center,
+                                      ),
+                                      color: Colors.green,
+                                      textColor: Colors.white,
+                                      onPressed: () {},
+                                    ),
+                                    ),
+                                  ]
+                                  )
+                              )
+                          )
+                      )
+                  ),
+                ),
+                /*Padding(
+                  padding: const EdgeInsets.only(top: 10, left: 5, right: 5, bottom: 80),
                   child: PaginatedDataTable(
                     source: MyData(),
                     //header: const Text('My Products'),
@@ -64,11 +186,12 @@ class _AccettaState extends State<Accetta> {
                     ],
                     columnSpacing: 100,
                     horizontalMargin: 10,
-                    rowsPerPage: 10,
+                    rowsPerPage: 9,
                     showCheckboxColumn: false,
                   ),
                 ),
-                Container(
+                Padding(
+                  padding: const EdgeInsets.only(top: 10, left: 5, right: 5, bottom: 80),
                   child: PaginatedDataTable(
                     source: MyData(),
                     //header: const Text('My Products'),
@@ -79,26 +202,11 @@ class _AccettaState extends State<Accetta> {
                     ],
                     columnSpacing: 100,
                     horizontalMargin: 10,
-                    rowsPerPage: 10,
+                    rowsPerPage: 9,
                     showCheckboxColumn: false,
                   ),
                 ),
-                Container(
-                  child: PaginatedDataTable(
-                    source: MyData(),
-                    //header: const Text('My Products'),
-                    columns: const [
-                      DataColumn(label: Text('ID')),
-                      DataColumn(label: Text('Name')),
-                      DataColumn(label: Text('Price'))
-                    ],
-                    columnSpacing: 100,
-                    horizontalMargin: 10,
-                    rowsPerPage: 10,
-                    showCheckboxColumn: false,
-                  ),
-                ),
-                /*Center(
+                Center(
                     child: Column(children: <Widget>[
                   Container(
                     margin: const EdgeInsets.all(20),
@@ -656,7 +764,7 @@ class MyData extends DataTableSource {
       {
         "id": index,
         "title": "Item $index",
-        "price": Random().nextInt(10000)
+        "price": Random().nextInt(10000),
       });
 
   @override
