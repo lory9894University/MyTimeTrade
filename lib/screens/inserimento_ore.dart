@@ -302,6 +302,7 @@ class _OreState extends State<Ore> {
                               DateTime.now().millisecondsSinceEpoch.toString();
                           final Map<String, Map> updates = {};
                           updates['/transactions/${timestamp}'] = {
+                            "date": DateTime.now().toString().substring(0, 10),
                             "ore": ore,
                             "timestamp": timestamp,
                             "client": global_user_data!.uid,
@@ -357,7 +358,7 @@ class _OreState extends State<Ore> {
                         borderRadius: BorderRadius.circular(20)),
                     child: TextButton(
                       onPressed: () async {
-                        Navigator.of(context).pop();
+                        Navigator.pop(context);
                       },
                       child: const Text('Indietro',
                           style: TextStyle(color: Colors.white, fontSize: 20)),

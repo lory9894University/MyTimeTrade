@@ -106,8 +106,7 @@ class _AccettaState extends State<Accetta> {
                                           color: Colors.black,
                                           fontWeight: FontWeight.bold,
                                         ),
-                                        child:
-                                            Text(transaction['supplier_name']),
+                                        child: Text(transaction['client_name']),
                                       ),
                                     ],
                                   ),
@@ -270,7 +269,9 @@ class _AccettaState extends State<Accetta> {
                                   color: Colors.green,
                                   textColor: Colors.white,
                                   onPressed: () {
-                                    //TODO: implement payment
+                                    Navigator.pushNamed(context, '/swipe',
+                                        arguments: Map<String, String>.from(
+                                            transaction));
                                   },
                                 ),
                               ),

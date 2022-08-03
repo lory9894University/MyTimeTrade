@@ -131,7 +131,7 @@ class _HomePageState extends State<HomePage> {
                                 color: Colors.black,
                                 fontSize: 20),
                             child: Text(
-                                'data: ${transactions[index]["date"]}, importo: ${transactions[index]["amount"]} \n lavoro svolto: ${transactions[index]["description"]}'))),
+                                'data: ${transactions[index]["date"]}, importo: ${transactions[index]["ore"]} \n lavoro svolto: ${transactions[index]["description"]}'))),
                   );
                 },
                 shrinkWrap: true,

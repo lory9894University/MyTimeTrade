@@ -1,5 +1,5 @@
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
-import 'package:mytimetrade/screens/Profile_Passage.dart';
 import 'package:slider_button/slider_button.dart';
 
 class Swipe extends StatefulWidget {
@@ -11,10 +11,12 @@ class _SwipeState extends State<Swipe> {
   int _selectedIndex = 0;
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
-  Profile_Passage args = Profile_Passage('', '', '', '');
+  Map<String, String> args = Map<String, String>.from(
+      {"name": "", "phone": "", "address": "", "interest": ""});
 
   void didChangeDependencies() {
-    args = ModalRoute.of(context)?.settings.arguments as Profile_Passage;
+    args = ModalRoute.of(context)?.settings.arguments as Map<String, String>;
+
     super.didChangeDependencies();
   }
 
@@ -71,7 +73,7 @@ class _SwipeState extends State<Swipe> {
                       color: Colors.black,
                       fontWeight: FontWeight.bold,
                     ),
-                    child: Text(args.ore),
+                    child: Text(args['ore']!),
                   ),
                 ],
               ),
@@ -95,7 +97,7 @@ class _SwipeState extends State<Swipe> {
                       color: Colors.black,
                       fontWeight: FontWeight.bold,
                     ),
-                    child: Text(args.servizio),
+                    child: Text(args["description"]!),
                   ),
                 ],
               ),
@@ -119,7 +121,7 @@ class _SwipeState extends State<Swipe> {
                       color: Colors.black,
                       fontWeight: FontWeight.bold,
                     ),
-                    child: Text("${args.nome} ${args.cognome}"),
+                    child: Text("${args['supplier_name']}"),
                   ),
                 ],
               ),
@@ -133,8 +135,13 @@ class _SwipeState extends State<Swipe> {
                     width: 400,
                     backgroundColor: Colors.white70,
                     highlightedColor: Colors.green,
-                    action: () {
-                      ///Do something here
+                    action: () async {
+                      await updateBalance(args);
+                      FirebaseDatabase.instance
+                          .ref("/transactions/${args['timestamp']}")
+                          .update({
+                        "status": "completed",
+                      });
                       Navigator.of(context).pop();
                     },
                     alignLabel: Alignment(0.1, 0),
@@ -153,53 +160,28 @@ class _SwipeState extends State<Swipe> {
           ],
         ),
       ),
-      /*bottomNavigationBar: CurvedNavigationBar(
-          index: index,
-          backgroundColor: Colors.transparent,
-          height: 60,
-          items: <Widget>[
-            IconButton(
-              iconSize: 30,
-              onPressed: () {
-                Navigator.pushNamed(context, '/amici');
-              },
-              icon: const Icon(Icons.handshake),
-              tooltip: 'Invita i tuoi amici',
-            ),
-            IconButton(
-              iconSize: 30,
-              onPressed: () {
-                Navigator.pushNamed(context, '/accetta');
-              },
-              icon: const Icon(Icons.check_outlined),
-              tooltip: 'Accetta',
-            ),
-            IconButton(
-              iconSize: 30,
-              onPressed: () {
-                Navigator.pushNamed(context, '/');
-              },
-              icon: const Icon(Icons.home),
-              tooltip: 'Home',
-            ),
-            IconButton(
-              iconSize: 30,
-              onPressed: () {
-                Navigator.pushNamed(context, '/profile');
-              },
-              icon: const Icon(Icons.person),
-              tooltip: 'Profilo',
-            ),
-            IconButton(
-              iconSize: 30,
-              onPressed: () {
-                Navigator.pushNamed(context, '/servizi');
-              },
-              icon: const Icon(Icons.map),
-              tooltip: 'Servizi',
-            ),
-          ],
-        )*/
     );
+  }
+
+  Future<void> updateBalance(transaction) async {
+    var event = await FirebaseDatabase.instance
+        .ref("/users/${transaction['client']}")
+        .once();
+    var snap = event.snapshot.value as Map<dynamic, dynamic>;
+    var balance = snap['balance'];
+    var clientBalance = balance - int.parse(transaction['ore']!);
+    FirebaseDatabase.instance
+        .ref("/users/${transaction['client']}")
+        .update({"balance": clientBalance});
+
+    event = await FirebaseDatabase.instance
+        .ref("/users/${transaction['supplier']}")
+        .once();
+    snap = event.snapshot.value as Map<dynamic, dynamic>;
+    balance = snap['balance'];
+    clientBalance = balance + int.parse(transaction['ore']!);
+    FirebaseDatabase.instance
+        .ref("/users/${transaction['supplier']}")
+        .update({"balance": clientBalance});
   }
 }
