@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:geoflutterfire/geoflutterfire.dart';
@@ -19,6 +20,15 @@ class _ServiziElencoState extends State<ServiziElenco> {
   FirebaseFirestore db = FirebaseFirestore.instance;
 
   void checkInterests() async {
+    var connectivityResult = await Connectivity().checkConnectivity();
+    if (connectivityResult == ConnectivityResult.none) {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          content: Text(
+        'cannot search services while offline',
+        textAlign: TextAlign.center,
+      )));
+      return;
+    }
     FocusManager.instance.primaryFocus?.unfocus();
     showDialog(
         barrierColor: Colors.black.withOpacity(0),

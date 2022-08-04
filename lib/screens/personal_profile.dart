@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:accordion/accordion.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
@@ -45,7 +46,16 @@ class _PersonalProfileState extends State<PersonalProfile> {
     });
   }
 
-  callback() {
+  callback(Map<String, dynamic> interest) async {
+    var connectivityResult = await Connectivity().checkConnectivity();
+    if (connectivityResult == ConnectivityResult.none) {
+      interests.add(interest["interest"]);
+      setState(() {});
+    }
+    didChangeDependencies();
+  }
+
+  callback2() {
     didChangeDependencies();
   }
 
@@ -124,7 +134,7 @@ class _PersonalProfileState extends State<PersonalProfile> {
                                     descriptions: "modifica indirizzo",
                                     img:
                                         Image.asset("assets/img/handshake.png"),
-                                    callback: callback,
+                                    callback: callback2,
                                   );
                                 });
                           },
@@ -209,7 +219,8 @@ class _PersonalProfileState extends State<PersonalProfile> {
                                           onError: (e) => print(
                                               "Error updating document $e"),
                                         );
-                                    didChangeDependencies();
+                                    interests.removeAt(index);
+                                    setState(() {});
                                   }, //TODO: Chiedere conferma eliminazione con dialogBox
                                   title: Center(
                                     child: DefaultTextStyle(

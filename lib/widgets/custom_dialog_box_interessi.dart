@@ -9,7 +9,7 @@ import 'package:mytimetrade/widgets/global.dart';
 class InteressiDialogBox extends StatefulWidget {
   final String title;
   final Image img;
-  final Function() callback;
+  final Function(Map<String, dynamic>) callback;
 
   const InteressiDialogBox(
       {Key? key,
@@ -102,7 +102,7 @@ class _InteressiDialogBoxState extends State<InteressiDialogBox> {
                         'position': myLocation.data,
                       };
                       _firestore.collection('interests').add(interest);
-                      widget.callback();
+                      widget.callback(interest);
                     } else {
                       if (mounted) {
                         ScaffoldMessenger.of(context)

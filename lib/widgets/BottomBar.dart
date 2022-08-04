@@ -16,7 +16,7 @@ class BottomBar extends StatelessWidget {
       index: index,
       backgroundColor: Colors.transparent,
       height: 60,
-      onTap: (index) {
+      onTap: (index) async {
         if (index == 0) {
           Navigator.pushReplacementNamed(context, '/amici');
         } else if (index == 1) {
