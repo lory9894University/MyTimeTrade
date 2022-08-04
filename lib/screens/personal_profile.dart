@@ -125,7 +125,28 @@ class _PersonalProfileState extends State<PersonalProfile> {
                         Padding(padding: EdgeInsets.only(top: 5)),
                         IconButton(
                           icon: const Icon(FontAwesomeIcons.pen, size: 20),
-                          onPressed: () {
+                          onPressed: () async {
+                            var connectivityResult =
+                                await Connectivity().checkConnectivity();
+                            if (connectivityResult == ConnectivityResult.none) {
+                              showDialog(
+                                context: context,
+                                builder: (context) => AlertDialog(
+                                  title: Text('Errore'),
+                                  content: Text(
+                                      'impossibile cambiare indirizzo quando offline'),
+                                  actions: <Widget>[
+                                    FlatButton(
+                                      child: Text('Ok'),
+                                      onPressed: () {
+                                        Navigator.of(context).pop();
+                                      },
+                                    ),
+                                  ],
+                                ),
+                              );
+                              return;
+                            }
                             showDialog(
                                 context: context,
                                 builder: (BuildContext context) {
@@ -168,7 +189,13 @@ class _PersonalProfileState extends State<PersonalProfile> {
                         Padding(padding: EdgeInsets.only(top: 5)),
                         IconButton(
                           icon: const Icon(FontAwesomeIcons.pen, size: 20),
-                          onPressed: () {
+                          onPressed: () async {
+                            var connectivityResult =
+                                await Connectivity().checkConnectivity();
+                            if (connectivityResult == ConnectivityResult.none) {
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(offlineSnackBar);
+                            }
                             FirebaseDatabase.instance
                                 .ref()
                                 .child("users")

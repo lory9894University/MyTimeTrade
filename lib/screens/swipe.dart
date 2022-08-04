@@ -1,6 +1,9 @@
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:slider_button/slider_button.dart';
+
+import '../widgets/global.dart';
 
 class Swipe extends StatefulWidget {
   @override
@@ -14,8 +17,12 @@ class _SwipeState extends State<Swipe> {
   Map<String, String> args = Map<String, String>.from(
       {"name": "", "phone": "", "address": "", "interest": ""});
 
-  void didChangeDependencies() {
+  void didChangeDependencies() async {
     args = ModalRoute.of(context)?.settings.arguments as Map<String, String>;
+    var connectivityResult = await Connectivity().checkConnectivity();
+    if (connectivityResult == ConnectivityResult.none) {
+      ScaffoldMessenger.of(context).showSnackBar(offlineSnackBar);
+    }
 
     super.didChangeDependencies();
   }

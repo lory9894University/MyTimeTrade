@@ -22,11 +22,21 @@ class _ServiziElencoState extends State<ServiziElenco> {
   void checkInterests() async {
     var connectivityResult = await Connectivity().checkConnectivity();
     if (connectivityResult == ConnectivityResult.none) {
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-          content: Text(
-        'cannot search services while offline',
-        textAlign: TextAlign.center,
-      )));
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: Text('Errore'),
+          content: Text('impossibile cercare servizi quando offline'),
+          actions: <Widget>[
+            FlatButton(
+              child: Text('Ok'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        ),
+      );
       return;
     }
     FocusManager.instance.primaryFocus?.unfocus();

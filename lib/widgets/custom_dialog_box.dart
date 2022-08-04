@@ -101,14 +101,6 @@ class _CustomDialogBoxState extends State<CustomDialogBox> {
                           style: TextStyle(fontSize: 18),
                         )),
                   ),
-                  /*Align(
-                alignment: Alignment.bottomRight,
-                child: FlatButton(
-                    onPressed: (){
-                      Navigator.of(context).pop();
-                    },
-                    child: Text(widget.text,style: TextStyle(fontSize: 18),)),
-              ),*/
                 ],
               ),
             ],

@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:geoflutterfire/geoflutterfire.dart';
@@ -112,6 +113,12 @@ class _InteressiDialogBoxState extends State<InteressiDialogBox> {
                           textAlign: TextAlign.center,
                         )));
                       }
+                    }
+                    var connectivityResult =
+                        await Connectivity().checkConnectivity();
+                    if (connectivityResult == ConnectivityResult.none) {
+                      ScaffoldMessenger.of(context)
+                          .showSnackBar(offlineSnackBar);
                     }
                     Navigator.pop(context);
                   },
