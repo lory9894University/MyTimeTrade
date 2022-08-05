@@ -1,8 +1,5 @@
-import 'dart:ui';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:geoflutterfire/geoflutterfire.dart';
 import 'package:localization/localization.dart';
@@ -26,7 +23,7 @@ class InteressiDialogBox extends StatefulWidget {
 
 class _InteressiDialogBoxState extends State<InteressiDialogBox> {
   TextEditingController interessiController = TextEditingController();
-  TextEditingController _controller = TextEditingController();
+  final TextEditingController _controller = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -49,12 +46,12 @@ class _InteressiDialogBoxState extends State<InteressiDialogBox> {
               top: Constants.avatarRadius + Constants.padding,
               right: Constants.padding,
               bottom: Constants.padding),
-          margin: EdgeInsets.only(top: Constants.avatarRadius),
+          margin: const EdgeInsets.only(top: Constants.avatarRadius),
           decoration: BoxDecoration(
               shape: BoxShape.rectangle,
               color: Colors.white,
               borderRadius: BorderRadius.circular(Constants.padding),
-              boxShadow: [
+              boxShadow: const [
                 BoxShadow(
                     color: Colors.black, offset: Offset(0, 10), blurRadius: 10),
               ]),
@@ -63,9 +60,10 @@ class _InteressiDialogBoxState extends State<InteressiDialogBox> {
             children: <Widget>[
               Text(
                 widget.title,
-                style: TextStyle(fontSize: 22, fontWeight: FontWeight.w600),
+                style:
+                    const TextStyle(fontSize: 22, fontWeight: FontWeight.w600),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
               TextField(
@@ -74,7 +72,7 @@ class _InteressiDialogBoxState extends State<InteressiDialogBox> {
                   labelText: "interests".i18n(),
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 22,
               ),
               FlatButton(
@@ -89,17 +87,17 @@ class _InteressiDialogBoxState extends State<InteressiDialogBox> {
                       }
                       return;
                     }
-                    if (global_user_data!.lat != null &&
-                        global_user_data!.lng != null) {
+                    if (globalUserData!.lat != null &&
+                        globalUserData!.lng != null) {
                       final _geo = Geoflutterfire();
                       final _firestore = FirebaseFirestore.instance;
                       GeoFirePoint myLocation = _geo.point(
-                          latitude: global_user_data!.lat!,
-                          longitude: global_user_data!.lng!);
+                          latitude: globalUserData!.lat!,
+                          longitude: globalUserData!.lng!);
                       final interest = <String, dynamic>{
                         'interest': _controller.text,
-                        'user': global_user_data!.name,
-                        'user_id': global_user_data!.uid,
+                        'user': globalUserData!.name,
+                        'user_id': globalUserData!.uid,
                         'position': myLocation.data,
                       };
                       _firestore.collection('interests').add(interest);
@@ -123,7 +121,7 @@ class _InteressiDialogBoxState extends State<InteressiDialogBox> {
                   },
                   child: Text(
                     "add".i18n(),
-                    style: TextStyle(fontSize: 18),
+                    style: const TextStyle(fontSize: 18),
                   )),
             ],
           ),
@@ -135,8 +133,8 @@ class _InteressiDialogBoxState extends State<InteressiDialogBox> {
             backgroundColor: Colors.transparent,
             radius: Constants.avatarRadius,
             child: ClipRRect(
-                borderRadius:
-                    BorderRadius.all(Radius.circular(Constants.avatarRadius)),
+                borderRadius: const BorderRadius.all(
+                    Radius.circular(Constants.avatarRadius)),
                 child: Image.asset("assets/img/handshake.png")),
           ),
         ),

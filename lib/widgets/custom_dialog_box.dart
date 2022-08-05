@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -44,17 +42,17 @@ class _CustomDialogBoxState extends State<CustomDialogBox> {
     return Stack(
       children: <Widget>[
         Container(
-          padding: EdgeInsets.only(
+          padding: const EdgeInsets.only(
               left: Constants.padding,
               top: Constants.avatarRadius + Constants.padding,
               right: Constants.padding,
               bottom: Constants.padding),
-          margin: EdgeInsets.only(top: Constants.avatarRadius),
+          margin: const EdgeInsets.only(top: Constants.avatarRadius),
           decoration: BoxDecoration(
               shape: BoxShape.rectangle,
               color: Colors.white,
               borderRadius: BorderRadius.circular(Constants.padding),
-              boxShadow: [
+              boxShadow: const [
                 BoxShadow(
                     color: Colors.black, offset: Offset(0, 10), blurRadius: 10),
               ]),
@@ -63,9 +61,10 @@ class _CustomDialogBoxState extends State<CustomDialogBox> {
             children: <Widget>[
               Text(
                 widget.title,
-                style: TextStyle(fontSize: 22, fontWeight: FontWeight.w600),
+                style:
+                    const TextStyle(fontSize: 22, fontWeight: FontWeight.w600),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
               TextField(
@@ -74,37 +73,33 @@ class _CustomDialogBoxState extends State<CustomDialogBox> {
                   labelText: "address".i18n(),
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 22,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
                   Expanded(
-                    child: Container(
-                      child: FlatButton(
-                          onPressed: () async {
-                            String address = await currentLocation();
-                            addressController.text = address;
-                            setState(() {});
-                          },
-                          child: Text(
-                            "use current position".i18n(),
-                            style: TextStyle(fontSize: 15),
-                          )),
-                    ),
+                    child: FlatButton(
+                        onPressed: () async {
+                          String address = await currentLocation();
+                          addressController.text = address;
+                          setState(() {});
+                        },
+                        child: Text(
+                          "use current position".i18n(),
+                          style: const TextStyle(fontSize: 15),
+                        )),
                   ),
                   Expanded(
-                    child: Container(
-                      child: FlatButton(
-                          onPressed: () async {
-                            await updateDb(addressController.text);
-                          },
-                          child: Text(
-                            "confirm".i18n(),
-                            style: TextStyle(fontSize: 15),
-                          )),
-                    ),
+                    child: FlatButton(
+                        onPressed: () async {
+                          await updateDb(addressController.text);
+                        },
+                        child: Text(
+                          "confirm".i18n(),
+                          style: const TextStyle(fontSize: 15),
+                        )),
                   ),
                 ],
               ),
@@ -118,8 +113,8 @@ class _CustomDialogBoxState extends State<CustomDialogBox> {
             backgroundColor: Colors.transparent,
             radius: Constants.avatarRadius,
             child: ClipRRect(
-                borderRadius:
-                    BorderRadius.all(Radius.circular(Constants.avatarRadius)),
+                borderRadius: const BorderRadius.all(
+                    Radius.circular(Constants.avatarRadius)),
                 child: Image.asset("assets/img/handshake.png")),
           ),
         ),
@@ -128,7 +123,7 @@ class _CustomDialogBoxState extends State<CustomDialogBox> {
   }
 
   Future<String> currentLocation() async {
-    Location location = new Location();
+    Location location = Location();
     bool _serviceEnabled;
     PermissionStatus _permissionGranted;
     LocationData _locationData;
@@ -159,15 +154,15 @@ class _CustomDialogBoxState extends State<CustomDialogBox> {
       FirebaseDatabase.instance
           .ref()
           .child("users")
-          .child(logged_user!.uid)
+          .child(loggedUser!.uid)
           .update({
         "address": address,
         "lat": location.latitude,
         "lng": location.longitude,
       });
-      global_user_data!.address = addressController.text;
-      global_user_data!.lat = location.latitude;
-      global_user_data!.lng = location.longitude;
+      globalUserData!.address = addressController.text;
+      globalUserData!.lat = location.latitude;
+      globalUserData!.lng = location.longitude;
       widget.callback();
       Navigator.pop(context);
     } catch (e) {

@@ -4,8 +4,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:localization/localization.dart';
 
-User? logged_user;
-UserData? global_user_data;
+User? loggedUser;
+UserData? globalUserData;
 
 final offlineSnackBar = SnackBar(
   duration: const Duration(seconds: 5),
