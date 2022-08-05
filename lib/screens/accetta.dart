@@ -120,12 +120,13 @@ class _AccettaState extends State<Accetta> {
                                             textColor: Colors.white,
                                             onPressed: () async {
                                               var connectivityResult =
-                                              await Connectivity()
-                                                  .checkConnectivity();
+                                                  await Connectivity()
+                                                      .checkConnectivity();
                                               if (connectivityResult ==
                                                   ConnectivityResult.none) {
                                                 ScaffoldMessenger.of(context)
-                                                    .showSnackBar(offlineSnackBar);
+                                                    .showSnackBar(
+                                                        offlineSnackBar);
                                               }
                                               DatabaseReference ref =
                                                   FirebaseDatabase.instance.ref(

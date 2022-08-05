@@ -79,29 +79,31 @@ class _CustomDialogBoxState extends State<CustomDialogBox> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
-                  Expanded(child: Container(
-                    child: FlatButton(
-                        onPressed: () async {
-                          String address = await currentLocation();
-                          addressController.text = address;
-                          setState(() {});
-                        },
-                        child: Text(
-                          "Usa posizione",
-                          style: TextStyle(fontSize: 15),
-                        )),
+                  Expanded(
+                    child: Container(
+                      child: FlatButton(
+                          onPressed: () async {
+                            String address = await currentLocation();
+                            addressController.text = address;
+                            setState(() {});
+                          },
+                          child: Text(
+                            "Usa posizione",
+                            style: TextStyle(fontSize: 15),
+                          )),
+                    ),
                   ),
-                  ),
-                  Expanded(child: Container(
-                    child: FlatButton(
-                        onPressed: () async {
-                          await updateDb(addressController.text);
-                        },
-                        child: Text(
-                          "Conferma",
-                          style: TextStyle(fontSize: 15),
-                        )),
-                  ),
+                  Expanded(
+                    child: Container(
+                      child: FlatButton(
+                          onPressed: () async {
+                            await updateDb(addressController.text);
+                          },
+                          child: Text(
+                            "Conferma",
+                            style: TextStyle(fontSize: 15),
+                          )),
+                    ),
                   ),
                 ],
               ),
