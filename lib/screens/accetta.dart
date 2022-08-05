@@ -1,7 +1,4 @@
 import 'package:firebase_database/firebase_database.dart';
-import 'dart:math';
-
-import 'package:data_table_2/data_table_2.dart';
 import 'package:flutter/material.dart';
 import 'package:mytimetrade/widgets/global.dart';
 
@@ -86,24 +83,9 @@ class _AccettaState extends State<Accetta> {
             child: TabBarView(
               physics: NeverScrollableScrollPhysics(),
               children: [
-                /*Padding(
-                  padding: const EdgeInsets.only(top: 10, left: 5, right: 5, bottom: 80),
-                  child: PaginatedDataTable2(
-                    source: MyData(),
-                    //header: const Text('My Products'),
-                    columns: const [
-                      DataColumn2(label: Text('ID'), size: ColumnSize.S,),
-                      DataColumn2(label: Text('Name'), size: ColumnSize.L,),
-                      DataColumn2(label: Text('Price'))
-                    ],
-                    columnSpacing: 100,
-                    horizontalMargin: 10,
-                    rowsPerPage: 9,
-                    showCheckboxColumn: false,
-                  ),
-                ),*/
                 Padding(
-                  padding: const EdgeInsets.only(top: 10, left: 5, right: 5, bottom: 80),
+                  padding: const EdgeInsets.only(
+                      top: 10, left: 5, right: 5, bottom: 80),
                   child: SingleChildScrollView(
                       scrollDirection: Axis.horizontal,
                       child: SingleChildScrollView(
@@ -118,30 +100,37 @@ class _AccettaState extends State<Accetta> {
                                 DataColumn(label: Text('Conferma')),
                               ],
                               rows: List<DataRow>.generate(
-                                  100,
-                                      (index) => DataRow(cells: [
-                                        DataCell(Text('A' * (10 - index % 10))),
-                                        DataCell(Text('B' * (10 - (index + 5) % 10))),
-                                        DataCell(Text('C' * (15 - (index + 5) % 10))),
-                                        DataCell(FlatButton(
-                                          child: const Text(
-                                            'Conferma',
-                                            style: TextStyle(fontSize: 18.0), textAlign: TextAlign.center,
+                                  transactionsPending.length,
+                                  (index) => DataRow(cells: [
+                                        DataCell(Text(transactionsPending[index]
+                                            ['client_name'])),
+                                        DataCell(Text(transactionsPending[index]
+                                            ['description'])),
+                                        DataCell(Text(
+                                            transactionsPending[index]['ore'])),
+                                        DataCell(
+                                          FlatButton(
+                                            child: const Text(
+                                              'Conferma',
+                                              style: TextStyle(fontSize: 18.0),
+                                              textAlign: TextAlign.center,
+                                            ),
+                                            color: Colors.green,
+                                            textColor: Colors.white,
+                                            onPressed: () {
+                                              DatabaseReference ref =
+                                                  FirebaseDatabase.instance.ref(
+                                                      'transactions/${transactionsPending[index]['timestamp']}');
+                                              ref.update({'status': 'working'});
+                                              didChangeDependencies();
+                                            },
                                           ),
-                                          color: Colors.green,
-                                          textColor: Colors.white,
-                                          onPressed: () {},
                                         ),
-                                        ),
-                                      ]
-                                      )
-                              )
-                          )
-                      )
-                  ),
+                                      ]))))),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(top: 10, left: 5, right: 5, bottom: 80),
+                  padding: const EdgeInsets.only(
+                      top: 10, left: 5, right: 5, bottom: 80),
                   child: SingleChildScrollView(
                       scrollDirection: Axis.horizontal,
                       child: SingleChildScrollView(
@@ -155,20 +144,22 @@ class _AccettaState extends State<Accetta> {
                                 DataColumn(label: Text('Ore')),
                               ],
                               rows: List<DataRow>.generate(
-                                  100,
-                                      (index) => DataRow(cells: [
-                                    DataCell(Text('A' * (10 - index % 10))),
-                                    DataCell(Text('B' * (10 - (index + 5) % 10))),
-                                    DataCell(Text('C' * (15 - (index + 5) % 10))),
-                                  ]
-                                  )
-                              )
-                          )
-                      )
-                  ),
+                                  transactionsAccepted.length,
+                                  (index) => DataRow(cells: [
+                                        DataCell(Text(
+                                            transactionsAccepted[index]
+                                                ['client_name'])),
+                                        DataCell(Text(
+                                            transactionsAccepted[index]
+                                                ['description'])),
+                                        DataCell(Text(
+                                            transactionsAccepted[index]
+                                                ['ore'])),
+                                      ]))))),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(top: 10, left: 5, right: 5, bottom: 80),
+                  padding: const EdgeInsets.only(
+                      top: 10, left: 5, right: 5, bottom: 80),
                   child: SingleChildScrollView(
                       scrollDirection: Axis.horizontal,
                       child: SingleChildScrollView(
@@ -183,261 +174,35 @@ class _AccettaState extends State<Accetta> {
                                 DataColumn(label: Text('Paga')),
                               ],
                               rows: List<DataRow>.generate(
-                                  100,
-                                      (index) => DataRow(cells: [
-                                    DataCell(Text('A' * (10 - index % 10))),
-                                    DataCell(Text('B' * (10 - (index + 5) % 10))),
-                                    DataCell(Text('C' * (15 - (index + 5) % 10))),
-                                    DataCell(FlatButton(
-                                      child: const Text(
-                                        'Paga',
-                                        style: TextStyle(fontSize: 18.0), textAlign: TextAlign.center,
-                                      ),
-                                      color: Colors.green,
-                                      textColor: Colors.white,
-                                      onPressed: () {},
-                                    ),
-                                    ),
-                                  ]
-                                  )
-                              )
-                          )
-                      )
-                  ),
-                );
-                /*Padding(
-                  padding: const EdgeInsets.only(top: 10, left: 5, right: 5, bottom: 80),
-                  child: PaginatedDataTable(
-                    source: MyData(),
-                    //header: const Text('My Products'),
-                    columns: const [
-                      DataColumn(label: Text('ID')),
-                      DataColumn(label: Text('Name')),
-                      DataColumn(label: Text('Price'))
-                    ],
-                    columnSpacing: 100,
-                    horizontalMargin: 10,
-                    rowsPerPage: 9,
-                    showCheckboxColumn: false,
-                  ),
+                                  transactionsToPay.length,
+                                  (index) => DataRow(cells: [
+                                        DataCell(Text(transactionsToPay[index]
+                                            ['client_name'])),
+                                        DataCell(Text(transactionsToPay[index]
+                                            ['description'])),
+                                        DataCell(Text(
+                                            transactionsToPay[index]['ore'])),
+                                        DataCell(
+                                          FlatButton(
+                                            child: const Text(
+                                              'Paga',
+                                              style: TextStyle(fontSize: 18.0),
+                                              textAlign: TextAlign.center,
+                                            ),
+                                            color: Colors.green,
+                                            textColor: Colors.white,
+                                            onPressed: () {
+                                              Navigator.pushNamed(
+                                                  context, '/swipe',
+                                                  arguments:
+                                                      Map<String, String>.from(
+                                                          transactionsToPay[
+                                                              index]));
+                                            },
+                                          ),
+                                        ),
+                                      ]))))),
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 10, left: 5, right: 5, bottom: 80),
-                  child: PaginatedDataTable(
-                    source: MyData(),
-                    //header: const Text('My Products'),
-                    columns: const [
-                      DataColumn(label: Text('ID')),
-                      DataColumn(label: Text('Name')),
-                      DataColumn(label: Text('Price'))
-                    ],
-                    columnSpacing: 100,
-                    horizontalMargin: 10,
-                    rowsPerPage: 9,
-                    showCheckboxColumn: false,
-                  ),
-                ),
-                Center(
-                    child: Column(children: <Widget>[
-                  Container(
-                    margin: const EdgeInsets.all(20),
-                    child: Table(
-                      defaultVerticalAlignment:
-                          TableCellVerticalAlignment.middle,
-                      border: TableBorder.all(
-                          color: Colors.black,
-                          style: BorderStyle.solid,
-                          width: 2),
-                      children: [
-                        for (var transaction in transactionsPending)
-                          TableRow(children: [
-                            Column(
-                              children: <Widget>[
-                                Container(
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      DefaultTextStyle(
-                                        style: TextStyle(
-                                          fontSize: 20.0,
-                                          color: Colors.black,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                        child: Text(transaction['client_name']),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                Container(
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      DefaultTextStyle(
-                                        style: TextStyle(
-                                          fontSize: 16.0,
-                                          color: Colors.black,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                        child: Text(transaction['description']),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            ),
-                            Column(children: [
-                              Container(
-                                margin: const EdgeInsets.all(25),
-                                child: FlatButton(
-                                  child: const Text(
-                                    'Conferma',
-                                    style: TextStyle(fontSize: 20.0),
-                                  ),
-                                  color: Colors.green,
-                                  textColor: Colors.white,
-                                  onPressed: () {
-                                    DatabaseReference ref =
-                                        FirebaseDatabase.instance.ref(
-                                            'transactions/${transaction['timestamp']}');
-                                    ref.update({'status': 'working'});
-                                    didChangeDependencies();
-                                  },
-                                ),
-                              ),
-                            ]),
-                          ]),
-                      ],
-                    ),
-                  ),
-                ])),
-                Center(
-                    child: Column(children: <Widget>[
-                  Container(
-                    margin: const EdgeInsets.all(20),
-                    child: Table(
-                      defaultVerticalAlignment:
-                          TableCellVerticalAlignment.middle,
-                      border: TableBorder.all(
-                          color: Colors.black,
-                          style: BorderStyle.solid,
-                          width: 2),
-                      children: [
-                        for (var transaction in transactionsAccepted)
-                          TableRow(children: [
-                            Column(
-                              children: <Widget>[
-                                Container(
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      DefaultTextStyle(
-                                        style: TextStyle(
-                                          fontSize: 20.0,
-                                          color: Colors.black,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                        child:
-                                            Text(transaction['supplier_name']),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            ),
-                            Column(children: [
-                              Container(
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    DefaultTextStyle(
-                                      style: TextStyle(
-                                        fontSize: 16.0,
-                                        color: Colors.black,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                      child: Text(transaction['description']),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ]),
-                          ]),
-                      ],
-                    ),
-                  ),
-                ])),
-                Center(
-                    child: Column(children: <Widget>[
-                  Container(
-                    margin: const EdgeInsets.all(20),
-                    child: Table(
-                      defaultVerticalAlignment:
-                      TableCellVerticalAlignment.middle,
-                      border: TableBorder.all(
-                          color: Colors.black,
-                          style: BorderStyle.solid,
-                          width: 2),
-                      children: [
-                        for (var transaction in transactionsToPay)
-                          TableRow(children: [
-                            Column(
-                              children: <Widget>[
-                                Container(
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      DefaultTextStyle(
-                                        style: TextStyle(
-                                          fontSize: 20.0,
-                                          color: Colors.black,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                        child:
-                                            Text(transaction['supplier_name']),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                Container(
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      DefaultTextStyle(
-                                        style: TextStyle(
-                                          fontSize: 16.0,
-                                          color: Colors.black,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                        child: Text(transaction['description']),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            ),
-                            Column(children: [
-                              Container(
-                                margin: const EdgeInsets.all(25),
-                                child: FlatButton(
-                                  child: const Text(
-                                    'Paga',
-                                    style: TextStyle(fontSize: 20.0),
-                                  ),
-                                  color: Colors.green,
-                                  textColor: Colors.white,
-                                  onPressed: () {
-                                    Navigator.pushNamed(context, '/swipe',
-                                        arguments: Map<String, String>.from(
-                                            transaction));
-                                  },
-                                ),
-                              ),
-                            ]),
-                          ]),
-                      ],
-                    ),
-                  ),
-                ])),
               ],
             ),
           ),

@@ -1,8 +1,6 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:share_plus/share_plus.dart';
-import 'package:url_launcher/url_launcher.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
 import '../widgets/BottomBar.dart';
@@ -23,7 +21,9 @@ class _ProfileState extends State<Profile> {
 
   void launchWhatsapp({required number, required message}) async {
     String url = "whatsapp://send?phone=$number&text=$message";
-    await canLaunchUrlString(url) ? launchUrlString(url) : print("Errore: fallimento totale");
+    await canLaunchUrlString(url)
+        ? launchUrlString(url)
+        : print("Errore: fallimento totale");
   }
 
   @override
@@ -41,148 +41,150 @@ class _ProfileState extends State<Profile> {
           begin: Alignment.topRight,
           end: Alignment.bottomLeft,
         )),
-        child: SingleChildScrollView(child: Column(
-          children: <Widget>[
-            const Padding(padding: EdgeInsets.only(top: 60)),
-            Container(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: <Widget>[
-                  const Icon(Icons.person, size: 35),
-                  DefaultTextStyle(
-                      style: const TextStyle(
-                        fontSize: 27.0,
+        child: SingleChildScrollView(
+          child: Column(
+            children: <Widget>[
+              const Padding(padding: EdgeInsets.only(top: 60)),
+              Container(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: <Widget>[
+                    const Icon(Icons.person, size: 35),
+                    DefaultTextStyle(
+                        style: const TextStyle(
+                          fontSize: 27.0,
+                          color: Colors.black,
+                        ),
+                        child: Text('${args['name']}'))
+                  ],
+                ),
+              ),
+              const Padding(padding: EdgeInsets.only(top: 100)),
+              Container(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: const [
+                    DefaultTextStyle(
+                      style: TextStyle(
+                        fontSize: 20.0,
                         color: Colors.black,
+                        fontWeight: FontWeight.bold,
                       ),
-                      child: Text('${args['name']}'))
-                ],
-              ),
-            ),
-            const Padding(padding: EdgeInsets.only(top: 100)),
-            Container(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: const [
-                  DefaultTextStyle(
-                    style: TextStyle(
-                      fontSize: 20.0,
-                      color: Colors.black,
-                      fontWeight: FontWeight.bold,
+                      child: Text("Indirizzo"),
                     ),
-                    child: Text("Indirizzo"),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
-            const Padding(padding: EdgeInsets.only(top: 15)),
-            Container(
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Container(
-                    constraints:
-                        const BoxConstraints(minWidth: 100, maxWidth: 350),
-                    child: DefaultTextStyle(
-                      style: const TextStyle(
-                        fontStyle: FontStyle.italic,
-                        fontSize: 15.0,
+              const Padding(padding: EdgeInsets.only(top: 15)),
+              Container(
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Container(
+                      constraints:
+                          const BoxConstraints(minWidth: 100, maxWidth: 350),
+                      child: DefaultTextStyle(
+                        style: const TextStyle(
+                          fontStyle: FontStyle.italic,
+                          fontSize: 15.0,
+                          color: Colors.black,
+                        ),
+                        child: Text('${args['address']}'),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              const Padding(padding: EdgeInsets.only(top: 30)),
+              Container(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: const [
+                    DefaultTextStyle(
+                      style: TextStyle(
+                        fontSize: 20.0,
                         color: Colors.black,
+                        fontWeight: FontWeight.bold,
                       ),
-                      child: Text('${args['address']}'),
+                      child: Text("Telefono"),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
-            const Padding(padding: EdgeInsets.only(top: 30)),
-            Container(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: const [
-                  DefaultTextStyle(
-                    style: TextStyle(
-                      fontSize: 20.0,
-                      color: Colors.black,
-                      fontWeight: FontWeight.bold,
+              const Padding(padding: EdgeInsets.only(top: 15)),
+              Container(
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Container(
+                      constraints:
+                          const BoxConstraints(minWidth: 100, maxWidth: 350),
+                      child: DefaultTextStyle(
+                        style: const TextStyle(
+                          fontStyle: FontStyle.italic,
+                          fontSize: 15.0,
+                          color: Colors.black,
+                        ),
+                        child: Text('${args['phone']}'),
+                      ),
                     ),
-                    child: Text("Telefono"),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
-            const Padding(padding: EdgeInsets.only(top: 15)),
-            Container(
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Container(
-                    constraints:
-                        const BoxConstraints(minWidth: 100, maxWidth: 350),
-                    child: DefaultTextStyle(
-                      style: const TextStyle(
-                        fontStyle: FontStyle.italic,
-                        fontSize: 15.0,
+              const Padding(padding: EdgeInsets.only(top: 30)),
+              Container(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: const [
+                    DefaultTextStyle(
+                      style: TextStyle(
+                        fontSize: 20.0,
                         color: Colors.black,
+                        fontWeight: FontWeight.bold,
                       ),
-                      child: Text('${args['phone']}'),
+                      child: Text("lavoro richiesto"),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
-            const Padding(padding: EdgeInsets.only(top: 30)),
-            Container(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: const [
-                  DefaultTextStyle(
-                    style: TextStyle(
-                      fontSize: 20.0,
-                      color: Colors.black,
-                      fontWeight: FontWeight.bold,
-                    ),
-                    child: Text("lavoro richiesto"),
-                  ),
-                ],
-              ),
-            ),
-            const Padding(padding: EdgeInsets.only(top: 15)),
-            Container(
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Container(
-                    //constraints: BoxConstraints(minWidth: 100, maxWidth: 350),
-                    child: DefaultTextStyle(
-                      style: const TextStyle(
-                        fontStyle: FontStyle.italic,
-                        fontSize: 15.0,
-                        color: Colors.black,
+              const Padding(padding: EdgeInsets.only(top: 15)),
+              Container(
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Container(
+                      //constraints: BoxConstraints(minWidth: 100, maxWidth: 350),
+                      child: DefaultTextStyle(
+                        style: const TextStyle(
+                          fontStyle: FontStyle.italic,
+                          fontSize: 15.0,
+                          color: Colors.black,
+                        ),
+                        child: Text("${args['interest']}"),
                       ),
-                      child: Text("${args['interest']}"),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
-            const Padding(padding: EdgeInsets.only(top: 100)),
-            Container(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: <Widget>[
-                  Container(
-                    height: 50,
-                    width: 130,
-                    decoration: BoxDecoration(
-                        color: Colors.blue,
-                        borderRadius: BorderRadius.circular(20)),
-                    child: TextButton(
-                      onPressed: () async {
-                        launchWhatsapp(number: 3425934167, message: "hahahahahah");
-                        /*User? user = await AuthOperation.registerUserAndSignIn(
+              const Padding(padding: EdgeInsets.only(top: 100)),
+              Container(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: <Widget>[
+                    Container(
+                      height: 50,
+                      width: 130,
+                      decoration: BoxDecoration(
+                          color: Colors.blue,
+                          borderRadius: BorderRadius.circular(20)),
+                      child: TextButton(
+                        onPressed: () async {
+                          launchWhatsapp(
+                              number: 3425934167, message: "hahahahahah");
+                          /*User? user = await AuthOperation.registerUserAndSignIn(
                           emailController.text, passwordController.text);
                       if (user != null) {
                         Navigator.pushReplacementNamed(context, '/', arguments: user);
@@ -191,36 +193,36 @@ class _ProfileState extends State<Profile> {
                         Share.share(
                             "Ciao! Ti contatto dall'applicazione MyTimeTrade per quel " +
                                 lavoro); */
-                      }
-                      child: const Text(
-                        'Contatta',
-                        style: TextStyle(color: Colors.white, fontSize: 25),
+                        },
+                        child: const Text(
+                          'Contatta',
+                          style: TextStyle(color: Colors.white, fontSize: 25),
+                        ),
                       ),
                     ),
-                  ),
-                  Container(
-                    height: 50,
-                    width: 160,
-                    decoration: BoxDecoration(
-                        color: Colors.blue,
-                        borderRadius: BorderRadius.circular(20)),
-                    child: TextButton(
-                      onPressed: () {
-                        //TODO: mi piacerebbe aggiungere una nuova casella di testo per inserire informazioni aggiuntive
-                        Navigator.pushNamed(context, '/ore', arguments: args);
-                      },
-                      child: const Text(
-                        'Richiedi ore',
-                        style: TextStyle(color: Colors.white, fontSize: 25),
+                    Container(
+                      height: 50,
+                      width: 160,
+                      decoration: BoxDecoration(
+                          color: Colors.blue,
+                          borderRadius: BorderRadius.circular(20)),
+                      child: TextButton(
+                        onPressed: () {
+                          //TODO: mi piacerebbe aggiungere una nuova casella di testo per inserire informazioni aggiuntive
+                          Navigator.pushNamed(context, '/ore', arguments: args);
+                        },
+                        child: const Text(
+                          'Richiedi ore',
+                          style: TextStyle(color: Colors.white, fontSize: 25),
+                        ),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
-            Padding(padding: EdgeInsets.only(top: 80))
-          ],
-        ),
+              Padding(padding: EdgeInsets.only(top: 80))
+            ],
+          ),
         ),
       ),
       bottomNavigationBar: BottomBar(index: index, context: context),
