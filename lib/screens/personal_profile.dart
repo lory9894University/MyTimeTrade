@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:accordion/accordion.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
@@ -45,7 +46,16 @@ class _PersonalProfileState extends State<PersonalProfile> {
     });
   }
 
-  callback() {
+  callback(Map<String, dynamic> interest) async {
+    var connectivityResult = await Connectivity().checkConnectivity();
+    if (connectivityResult == ConnectivityResult.none) {
+      interests.add(interest["interest"]);
+      setState(() {});
+    }
+    didChangeDependencies();
+  }
+
+  callback2() {
     didChangeDependencies();
   }
 
@@ -119,7 +129,28 @@ class _PersonalProfileState extends State<PersonalProfile> {
                     const Padding(padding: EdgeInsets.only(top: 5)),
                     IconButton(
                       icon: const Icon(FontAwesomeIcons.pen, size: 20),
-                      onPressed: () {
+                      onPressed: () async {
+                        var connectivityResult =
+                            await Connectivity().checkConnectivity();
+                        if (connectivityResult == ConnectivityResult.none) {
+                          showDialog(
+                            context: context,
+                            builder: (context) => AlertDialog(
+                              title: Text('Errore'),
+                              content: Text(
+                                  'impossibile cambiare indirizzo quando offline'),
+                              actions: <Widget>[
+                                FlatButton(
+                                  child: Text('Ok'),
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                  },
+                                ),
+                              ],
+                            ),
+                          );
+                          return;
+                        }
                         showDialog(
                             context: context,
                             builder: (BuildContext context) {
@@ -128,7 +159,7 @@ class _PersonalProfileState extends State<PersonalProfile> {
                                 descriptions: "modifica indirizzo",
                                 img:
                                 Image.asset("assets/img/handshake.png"),
-                                callback: callback,
+                                callback: callback2,
                               );
                             });
                       },
@@ -165,6 +196,7 @@ class _PersonalProfileState extends State<PersonalProfile> {
                     controller: phoneController,
                       decoration: const InputDecoration(
                         border: OutlineInputBorder(),
+                        labelText: 'Telefono',
                         hintText: '##########',
                         prefixText: '+ 39',
                       ),
@@ -172,7 +204,13 @@ class _PersonalProfileState extends State<PersonalProfile> {
                     const Padding(padding: EdgeInsets.only(top: 5)),
                     IconButton(
                       icon: const Icon(FontAwesomeIcons.check, size: 20),
-                      onPressed: () {
+                      onPressed: () async {
+                        var connectivityResult =
+                        await Connectivity().checkConnectivity();
+                        if (connectivityResult == ConnectivityResult.none) {
+                          ScaffoldMessenger.of(context)
+                              .showSnackBar(offlineSnackBar);
+                        }
                         FirebaseDatabase.instance
                             .ref()
                             .child("users")
@@ -232,8 +270,9 @@ class _PersonalProfileState extends State<PersonalProfile> {
                                   onError: (e) => print(
                                       "Error updating document $e"),
                                 );
-                                didChangeDependencies();
-                              }, //TODO: Chiedere conferma eliminazione con dialogBox
+                                interests.removeAt(index);
+                                setState(() {});
+                                }, //TODO: Chiedere conferma eliminazione con dialogBox
                               title: Center(
                                 child: DefaultTextStyle(
                                     style: const TextStyle(

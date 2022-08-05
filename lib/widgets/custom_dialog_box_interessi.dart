@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:geoflutterfire/geoflutterfire.dart';
@@ -9,7 +10,7 @@ import 'package:mytimetrade/widgets/global.dart';
 class InteressiDialogBox extends StatefulWidget {
   final String title;
   final Image img;
-  final Function() callback;
+  final Function(Map<String, dynamic>) callback;
 
   const InteressiDialogBox(
       {Key? key,
@@ -102,7 +103,7 @@ class _InteressiDialogBoxState extends State<InteressiDialogBox> {
                         'position': myLocation.data,
                       };
                       _firestore.collection('interests').add(interest);
-                      widget.callback();
+                      widget.callback(interest);
                     } else {
                       if (mounted) {
                         ScaffoldMessenger.of(context)
@@ -112,6 +113,12 @@ class _InteressiDialogBoxState extends State<InteressiDialogBox> {
                           textAlign: TextAlign.center,
                         )));
                       }
+                    }
+                    var connectivityResult =
+                        await Connectivity().checkConnectivity();
+                    if (connectivityResult == ConnectivityResult.none) {
+                      ScaffoldMessenger.of(context)
+                          .showSnackBar(offlineSnackBar);
                     }
                     Navigator.pop(context);
                   },

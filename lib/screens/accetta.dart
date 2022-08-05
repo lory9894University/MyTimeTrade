@@ -1,3 +1,4 @@
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:mytimetrade/widgets/global.dart';
@@ -117,7 +118,15 @@ class _AccettaState extends State<Accetta> {
                                             ),
                                             color: Colors.green,
                                             textColor: Colors.white,
-                                            onPressed: () {
+                                            onPressed: () async {
+                                              var connectivityResult =
+                                              await Connectivity()
+                                                  .checkConnectivity();
+                                              if (connectivityResult ==
+                                                  ConnectivityResult.none) {
+                                                ScaffoldMessenger.of(context)
+                                                    .showSnackBar(offlineSnackBar);
+                                              }
                                               DatabaseReference ref =
                                                   FirebaseDatabase.instance.ref(
                                                       'transactions/${transactionsPending[index]['timestamp']}');

@@ -1,3 +1,4 @@
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_signin_button/button_list.dart';
@@ -102,7 +103,7 @@ class _LoginPageState extends State<LoginPage> {
                                   email: emailController.text,
                                   password: passwordController.text,
                                   context: context)
-                              .then((user) {
+                              .then((user) async {
                             // ritorna null se l'autenticazione non è riuscita
                             if (user != null) {
                               if (mounted) {
@@ -112,12 +113,24 @@ class _LoginPageState extends State<LoginPage> {
                               }
                             } else {
                               if (mounted) {
-                                ScaffoldMessenger.of(context)
-                                    .showSnackBar(const SnackBar(
-                                        content: Text(
-                                  'wrong username or password',
-                                  textAlign: TextAlign.center,
-                                )));
+                                var connectivityResult =
+                                    await Connectivity().checkConnectivity();
+                                if (connectivityResult ==
+                                    ConnectivityResult.none) {
+                                  ScaffoldMessenger.of(context)
+                                      .showSnackBar(const SnackBar(
+                                          content: Text(
+                                    'cannot login while offline',
+                                    textAlign: TextAlign.center,
+                                  )));
+                                } else {
+                                  ScaffoldMessenger.of(context)
+                                      .showSnackBar(const SnackBar(
+                                          content: Text(
+                                    'wrong username or password',
+                                    textAlign: TextAlign.center,
+                                  )));
+                                }
                               }
                             }
                           });

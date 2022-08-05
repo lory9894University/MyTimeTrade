@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:geoflutterfire/geoflutterfire.dart';
@@ -19,6 +20,25 @@ class _ServiziElencoState extends State<ServiziElenco> {
   FirebaseFirestore db = FirebaseFirestore.instance;
 
   void checkInterests() async {
+    var connectivityResult = await Connectivity().checkConnectivity();
+    if (connectivityResult == ConnectivityResult.none) {
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: Text('Errore'),
+          content: Text('impossibile cercare servizi quando offline'),
+          actions: <Widget>[
+            FlatButton(
+              child: Text('Ok'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        ),
+      );
+      return;
+    }
     FocusManager.instance.primaryFocus?.unfocus();
     showDialog(
         barrierColor: Colors.black.withOpacity(0),
