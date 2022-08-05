@@ -1,6 +1,7 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:localization/localization.dart';
 import 'package:mytimetrade/widgets/global.dart';
 
 import '../widgets/BottomBar.dart';
@@ -63,11 +64,11 @@ class _AccettaState extends State<Accetta> {
           extendBody: true,
           appBar: AppBar(
             toolbarHeight: 0.5,
-            bottom: const TabBar(
+            bottom: TabBar(
               tabs: [
-                const Tab(text: "Da accettare"),
-                const Tab(text: "Accettate"),
-                const Tab(text: "Da pagare")
+                Tab(text: "to accept".i18n()),
+                Tab(text: "accepted".i18n()),
+                Tab(text: "to pay".i18n())
               ],
             ),
           ),
@@ -94,11 +95,11 @@ class _AccettaState extends State<Accetta> {
                           child: DataTable(
                               columnSpacing: 12,
                               horizontalMargin: 12,
-                              columns: const [
-                                DataColumn(label: Text('Nome')),
-                                DataColumn(label: Text('Servizio')),
-                                DataColumn(label: Text('Ore')),
-                                DataColumn(label: Text('Conferma')),
+                              columns: [
+                                DataColumn(label: Text('name'.i18n())),
+                                DataColumn(label: Text('service'.i18n())),
+                                DataColumn(label: Text('hours'.i18n())),
+                                DataColumn(label: Text('confirm'.i18n())),
                               ],
                               rows: List<DataRow>.generate(
                                   transactionsPending.length,
@@ -148,10 +149,10 @@ class _AccettaState extends State<Accetta> {
                           child: DataTable(
                               columnSpacing: 12,
                               horizontalMargin: 12,
-                              columns: const [
-                                DataColumn(label: Text('Nome')),
-                                DataColumn(label: Text('Servizio')),
-                                DataColumn(label: Text('Ore')),
+                              columns: [
+                                DataColumn(label: Text('name'.i18n())),
+                                DataColumn(label: Text('service'.i18n())),
+                                DataColumn(label: Text('hours'.i18n())),
                               ],
                               rows: List<DataRow>.generate(
                                   transactionsAccepted.length,
@@ -177,11 +178,11 @@ class _AccettaState extends State<Accetta> {
                           child: DataTable(
                               columnSpacing: 12,
                               horizontalMargin: 12,
-                              columns: const [
-                                DataColumn(label: Text('Nome')),
-                                DataColumn(label: Text('Servizio')),
-                                DataColumn(label: Text('Ore')),
-                                DataColumn(label: Text('Paga')),
+                              columns: [
+                                DataColumn(label: Text('name'.i18n())),
+                                DataColumn(label: Text('service'.i18n())),
+                                DataColumn(label: Text('hours'.i18n())),
+                                DataColumn(label: Text('confirm'.i18n())),
                               ],
                               rows: List<DataRow>.generate(
                                   transactionsToPay.length,
@@ -194,8 +195,8 @@ class _AccettaState extends State<Accetta> {
                                             transactionsToPay[index]['ore'])),
                                         DataCell(
                                           FlatButton(
-                                            child: const Text(
-                                              'Paga',
+                                            child: Text(
+                                              'pay'.i18n(),
                                               style: TextStyle(fontSize: 18.0),
                                               textAlign: TextAlign.center,
                                             ),

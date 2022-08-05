@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:localization/localization.dart';
 
 class forgotPassword extends StatefulWidget {
   @override
@@ -9,21 +10,19 @@ class forgotPassword extends StatefulWidget {
 class _forgotPasswordState extends State<forgotPassword> {
   TextEditingController emailController = TextEditingController();
   bool _validEmail = true;
-  String _emailError = 'Email is required';
+  String _emailError = 'email required'.i18n();
 
   validateEmail(String value) {
     RegExp regex = RegExp(
         r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$');
     if (value.isEmpty) {
-      _emailError = 'Email is required';
+      _emailError = 'email required'.i18n();
     } else if (!regex.hasMatch(value)) {
-      _emailError = 'Invalid email';
+      _emailError = 'invalid email'.i18n();
     } else {
       _validEmail = true;
-      print("valid email");
       return true;
     }
-    print("invalid email");
 
     _validEmail = false;
     return false;
@@ -37,7 +36,7 @@ class _forgotPasswordState extends State<forgotPassword> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        title: const Text("Recupero password"),
+        title: Text("recover password".i18n()),
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -52,7 +51,7 @@ class _forgotPasswordState extends State<forgotPassword> {
                 decoration: InputDecoration(
                     border: OutlineInputBorder(),
                     labelText: 'Email',
-                    hintText: 'Inserisci la tua mail',
+                    hintText: 'insert email'.i18n(),
                     errorText: _validEmail ? null : _emailError),
               ),
             ),
@@ -79,10 +78,9 @@ class _forgotPasswordState extends State<forgotPassword> {
                       Navigator.pushReplacementNamed(context, '/');
                     } else {
                       if (mounted) {
-                        ScaffoldMessenger.of(context)
-                            .showSnackBar(const SnackBar(
-                                content: Text(
-                          'Utente non registrato',
+                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                            content: Text(
+                          'user not registered'.i18n(),
                           textAlign: TextAlign.center,
                         )));
                       }
@@ -91,8 +89,8 @@ class _forgotPasswordState extends State<forgotPassword> {
                     setState(() => {});
                   }
                 },
-                child: const Text(
-                  'Recupera',
+                child: Text(
+                  'recover'.i18n(),
                   style: TextStyle(color: Colors.white, fontSize: 25),
                 ),
               ),

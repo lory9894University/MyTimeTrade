@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:localization/localization.dart';
 
 import '../widgets/BottomBar.dart';
 import '../widgets/global.dart';
@@ -79,7 +80,7 @@ class _HomePageState extends State<HomePage> {
                         fontSize: 27.0,
                         color: Colors.black,
                       ),
-                      child: Text("Ciao, ${pageData["name"]}!")),
+                      child: Text("hi".i18n() + pageData["name"] + "!")),
                 ],
               ),
             ),
@@ -87,14 +88,14 @@ class _HomePageState extends State<HomePage> {
             Container(
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: const [
+                children: [
                   DefaultTextStyle(
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 20.0,
                       color: Colors.black,
                       fontWeight: FontWeight.bold,
                     ),
-                    child: Text("Il tuo saldo corrente è: "),
+                    child: Text("balance".i18n()),
                   ),
                 ],
               ),
@@ -126,12 +127,21 @@ class _HomePageState extends State<HomePage> {
                     leading: Image.asset('assets/img/handshake.png'),
                     title: Center(
                         child: DefaultTextStyle(
-                            style: TextStyle(
+                            style: const TextStyle(
                                 fontStyle: FontStyle.italic,
                                 color: Colors.black,
                                 fontSize: 20),
-                            child: Text(
-                                'data: ${transactions[index]["date"]}, importo: ${transactions[index]["ore"]} \n lavoro svolto: ${transactions[index]["description"]}'))),
+                            child: Text('date'.i18n() +
+                                ": " +
+                                transactions[index]["date"] +
+                                " , " +
+                                "payment".i18n() +
+                                ": " +
+                                transactions[index]["ore"] +
+                                "\n" +
+                                "service requested".i18n() +
+                                ": " +
+                                transactions[index]["description"]))),
                   );
                 },
                 shrinkWrap: true,
