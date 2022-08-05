@@ -79,7 +79,7 @@ class _CustomDialogBoxState extends State<CustomDialogBox> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
-                  Container(
+                  Expanded(child: Container(
                     child: FlatButton(
                         onPressed: () async {
                           String address = await currentLocation();
@@ -88,18 +88,20 @@ class _CustomDialogBoxState extends State<CustomDialogBox> {
                         },
                         child: Text(
                           "Usa posizione",
-                          style: TextStyle(fontSize: 18),
+                          style: TextStyle(fontSize: 15),
                         )),
                   ),
-                  Container(
+                  ),
+                  Expanded(child: Container(
                     child: FlatButton(
                         onPressed: () async {
                           await updateDb(addressController.text);
                         },
                         child: Text(
                           "Conferma",
-                          style: TextStyle(fontSize: 18),
+                          style: TextStyle(fontSize: 15),
                         )),
+                  ),
                   ),
                   /*Align(
                 alignment: Alignment.bottomRight,

@@ -2,6 +2,8 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:share_plus/share_plus.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 import '../widgets/BottomBar.dart';
 
@@ -19,12 +21,18 @@ class _ProfileState extends State<Profile> {
     super.didChangeDependencies();
   }
 
+  void launchWhatsapp({required number, required message}) async {
+    String url = "whatsapp://send?phone=$number&text=$message";
+    await canLaunchUrlString(url) ? launchUrlString(url) : print("Errore: fallimento totale");
+  }
+
   @override
   Widget build(BuildContext context) {
     var index = 3;
     return Scaffold(
       extendBody: true,
       body: Container(
+        height: 1000,
         decoration: BoxDecoration(
             gradient: LinearGradient(
           colors: [
@@ -34,7 +42,7 @@ class _ProfileState extends State<Profile> {
           begin: Alignment.topRight,
           end: Alignment.bottomLeft,
         )),
-        child: Column(
+        child: SingleChildScrollView(child: Column(
           children: <Widget>[
             Padding(padding: EdgeInsets.only(top: 60)),
             Container(
@@ -172,18 +180,16 @@ class _ProfileState extends State<Profile> {
                         borderRadius: BorderRadius.circular(20)),
                     child: TextButton(
                       onPressed: () async {
+                        launchWhatsapp(number: 3425934167, message: "hahahahahah");
                         /*User? user = await AuthOperation.registerUserAndSignIn(
                           emailController.text, passwordController.text);
                       if (user != null) {
                         Navigator.pushReplacementNamed(context, '/', arguments: user);
-                      }*/
+                      }
                         var lavoro = "lavoro da insegnante di liceo";
                         Share.share(
                             "Ciao! Ti contatto dall'applicazione MyTimeTrade per quel " +
-                                lavoro);
-                        /*var phoneNumber = '3425934167';
-                      var whatsapp_android = "whatsapp://send?phone="+phoneNumber+"&text=hello";
-                      await launchUrl(whatsapp_android);*/
+                                lavoro);*/
                       },
                       child: const Text(
                         'Contatta',
@@ -223,7 +229,9 @@ class _ProfileState extends State<Profile> {
                 ],
               ),
             ),
+            Padding(padding: EdgeInsets.only(top: 80))
           ],
+        ),
         ),
       ),
       bottomNavigationBar: BottomBar(index: index, context: context),
