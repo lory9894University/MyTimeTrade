@@ -1,6 +1,7 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:localization/localization.dart';
 import 'package:slider_button/slider_button.dart';
 
 import '../widgets/global.dart';
@@ -48,14 +49,14 @@ class _SwipeState extends State<Swipe> {
             Container(
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: const [
+                children: [
                   DefaultTextStyle(
                     style: TextStyle(
                       fontSize: 30.0,
                       color: Colors.black,
                       fontWeight: FontWeight.bold,
                     ),
-                    child: Text("Conferma dello scambio ore"),
+                    child: Text("confirm hours exchange".i18n()),
                   ),
                 ],
               ),
@@ -72,7 +73,7 @@ class _SwipeState extends State<Swipe> {
                       color: Colors.black,
                       fontWeight: FontWeight.bold,
                     ),
-                    child: Text("Numero di ore:"),
+                    child: Text("hours requested".i18n() + ":"),
                   ),
                   DefaultTextStyle(
                     style: TextStyle(
@@ -96,7 +97,7 @@ class _SwipeState extends State<Swipe> {
                       color: Colors.black,
                       fontWeight: FontWeight.bold,
                     ),
-                    child: Text("Servizio richiesto:"),
+                    child: Text("service requested".i18n() + ": "),
                   ),
                   DefaultTextStyle(
                     style: TextStyle(
@@ -120,7 +121,7 @@ class _SwipeState extends State<Swipe> {
                       color: Colors.black,
                       fontWeight: FontWeight.bold,
                     ),
-                    child: Text("Da donare a:"),
+                    child: Text("paying to".i18n() + ": "),
                   ),
                   DefaultTextStyle(
                     style: TextStyle(
@@ -153,7 +154,7 @@ class _SwipeState extends State<Swipe> {
                     },
                     alignLabel: Alignment(0.1, 0),
                     label: Text(
-                      "Conferma",
+                      "confirm".i18n(),
                       style: TextStyle(
                           color: Color(0xff4a4a4a),
                           fontWeight: FontWeight.w500,

@@ -3,6 +3,7 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:geoflutterfire/geoflutterfire.dart';
+import 'package:localization/localization.dart';
 import 'package:location/location.dart';
 import 'package:mytimetrade/widgets/global.dart';
 
@@ -25,8 +26,8 @@ class _ServiziElencoState extends State<ServiziElenco> {
       showDialog(
         context: context,
         builder: (context) => AlertDialog(
-          title: Text('Errore'),
-          content: Text('impossibile cercare servizi quando offline'),
+          title: Text('error'.i18n()),
+          content: Text('services offline'.i18n()),
           actions: <Widget>[
             FlatButton(
               child: Text('Ok'),
@@ -113,14 +114,14 @@ class _ServiziElencoState extends State<ServiziElenco> {
               Container(
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: const [
+                  children: [
                     DefaultTextStyle(
                       style: TextStyle(
                         fontSize: 30.0,
                         color: Colors.black,
                         fontWeight: FontWeight.bold,
                       ),
-                      child: Text("Servizi"),
+                      child: Text("services".i18n()),
                     ),
                   ],
                 ),
@@ -134,11 +135,10 @@ class _ServiziElencoState extends State<ServiziElenco> {
                         Center(
                           child: TextField(
                             controller: _controller,
-                            decoration: const InputDecoration(
+                            decoration: InputDecoration(
                               contentPadding:
                                   EdgeInsets.symmetric(horizontal: 40),
-                              hintText:
-                                  'Inserisci la specifica categoria che ti interessa, lascia vuoto per cercare ovunque',
+                              hintText: 'category'.i18n(),
                             ),
                           ),
                         ),
@@ -149,7 +149,7 @@ class _ServiziElencoState extends State<ServiziElenco> {
                       child: ElevatedButton.icon(
                           onPressed: checkInterests,
                           icon: Icon(Icons.search),
-                          label: Text('Cerca'))),
+                          label: Text('search'.i18n())))
                 ],
               ),
               Container(

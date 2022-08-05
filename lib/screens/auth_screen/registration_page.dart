@@ -1,5 +1,6 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:localization/localization.dart';
 import 'package:mytimetrade/firebase/auth_operations.dart';
 
 class RegistrationPage extends StatefulWidget {
@@ -14,8 +15,8 @@ class _RegistrationPageState extends State<RegistrationPage> {
   bool _validPassword = true;
   bool _validEmail = true;
   bool _validUsername = true;
-  String _passwordError = 'Password is required';
-  String _emailError = 'Email is required';
+  String _passwordError = 'password required'.i18n();
+  String _emailError = 'email required'.i18n();
 
   //validate password
   bool validatePassword(String value) {
@@ -23,10 +24,9 @@ class _RegistrationPageState extends State<RegistrationPage> {
     RegExp regex =
         RegExp(r'^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$');
     if (value.isEmpty) {
-      _passwordError = 'Password is required';
+      _passwordError = 'password required'.i18n();
     } else if (!regex.hasMatch(value)) {
-      _passwordError =
-          "Password must contain an upper case letter and a number";
+      _passwordError = "password must contain".i18n();
     } else {
       _validPassword = true;
       return true;
@@ -41,15 +41,13 @@ class _RegistrationPageState extends State<RegistrationPage> {
     RegExp regex = RegExp(
         r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$');
     if (value.isEmpty) {
-      _emailError = 'Email is required';
+      _emailError = 'email required'.i18n();
     } else if (!regex.hasMatch(value)) {
-      _emailError = 'Invalid email';
+      _emailError = 'invalid email'.i18n();
     } else {
       _validEmail = true;
-      print("valid email");
       return true;
     }
-    print("invalid email");
 
     setState(() => {});
     _validEmail = false;
@@ -75,7 +73,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        title: const Text("Registration Page"),
+        title: Text("register".i18n()),
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -91,7 +89,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                 decoration: InputDecoration(
                     border: OutlineInputBorder(),
                     labelText: 'Email',
-                    hintText: 'Enter valid email as abc@gmail.com',
+                    hintText: 'enter email'.i18n(),
                     errorText: _validEmail ? null : _emailError),
               ),
             ),
@@ -104,8 +102,9 @@ class _RegistrationPageState extends State<RegistrationPage> {
                 decoration: InputDecoration(
                     border: OutlineInputBorder(),
                     labelText: 'Username',
-                    hintText: 'Enter creative username',
-                    errorText: _validUsername ? null : 'Username is required'),
+                    hintText: 'enter usename'.i18n(),
+                    errorText:
+                        _validUsername ? null : 'username required'.i18n()),
               ),
             ),
             Padding(
@@ -118,7 +117,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                 decoration: InputDecoration(
                     border: OutlineInputBorder(),
                     labelText: 'Password',
-                    hintText: 'Enter secure password',
+                    hintText: 'Enter secure password'.i18n(),
                     errorText: _validPassword ? null : _passwordError),
               ),
             ),
@@ -154,8 +153,8 @@ class _RegistrationPageState extends State<RegistrationPage> {
                     });
                   }
                 },
-                child: const Text(
-                  'Send',
+                child: Text(
+                  'register'.i18n(),
                   style: TextStyle(color: Colors.white, fontSize: 25),
                 ),
               ),

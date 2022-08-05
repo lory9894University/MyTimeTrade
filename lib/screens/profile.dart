@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:localization/localization.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
 import '../widgets/BottomBar.dart';
@@ -63,14 +64,14 @@ class _ProfileState extends State<Profile> {
               Container(
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: const [
+                  children: [
                     DefaultTextStyle(
                       style: TextStyle(
                         fontSize: 20.0,
                         color: Colors.black,
                         fontWeight: FontWeight.bold,
                       ),
-                      child: Text("Indirizzo"),
+                      child: Text("address".i18n()),
                     ),
                   ],
                 ),
@@ -100,14 +101,14 @@ class _ProfileState extends State<Profile> {
               Container(
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: const [
+                  children: [
                     DefaultTextStyle(
                       style: TextStyle(
                         fontSize: 20.0,
                         color: Colors.black,
                         fontWeight: FontWeight.bold,
                       ),
-                      child: Text("Telefono"),
+                      child: Text("phoneNr".i18n()),
                     ),
                   ],
                 ),
@@ -137,14 +138,14 @@ class _ProfileState extends State<Profile> {
               Container(
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: const [
+                  children: [
                     DefaultTextStyle(
                       style: TextStyle(
                         fontSize: 20.0,
                         color: Colors.black,
                         fontWeight: FontWeight.bold,
                       ),
-                      child: Text("lavoro richiesto"),
+                      child: Text("service requested".i18n()),
                     ),
                   ],
                 ),
@@ -194,8 +195,8 @@ class _ProfileState extends State<Profile> {
                             "Ciao! Ti contatto dall'applicazione MyTimeTrade per quel " +
                                 lavoro); */
                         },
-                        child: const Text(
-                          'Contatta',
+                        child: Text(
+                          'contact'.i18n(),
                           style: TextStyle(color: Colors.white, fontSize: 25),
                         ),
                       ),
@@ -211,8 +212,8 @@ class _ProfileState extends State<Profile> {
                           //TODO: mi piacerebbe aggiungere una nuova casella di testo per inserire informazioni aggiuntive
                           Navigator.pushNamed(context, '/ore', arguments: args);
                         },
-                        child: const Text(
-                          'Richiedi ore',
+                        child: Text(
+                          'request service'.i18n(),
                           style: TextStyle(color: Colors.white, fontSize: 25),
                         ),
                       ),

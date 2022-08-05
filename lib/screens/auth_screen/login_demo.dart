@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_signin_button/button_list.dart';
 import 'package:flutter_signin_button/button_view.dart';
+import 'package:localization/localization.dart';
 import 'package:mytimetrade/firebase/auth_operations.dart';
 
 class LoginPage extends StatefulWidget {
@@ -30,7 +31,7 @@ class _LoginPageState extends State<LoginPage> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        title: const Text("Login Page"),
+        title: const Text("Login"),
       ),
       body: FutureBuilder(
           future: initializeFirebase(),
@@ -59,7 +60,7 @@ class _LoginPageState extends State<LoginPage> {
                       decoration: InputDecoration(
                           border: const OutlineInputBorder(),
                           labelText: 'Email',
-                          hintText: 'Enter email as abc@gmail.com',
+                          hintText: 'enter email'.i18n(),
                           errorText: validator._validEmail
                               ? null
                               : validator._emailError),
@@ -75,18 +76,18 @@ class _LoginPageState extends State<LoginPage> {
                       decoration: InputDecoration(
                           border: const OutlineInputBorder(),
                           labelText: 'Password',
-                          hintText: 'Enter password',
+                          hintText: 'enter password'.i18n(),
                           errorText: validator._validPassword
                               ? null
-                              : "Password is required"),
+                              : "password required".i18n()),
                     ),
                   ),
                   TextButton(
                     onPressed: () {
-                      Navigator.pushReplacementNamed(context, '/lostpw');
+                      Navigator.pushNamed(context, '/lostpw');
                     },
-                    child: const Text(
-                      'Forgot Password',
+                    child: Text(
+                      'forgot password'.i18n(),
                       style: TextStyle(color: Colors.blue, fontSize: 15),
                     ),
                   ),
@@ -118,16 +119,16 @@ class _LoginPageState extends State<LoginPage> {
                                 if (connectivityResult ==
                                     ConnectivityResult.none) {
                                   ScaffoldMessenger.of(context)
-                                      .showSnackBar(const SnackBar(
+                                      .showSnackBar(SnackBar(
                                           content: Text(
-                                    'cannot login while offline',
+                                    'offline login'.i18n(),
                                     textAlign: TextAlign.center,
                                   )));
                                 } else {
                                   ScaffoldMessenger.of(context)
-                                      .showSnackBar(const SnackBar(
+                                      .showSnackBar(SnackBar(
                                           content: Text(
-                                    'wrong username or password',
+                                    'wrong username or password'.i18n(),
                                     textAlign: TextAlign.center,
                                   )));
                                 }
@@ -152,7 +153,7 @@ class _LoginPageState extends State<LoginPage> {
                         borderRadius: BorderRadius.circular(20)),
                     child: SignInButton(
                       Buttons.Google,
-                      text: "Sign up with Google",
+                      text: "Sign up with Google".i18n(),
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(20)),
                       onPressed: () async {
@@ -180,13 +181,13 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                   ),
                   const Padding(padding: EdgeInsets.only(top: 60)),
-                  const Text('Non ti sei ancora registrato?'),
+                  Text('not yet registered?'.i18n()),
                   TextButton(
                     onPressed: () {
                       Navigator.pushNamed(context, '/registration');
                     },
-                    child: const Text(
-                      'Clicca qui, per farlo ora!',
+                    child: Text(
+                      'click here'.i18n(),
                       style: TextStyle(color: Colors.blue, fontSize: 15),
                     ),
                   ),
@@ -207,7 +208,7 @@ class Verificator {
   TextEditingController passwordController;
   bool _validPassword = true;
   bool _validEmail = true;
-  String _emailError = 'Email is required';
+  String _emailError = 'email required'.i18n();
 
   Verificator(TextEditingController this.emailController,
       TextEditingController this.passwordController);
@@ -226,9 +227,9 @@ class Verificator {
     RegExp regex = RegExp(
         r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$');
     if (value.isEmpty) {
-      _emailError = 'Email is required';
+      _emailError = 'email required'.i18n();
     } else if (!regex.hasMatch(value)) {
-      _emailError = 'Invalid email';
+      _emailError = 'invalid email'.i18n();
     } else {
       _validEmail = true;
       return true;

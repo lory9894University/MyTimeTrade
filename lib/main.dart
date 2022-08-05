@@ -1,6 +1,8 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:flutterfire_ui/i10n.dart';
+import 'package:localization/localization.dart';
 import 'package:mytimetrade/screens/auth_screen/forgot_password.dart';
 import 'package:mytimetrade/screens/personal_profile.dart';
 
@@ -28,7 +30,35 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    LocalJsonLocalization.delegate.directories = ['assets/i18n'];
+
     return MaterialApp(
+      supportedLocales: const [
+        Locale("en", "US"),
+        Locale("it", "IT"),
+        Locale("ja", "JP"),
+      ],
+      localeResolutionCallback: (locale, supportedLocales) {
+        if (supportedLocales.contains(locale)) {
+          return locale;
+        }
+
+        // define pt_BR as default when de language code is 'pt'
+        if (locale?.languageCode == 'en') {
+          return Locale('en', 'US');
+        }
+
+        // default language
+        return Locale('en', 'US');
+      },
+      localizationsDelegates: [
+        // delegate from flutter_localization
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+        // delegate from localization package.
+        LocalJsonLocalization.delegate,
+      ],
       title: 'MyTimeTrade',
       debugShowCheckedModeBanner: false,
       initialRoute: '/',
