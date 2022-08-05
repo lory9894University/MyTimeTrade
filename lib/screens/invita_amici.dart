@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:localization/localization.dart';
 import 'package:share_plus/share_plus.dart';
 
 import '../widgets/BottomBar.dart';
@@ -9,7 +10,6 @@ class InvitaAmici extends StatefulWidget {
 }
 
 class _InvitaAmiciState extends State<InvitaAmici> {
-  int _selectedIndex = 0;
   @override
   Widget build(BuildContext context) {
     var index = 0;
@@ -27,139 +27,133 @@ class _InvitaAmiciState extends State<InvitaAmici> {
           )),
           child: Column(
             children: <Widget>[
-              Padding(padding: EdgeInsets.only(top: 60)),
+              const Padding(padding: EdgeInsets.only(top: 60)),
               Container(
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: const [
+                  children: [
                     DefaultTextStyle(
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 30.0,
                         color: Colors.black,
                         fontWeight: FontWeight.bold,
                       ),
-                      child: Text("Invita i tuoi amici!"),
+                      child: Text("invite".i18n()),
                     ),
                   ],
                 ),
               ),
-              Padding(padding: EdgeInsets.only(top: 50)),
-              Container(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: const <Widget>[
-                    DefaultTextStyle(
-                      style: TextStyle(
-                        fontSize: 20.0,
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold,
-                      ),
-                      child: Text("AMICI RIMANENTI: 3"),
+              const Padding(padding: EdgeInsets.only(top: 50)),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: <Widget>[
+                  DefaultTextStyle(
+                    style: const TextStyle(
+                      fontSize: 20.0,
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold,
                     ),
-                  ],
-                ),
-              ),
-              Container(
-                child: Flexible(
-                  child: ListView(
-                    shrinkWrap: true,
-                    children: <Widget>[
-                      ListTile(
-                        tileColor: Colors.green,
-                        dense: true,
-                        shape: RoundedRectangleBorder(
-                            side: BorderSide(color: Colors.black, width: 3),
-                            borderRadius: BorderRadius.circular(10)),
-                        title: const Center(
-                            child: DefaultTextStyle(
-                                style: TextStyle(
-                                    fontStyle: FontStyle.italic,
-                                    color: Colors.white,
-                                    fontSize: 20),
-                                child: Text('Alessandro DeMaria'))),
-                      ),
-                      ListTile(
-                        tileColor: Colors.green,
-                        dense: true,
-                        shape: RoundedRectangleBorder(
-                            side: BorderSide(color: Colors.black, width: 3),
-                            borderRadius: BorderRadius.circular(10)),
-                        title: const Center(
-                            child: DefaultTextStyle(
-                                style: TextStyle(
-                                    fontStyle: FontStyle.italic,
-                                    color: Colors.white,
-                                    fontSize: 20),
-                                child: Text('Filippo Lamberti'))),
-                      ),
-                      ListTile(
-                        tileColor: Colors.red,
-                        dense: true,
-                        shape: RoundedRectangleBorder(
-                            side: BorderSide(color: Colors.black, width: 3),
-                            borderRadius: BorderRadius.circular(10)),
-                        title: const Center(
-                            child: DefaultTextStyle(
-                                style: TextStyle(
-                                    fontStyle: FontStyle.italic,
-                                    color: Colors.white,
-                                    fontSize: 20),
-                                child: Text(''))),
-                      ),
-                      ListTile(
-                        tileColor: Colors.red,
-                        dense: true,
-                        shape: RoundedRectangleBorder(
-                            side: BorderSide(color: Colors.black, width: 3),
-                            borderRadius: BorderRadius.circular(10)),
-                        title: const Center(
-                            child: DefaultTextStyle(
-                                style: TextStyle(
-                                    fontStyle: FontStyle.italic,
-                                    color: Colors.white,
-                                    fontSize: 20),
-                                child: Text(''))),
-                      ),
-                      ListTile(
-                        tileColor: Colors.red,
-                        dense: true,
-                        shape: RoundedRectangleBorder(
-                            side: BorderSide(color: Colors.black, width: 3),
-                            borderRadius: BorderRadius.circular(10)),
-                        title: const Center(
-                            child: DefaultTextStyle(
-                                style: TextStyle(
-                                    fontStyle: FontStyle.italic,
-                                    color: Colors.white,
-                                    fontSize: 20),
-                                child: Text(''))),
-                      ),
-                    ],
+                    child: Text("invited friends".i18n()),
                   ),
-                ),
+                ],
               ),
-              Padding(padding: EdgeInsets.only(top: 60)),
-              Container(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
+              Flexible(
+                child: ListView(
+                  shrinkWrap: true,
                   children: <Widget>[
-                    Container(
-                      height: 50,
-                      width: 150,
-                      decoration: BoxDecoration(
-                          color: Colors.blue,
-                          borderRadius: BorderRadius.circular(20)),
-                      child: TextButton(
-                        onPressed: () async {
-                          Share.share("Questo è il tuo codice per iscriverti!");
-                        },
-                        child: const Text('Condividi!',
-                            style:
-                                TextStyle(color: Colors.white, fontSize: 25)),
-                      ),
+                    ListTile(
+                      tileColor: Colors.green,
+                      dense: true,
+                      shape: RoundedRectangleBorder(
+                          side: const BorderSide(color: Colors.black, width: 3),
+                          borderRadius: BorderRadius.circular(10)),
+                      title: const Center(
+                          child: DefaultTextStyle(
+                              style: TextStyle(
+                                  fontStyle: FontStyle.italic,
+                                  color: Colors.white,
+                                  fontSize: 20),
+                              child: Text('Alessandro DeMaria'))),
+                    ),
+                    ListTile(
+                      tileColor: Colors.green,
+                      dense: true,
+                      shape: RoundedRectangleBorder(
+                          side: const BorderSide(color: Colors.black, width: 3),
+                          borderRadius: BorderRadius.circular(10)),
+                      title: const Center(
+                          child: DefaultTextStyle(
+                              style: TextStyle(
+                                  fontStyle: FontStyle.italic,
+                                  color: Colors.white,
+                                  fontSize: 20),
+                              child: Text('Filippo Lamberti'))),
+                    ),
+                    ListTile(
+                      tileColor: Colors.red,
+                      dense: true,
+                      shape: RoundedRectangleBorder(
+                          side: const BorderSide(color: Colors.black, width: 3),
+                          borderRadius: BorderRadius.circular(10)),
+                      title: const Center(
+                          child: DefaultTextStyle(
+                              style: TextStyle(
+                                  fontStyle: FontStyle.italic,
+                                  color: Colors.white,
+                                  fontSize: 20),
+                              child: Text(''))),
+                    ),
+                    ListTile(
+                      tileColor: Colors.red,
+                      dense: true,
+                      shape: RoundedRectangleBorder(
+                          side: const BorderSide(color: Colors.black, width: 3),
+                          borderRadius: BorderRadius.circular(10)),
+                      title: const Center(
+                          child: DefaultTextStyle(
+                              style: TextStyle(
+                                  fontStyle: FontStyle.italic,
+                                  color: Colors.white,
+                                  fontSize: 20),
+                              child: Text(''))),
+                    ),
+                    ListTile(
+                      tileColor: Colors.red,
+                      dense: true,
+                      shape: RoundedRectangleBorder(
+                          side: const BorderSide(color: Colors.black, width: 3),
+                          borderRadius: BorderRadius.circular(10)),
+                      title: const Center(
+                          child: DefaultTextStyle(
+                              style: TextStyle(
+                                  fontStyle: FontStyle.italic,
+                                  color: Colors.white,
+                                  fontSize: 20),
+                              child: Text(''))),
                     ),
                   ],
                 ),
+              ),
+              const Padding(padding: EdgeInsets.only(top: 60)),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Container(
+                    height: 50,
+                    width: 150,
+                    decoration: BoxDecoration(
+                        color: Colors.blue,
+                        borderRadius: BorderRadius.circular(20)),
+                    child: TextButton(
+                      onPressed: () async {
+                        Share.share("Questo è il tuo codice per iscriverti!");
+                      },
+                      child: Text('share'.i18n(),
+                          style: const TextStyle(
+                              color: Colors.white, fontSize: 25)),
+                    ),
+                  ),
+                ],
               ),
             ],
           ),

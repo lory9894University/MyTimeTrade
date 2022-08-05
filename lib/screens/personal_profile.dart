@@ -6,6 +6,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:localization/localization.dart';
 import 'package:mytimetrade/widgets/custom_dialog_box_interessi.dart';
 import 'package:mytimetrade/widgets/global.dart';
 
@@ -97,7 +98,7 @@ class _PersonalProfileState extends State<PersonalProfile> {
                 title: Container(
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: const <Widget>[
+                    children: <Widget>[
                       Icon(FontAwesomeIcons.locationArrow),
                       Padding(padding: EdgeInsets.only(left: 0)),
                       Center(
@@ -107,7 +108,7 @@ class _PersonalProfileState extends State<PersonalProfile> {
                           color: Colors.black,
                           fontWeight: FontWeight.bold,
                         ),
-                        child: Text("Indirizzo"),
+                        child: Text("address".i18n()),
                       )),
                       Padding(padding: EdgeInsets.only(left: 45)),
                     ],
@@ -117,13 +118,13 @@ class _PersonalProfileState extends State<PersonalProfile> {
                   Column(
                     children: [
                       DefaultTextStyle(
-                        style: const TextStyle(
+                        style: TextStyle(
                           fontStyle: FontStyle.italic,
                           fontSize: 15.0,
                           color: Colors.black,
                         ),
                         child: Text(global_user_data!.address == null
-                            ? "inserisci indirizzo"
+                            ? "insert address".i18n()
                             : global_user_data!.address!),
                       ),
                       const Padding(padding: EdgeInsets.only(top: 5)),
@@ -136,12 +137,11 @@ class _PersonalProfileState extends State<PersonalProfile> {
                             showDialog(
                               context: context,
                               builder: (context) => AlertDialog(
-                                title: Text('Errore'),
-                                content: Text(
-                                    'impossibile cambiare indirizzo quando offline'),
+                                title: Text('error'.i18n()),
+                                content: Text('address offline'.i18n()),
                                 actions: <Widget>[
                                   FlatButton(
-                                    child: Text('Ok'),
+                                    child: const Text('Ok'),
                                     onPressed: () {
                                       Navigator.of(context).pop();
                                     },
@@ -155,14 +155,14 @@ class _PersonalProfileState extends State<PersonalProfile> {
                               context: context,
                               builder: (BuildContext context) {
                                 return CustomDialogBox(
-                                  title: "Modifica indirizzo",
-                                  descriptions: "modifica indirizzo",
+                                  title: "edit address".i18n(),
+                                  descriptions: "edit address".i18n(),
                                   img: Image.asset("assets/img/handshake.png"),
                                   callback: callback2,
                                 );
                               });
                         },
-                        tooltip: "Modifica indirizzo",
+                        tooltip: "edit address".i18n(),
                       ),
                     ],
                   ),
@@ -172,7 +172,7 @@ class _PersonalProfileState extends State<PersonalProfile> {
                 title: Container(
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: const <Widget>[
+                    children: <Widget>[
                       Icon(FontAwesomeIcons.phone),
                       Padding(padding: EdgeInsets.only(left: 0)),
                       Center(
@@ -182,7 +182,7 @@ class _PersonalProfileState extends State<PersonalProfile> {
                           color: Colors.black,
                           fontWeight: FontWeight.bold,
                         ),
-                        child: Text("Telefono"),
+                        child: Text("phoneNr".i18n()),
                       )),
                       Padding(padding: EdgeInsets.only(left: 45)),
                     ],
@@ -193,9 +193,9 @@ class _PersonalProfileState extends State<PersonalProfile> {
                     children: [
                       TextField(
                         controller: phoneController,
-                        decoration: const InputDecoration(
+                        decoration: InputDecoration(
                           border: OutlineInputBorder(),
-                          labelText: 'Telefono',
+                          labelText: 'phoneNr'.i18n(),
                           hintText: '##########',
                           prefixText: '+ 39',
                         ),
@@ -220,7 +220,7 @@ class _PersonalProfileState extends State<PersonalProfile> {
                           global_user_data!.phoneNr = phoneController.text;
                           setState(() {});
                         },
-                        tooltip: "Modifica telefono",
+                        tooltip: "edit phoneNr".i18n(),
                       ),
                     ],
                   ),
@@ -230,7 +230,7 @@ class _PersonalProfileState extends State<PersonalProfile> {
                 title: Container(
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: const <Widget>[
+                    children: <Widget>[
                       Icon(FontAwesomeIcons.briefcase),
                       Padding(padding: EdgeInsets.only(left: 0)),
                       Center(
@@ -240,7 +240,7 @@ class _PersonalProfileState extends State<PersonalProfile> {
                           color: Colors.black,
                           fontWeight: FontWeight.bold,
                         ),
-                        child: Text("Interessi"),
+                        child: Text("interests".i18n()),
                       )),
                       Padding(padding: EdgeInsets.only(left: 45)),
                     ],
@@ -292,13 +292,13 @@ class _PersonalProfileState extends State<PersonalProfile> {
                               context: context,
                               builder: (BuildContext context) {
                                 return InteressiDialogBox(
-                                  title: "Inserisci nuovo interesse",
+                                  title: "insert new interest".i18n(),
                                   img: Image.asset("assets/img/handshake.png"),
                                   callback: callback,
                                 );
                               });
                         },
-                        tooltip: "Aggiungi nuovo interesse",
+                        tooltip: "interest".i18n(),
                       ),
                     ],
                   ),

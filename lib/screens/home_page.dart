@@ -112,7 +112,7 @@ class _HomePageState extends State<HomePage> {
                       fontWeight: FontWeight.bold,
                     ),
                     child: Text(
-                      "${pageData["balance"]} ore",
+                      pageData["balance"].toString() + " " + "hours".i18n(),
                     ),
                   ),
                 ],

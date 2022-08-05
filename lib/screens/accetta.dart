@@ -112,8 +112,8 @@ class _AccettaState extends State<Accetta> {
                                             transactionsPending[index]['ore'])),
                                         DataCell(
                                           FlatButton(
-                                            child: const Text(
-                                              'Conferma',
+                                            child: Text(
+                                              'confirm'.i18n(),
                                               style: TextStyle(fontSize: 18.0),
                                               textAlign: TextAlign.center,
                                             ),

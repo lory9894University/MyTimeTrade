@@ -30,9 +30,14 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    LocalJsonLocalization.delegate.directories = ['lib/i18n'];
+    LocalJsonLocalization.delegate.directories = ['assets/i18n'];
 
     return MaterialApp(
+      supportedLocales: const [
+        Locale("en", "US"),
+        Locale("it", "IT"),
+        Locale("ja", "JP"),
+      ],
       localeResolutionCallback: (locale, supportedLocales) {
         if (supportedLocales.contains(locale)) {
           return locale;
@@ -46,10 +51,6 @@ class MyApp extends StatelessWidget {
         // default language
         return Locale('en', 'US');
       },
-      supportedLocales: const [
-        Locale("en", "US"),
-        Locale("it", "IT"),
-      ],
       localizationsDelegates: [
         // delegate from flutter_localization
         GlobalMaterialLocalizations.delegate,

@@ -4,6 +4,7 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart' as geocoding;
+import 'package:localization/localization.dart';
 import 'package:location/location.dart';
 import 'package:mytimetrade/widgets/global.dart';
 
@@ -70,7 +71,7 @@ class _CustomDialogBoxState extends State<CustomDialogBox> {
               TextField(
                 controller: addressController,
                 decoration: InputDecoration(
-                  labelText: "Indirizzo",
+                  labelText: "address".i18n(),
                 ),
               ),
               SizedBox(
@@ -88,7 +89,7 @@ class _CustomDialogBoxState extends State<CustomDialogBox> {
                             setState(() {});
                           },
                           child: Text(
-                            "Usa posizione",
+                            "use current position".i18n(),
                             style: TextStyle(fontSize: 15),
                           )),
                     ),
@@ -100,7 +101,7 @@ class _CustomDialogBoxState extends State<CustomDialogBox> {
                             await updateDb(addressController.text);
                           },
                           child: Text(
-                            "Conferma",
+                            "confirm".i18n(),
                             style: TextStyle(fontSize: 15),
                           )),
                     ),
@@ -171,9 +172,9 @@ class _CustomDialogBoxState extends State<CustomDialogBox> {
       Navigator.pop(context);
     } catch (e) {
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
             content: Text(
-          'l\'indirizzo non esiste',
+          'address_not_found'.i18n(),
           textAlign: TextAlign.center,
         )));
       }

@@ -1,5 +1,6 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:localization/localization.dart';
 import 'package:mytimetrade/widgets/global.dart';
 
 class Ore extends StatefulWidget {
@@ -41,14 +42,14 @@ class _OreState extends State<Ore> {
             Container(
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: const [
+                children: [
                   DefaultTextStyle(
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 20.0,
                       color: Colors.black,
                       fontWeight: FontWeight.bold,
                     ),
-                    child: Text("Inserimento ore"),
+                    child: Text("insert hours".i18n()),
                   ),
                 ],
               ),
@@ -330,7 +331,7 @@ class _OreState extends State<Ore> {
                           //TODO: show snackbar
                         }
                       },
-                      child: const Text('Richiedi!',
+                      child: Text('request'.i18n(),
                           style: TextStyle(color: Colors.white, fontSize: 20)),
                     ),
                   ),
@@ -346,21 +347,7 @@ class _OreState extends State<Ore> {
                           ore = '';
                         });
                       },
-                      child: const Text('Cancella',
-                          style: TextStyle(color: Colors.white, fontSize: 20)),
-                    ),
-                  ),
-                  Container(
-                    height: 50,
-                    width: 100,
-                    decoration: BoxDecoration(
-                        color: Colors.blue,
-                        borderRadius: BorderRadius.circular(20)),
-                    child: TextButton(
-                      onPressed: () async {
-                        Navigator.pop(context);
-                      },
-                      child: const Text('Indietro',
+                      child: Text('cancel'.i18n(),
                           style: TextStyle(color: Colors.white, fontSize: 20)),
                     ),
                   ),

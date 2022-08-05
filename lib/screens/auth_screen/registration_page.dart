@@ -89,7 +89,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                 decoration: InputDecoration(
                     border: OutlineInputBorder(),
                     labelText: 'Email',
-                    hintText: 'enter valid email'.i18n(),
+                    hintText: 'enter email'.i18n(),
                     errorText: _validEmail ? null : _emailError),
               ),
             ),

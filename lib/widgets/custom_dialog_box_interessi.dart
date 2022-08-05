@@ -5,6 +5,7 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:geoflutterfire/geoflutterfire.dart';
+import 'package:localization/localization.dart';
 import 'package:mytimetrade/widgets/global.dart';
 
 class InteressiDialogBox extends StatefulWidget {
@@ -70,7 +71,7 @@ class _InteressiDialogBoxState extends State<InteressiDialogBox> {
               TextField(
                 controller: _controller,
                 decoration: InputDecoration(
-                  labelText: "Interessi",
+                  labelText: "interests".i18n(),
                 ),
               ),
               SizedBox(
@@ -80,10 +81,9 @@ class _InteressiDialogBoxState extends State<InteressiDialogBox> {
                   onPressed: () async {
                     if (_controller.text.isEmpty) {
                       if (mounted) {
-                        ScaffoldMessenger.of(context)
-                            .showSnackBar(const SnackBar(
-                                content: Text(
-                          'specifica interesse',
+                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                            content: Text(
+                          'specify interest'.i18n(),
                           textAlign: TextAlign.center,
                         )));
                       }
@@ -106,10 +106,9 @@ class _InteressiDialogBoxState extends State<InteressiDialogBox> {
                       widget.callback(interest);
                     } else {
                       if (mounted) {
-                        ScaffoldMessenger.of(context)
-                            .showSnackBar(const SnackBar(
-                                content: Text(
-                          'prima imposta il tuo indirizzo',
+                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                            content: Text(
+                          'set address first'.i18n(),
                           textAlign: TextAlign.center,
                         )));
                       }
@@ -122,8 +121,8 @@ class _InteressiDialogBoxState extends State<InteressiDialogBox> {
                     }
                     Navigator.pop(context);
                   },
-                  child: const Text(
-                    "Aggiungi",
+                  child: Text(
+                    "add".i18n(),
                     style: TextStyle(fontSize: 18),
                   )),
             ],
