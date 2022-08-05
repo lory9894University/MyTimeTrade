@@ -12,7 +12,7 @@ class Profile extends StatefulWidget {
 
 class _ProfileState extends State<Profile> {
   Map<String, String> args = Map<String, String>.from(
-      {"name": "", "phone": "", "address": "", "interest": ""});
+      {"name": "", "phone": "", "address": "", "interest": "", "uid": ""});
 
   void didChangeDependencies() {
     args = ModalRoute.of(context)?.settings.arguments as Map<String, String>;
@@ -25,7 +25,7 @@ class _ProfileState extends State<Profile> {
     return Scaffold(
       extendBody: true,
       body: Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
             gradient: LinearGradient(
           colors: [
             Colors.greenAccent,
@@ -36,14 +36,14 @@ class _ProfileState extends State<Profile> {
         )),
         child: Column(
           children: <Widget>[
-            Padding(padding: EdgeInsets.only(top: 60)),
+            const Padding(padding: EdgeInsets.only(top: 60)),
             Container(
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: <Widget>[
-                  Icon(Icons.person, size: 35),
+                  const Icon(Icons.person, size: 35),
                   DefaultTextStyle(
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 27.0,
                         color: Colors.black,
                       ),
@@ -51,7 +51,7 @@ class _ProfileState extends State<Profile> {
                 ],
               ),
             ),
-            Padding(padding: EdgeInsets.only(top: 100)),
+            const Padding(padding: EdgeInsets.only(top: 100)),
             Container(
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -67,16 +67,17 @@ class _ProfileState extends State<Profile> {
                 ],
               ),
             ),
-            Padding(padding: EdgeInsets.only(top: 15)),
+            const Padding(padding: EdgeInsets.only(top: 15)),
             Container(
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   Container(
-                    constraints: BoxConstraints(minWidth: 100, maxWidth: 350),
+                    constraints:
+                        const BoxConstraints(minWidth: 100, maxWidth: 350),
                     child: DefaultTextStyle(
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontStyle: FontStyle.italic,
                         fontSize: 15.0,
                         color: Colors.black,
@@ -87,7 +88,7 @@ class _ProfileState extends State<Profile> {
                 ],
               ),
             ),
-            Padding(padding: EdgeInsets.only(top: 30)),
+            const Padding(padding: EdgeInsets.only(top: 30)),
             Container(
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -103,16 +104,17 @@ class _ProfileState extends State<Profile> {
                 ],
               ),
             ),
-            Padding(padding: EdgeInsets.only(top: 15)),
+            const Padding(padding: EdgeInsets.only(top: 15)),
             Container(
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   Container(
-                    constraints: BoxConstraints(minWidth: 100, maxWidth: 350),
+                    constraints:
+                        const BoxConstraints(minWidth: 100, maxWidth: 350),
                     child: DefaultTextStyle(
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontStyle: FontStyle.italic,
                         fontSize: 15.0,
                         color: Colors.black,
@@ -123,7 +125,7 @@ class _ProfileState extends State<Profile> {
                 ],
               ),
             ),
-            Padding(padding: EdgeInsets.only(top: 30)),
+            const Padding(padding: EdgeInsets.only(top: 30)),
             Container(
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -139,7 +141,7 @@ class _ProfileState extends State<Profile> {
                 ],
               ),
             ),
-            Padding(padding: EdgeInsets.only(top: 15)),
+            const Padding(padding: EdgeInsets.only(top: 15)),
             Container(
               child: Row(
                 mainAxisSize: MainAxisSize.min,
@@ -148,7 +150,7 @@ class _ProfileState extends State<Profile> {
                   Container(
                     //constraints: BoxConstraints(minWidth: 100, maxWidth: 350),
                     child: DefaultTextStyle(
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontStyle: FontStyle.italic,
                         fontSize: 15.0,
                         color: Colors.black,
@@ -159,7 +161,7 @@ class _ProfileState extends State<Profile> {
                 ],
               ),
             ),
-            Padding(padding: EdgeInsets.only(top: 100)),
+            const Padding(padding: EdgeInsets.only(top: 100)),
             Container(
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -199,20 +201,8 @@ class _ProfileState extends State<Profile> {
                         borderRadius: BorderRadius.circular(20)),
                     child: TextButton(
                       onPressed: () {
-                        /*if (args.servizio != '') {
-                          Navigator.pushNamed(
-                            context,
-                            '/ore',
-                            arguments: Profile_Passage(
-                              args.nome,
-                              args.cognome,
-                              "",
-                              args.servizio,
-                            ),
-                          );
-                        } else {
-                          null;
-                        }*/
+                        //TODO: mi piacerebbe aggiungere una nuova casella di testo per inserire informazioni aggiuntive
+                        Navigator.pushNamed(context, '/ore', arguments: args);
                       },
                       child: const Text(
                         'Richiedi ore',

@@ -28,23 +28,27 @@ class _HomePageState extends State<HomePage> {
 
     DatabaseReference userRef =
         FirebaseDatabase.instance.ref('users/${user.uid}');
-    userRef.onValue.listen((DatabaseEvent event) {
-      pageData = event.snapshot.value as Map<dynamic, dynamic>;
+    DatabaseEvent event = await userRef.once();
+    pageData = event.snapshot.value as Map<dynamic, dynamic>;
 
-      if (pageData["transactions"] != null) {
-        List<Object?> trans_id = pageData["transactions"] as List<Object?>;
-        transactions.clear();
-        trans_id.forEach((value) {
-          DatabaseReference transaction_ref =
-              FirebaseDatabase.instance.ref('transaction/${value}');
-          transaction_ref.onValue.listen((DatabaseEvent event) {
-            transactions.add(event.snapshot.value);
+    if (pageData["transactions"] != null) {
+      Map<dynamic, dynamic> trans_id =
+          pageData["transactions"] as Map<dynamic, dynamic>;
+      transactions.clear();
+      trans_id.forEach((key, value) {
+        DatabaseReference transaction_ref =
+            FirebaseDatabase.instance.ref('transactions/${value}');
+        transaction_ref.onValue.listen((DatabaseEvent event) {
+          var transaction = event.snapshot.value as Map<dynamic, dynamic>;
+          if (transaction['status'] == 'completed') {
+            transactions.add(transaction);
             setState(() => {});
-          });
+          }
         });
-      }
-      setState(() => {});
-    });
+      });
+    }
+
+    setState(() => {});
 
     //Query transactions_query = ;
   }
@@ -127,7 +131,7 @@ class _HomePageState extends State<HomePage> {
                                 color: Colors.black,
                                 fontSize: 20),
                             child: Text(
-                                'data: ${transactions[index]["date"]}, importo: ${transactions[index]["amount"]}  '))),
+                                'data: ${transactions[index]["date"]}, importo: ${transactions[index]["ore"]} \n lavoro svolto: ${transactions[index]["description"]}'))),
                   );
                 },
                 shrinkWrap: true,

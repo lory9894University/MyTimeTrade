@@ -196,6 +196,7 @@ class _ServiziElencoState extends State<ServiziElenco> {
     var snapshot = event.snapshot.value as Map<dynamic, dynamic>;
 
     return Map<String, String>.from({
+      "uid": uid,
       "name": snapshot['name'],
       "phone": snapshot['phoneNr'],
       "address": snapshot['address'],

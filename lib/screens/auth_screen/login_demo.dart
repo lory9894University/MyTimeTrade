@@ -1,5 +1,4 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_signin_button/button_list.dart';
 import 'package:flutter_signin_button/button_view.dart';
@@ -145,7 +144,7 @@ class _LoginPageState extends State<LoginPage> {
                           borderRadius: BorderRadius.circular(20)),
                       onPressed: () async {
                         AuthOperation.signInWithGoogle().then((user) {
-                          if (user != null) {
+                          /*if (user != null) {
                             //TODO: if user is not registered, register him/her
                             DatabaseReference ref = FirebaseDatabase.instance
                                 .ref("users")
@@ -158,7 +157,7 @@ class _LoginPageState extends State<LoginPage> {
                               "referral": user.uid.substring(0, 5),
                               "phoneNr": user.phoneNumber ?? "",
                             });
-                          }
+                          }*/
                           if (mounted) {
                             Navigator.pushReplacementNamed(context, '/welcome',
                                 arguments: user);

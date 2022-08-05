@@ -144,7 +144,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                         "balance": 0,
                         "transactions": [],
                         "referral": user?.uid.substring(0, 5),
-                        "phoneNr": "", //TODO: add phone nr
+                        "phoneNr": "",
                       }).then((value) {
                         if (user != null) {
                           Navigator.pushReplacementNamed(context, '/',
