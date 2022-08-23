@@ -18,10 +18,8 @@ class _RegistrationPageState extends State<RegistrationPage> {
   bool _validPassword = true;
   bool _validEmail = true;
   bool _validUsername = true;
-  bool _validReferral = true;
   String _passwordError = 'password required'.i18n();
   String _emailError = 'email required'.i18n();
-  String _referralError = 'Il codice amico non esiste'.i18n();
 
   //validate password
   bool validatePassword(String value) {
@@ -131,9 +129,8 @@ class _RegistrationPageState extends State<RegistrationPage> {
                 obscureText: true,
                 decoration: InputDecoration(
                     border: const OutlineInputBorder(),
-                    labelText: 'Codice amico',
-                    hintText: 'Se lo hai, inserisci qui il tuo codice amico'.i18n(),
-                    errorText: _validReferral ? null : _referralError),
+                    labelText: 'referral'.i18n(),
+                    hintText: 'referral_hint'.i18n()),
               ),
             ),
             const SizedBox(
@@ -150,12 +147,24 @@ class _RegistrationPageState extends State<RegistrationPage> {
                     AuthOperation.registerUserAndSignIn(
                             emailController.text, passwordController.text)
                         .then((user) {
+                      int bal = 0;
+                      if (referralController.text.isNotEmpty) {
+                        bal = 10;
+                        Query ref = FirebaseDatabase.instance
+                            .ref("users")
+                            .orderByChild("referral")
+                            .equalTo(referralController.text)
+                            .limitToFirst(1);
+                        ref.once().then((value) {
+                          print(value);
+                        });
+                      }
                       DatabaseReference ref = FirebaseDatabase.instance
                           .ref()
                           .child("users/${user?.uid}");
                       ref.set({
                         "name": usernameController.text,
-                        "balance": 0,
+                        "balance": bal,
                         "transactions": [],
                         "referral": user?.uid.substring(0, 5),
                         "phoneNr": "",

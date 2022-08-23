@@ -63,5 +63,7 @@
   "specify interest" : "Specify interest",
   "set address first" : "Set the address first",
   "category" : "Category",
-  "share_msg": "This is my referral code!"
+  "share_msg": "This is my referral code!",
+  "referral" : "Referral Code",
+  "referral_hint": "If you have a referral code, enter it here",
 }
