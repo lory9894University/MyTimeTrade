@@ -7,6 +7,8 @@ import 'package:localization/localization.dart';
 import 'package:mytimetrade/firebase/auth_operations.dart';
 
 class LoginPage extends StatefulWidget {
+  const LoginPage({Key? key}) : super(key: key);
+
   @override
   _LoginPageState createState() => _LoginPageState();
 }
@@ -42,7 +44,7 @@ class _LoginPageState extends State<LoginPage> {
                   Padding(
                     padding: const EdgeInsets.only(top: 60.0),
                     child: Center(
-                      child: Container(
+                      child: SizedBox(
                           width: 200,
                           height: 150,
                           /*decoration: BoxDecoration(
@@ -88,7 +90,7 @@ class _LoginPageState extends State<LoginPage> {
                     },
                     child: Text(
                       'forgot password'.i18n(),
-                      style: TextStyle(color: Colors.blue, fontSize: 15),
+                      style: const TextStyle(color: Colors.blue, fontSize: 15),
                     ),
                   ),
                   Container(
@@ -188,15 +190,11 @@ class _LoginPageState extends State<LoginPage> {
                     },
                     child: Text(
                       'click here'.i18n(),
-                      style: TextStyle(color: Colors.blue, fontSize: 15),
+                      style: const TextStyle(color: Colors.blue, fontSize: 15),
                     ),
                   ),
                 ],
               ),
-            );
-
-            return const Center(
-              child: CircularProgressIndicator(),
             );
           }),
     );
@@ -210,8 +208,7 @@ class Verificator {
   bool _validEmail = true;
   String _emailError = 'email required'.i18n();
 
-  Verificator(TextEditingController this.emailController,
-      TextEditingController this.passwordController);
+  Verificator(this.emailController, this.passwordController);
 
   bool validatePassword(String value) {
     if (value.isEmpty) {

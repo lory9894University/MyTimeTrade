@@ -1,14 +1,14 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mytimetrade/widgets/global.dart';
 
 class BottomBar extends StatelessWidget {
-  var index;
+  int index;
 
-  var context;
+  BuildContext context;
 
-  BottomBar({Key? key, required this.index, required this.context});
+  BottomBar({Key? key, required this.index, required this.context})
+      : super(key: key);
 
   @override
   Widget build(context2) {
@@ -23,7 +23,7 @@ class BottomBar extends StatelessWidget {
           Navigator.pushReplacementNamed(context, '/accetta');
         } else if (index == 2) {
           Navigator.pushReplacementNamed(context, '/welcome',
-              arguments: logged_user);
+              arguments: loggedUser);
         } else if (index == 3) {
           Navigator.pushReplacementNamed(context, '/pers_profile');
         } else if (index == 4) {

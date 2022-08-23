@@ -9,6 +9,8 @@ import '../widgets/BottomBar.dart';
 //TODO: Implementare il SingleChildScrollView, altrimenti abbiamo un limite di tre transazioni per tabella
 
 class Accetta extends StatefulWidget {
+  const Accetta({Key? key}) : super(key: key);
+
   @override
   _AccettaState createState() => _AccettaState();
 }
@@ -21,7 +23,7 @@ class _AccettaState extends State<Accetta> {
   @override
   didChangeDependencies() async {
     DatabaseReference userRef = FirebaseDatabase.instance
-        .ref('users/${global_user_data!.uid}/transactions');
+        .ref('users/${globalUserData!.uid}/transactions');
     userRef.onValue.listen((DatabaseEvent event) async {
       transactionsPending.clear();
       transactionsAccepted.clear();
@@ -33,17 +35,17 @@ class _AccettaState extends State<Accetta> {
 
       for (var value in pageData.values) {
         DatabaseReference ref =
-            FirebaseDatabase.instance.ref('transactions/${value}');
+            FirebaseDatabase.instance.ref('transactions/$value');
         event = await ref.once();
         var transaction = event.snapshot.value as Map<dynamic, dynamic>;
         if (transaction['status'] == 'working' &&
-            transaction['supplier'] != global_user_data!.uid) {
+            transaction['supplier'] != globalUserData!.uid) {
           transactionsToPay.add(transaction);
         } else if (transaction['status'] == 'pending' &&
-            transaction['supplier'] == global_user_data!.uid) {
+            transaction['supplier'] == globalUserData!.uid) {
           transactionsPending.add(transaction);
         } else if (transaction['status'] == 'working' &&
-            transaction['supplier'] == global_user_data!.uid) {
+            transaction['supplier'] == globalUserData!.uid) {
           transactionsAccepted.add(transaction);
         }
       }
@@ -83,7 +85,7 @@ class _AccettaState extends State<Accetta> {
               end: Alignment.bottomLeft,
             )),
             child: TabBarView(
-              physics: NeverScrollableScrollPhysics(),
+              physics: const NeverScrollableScrollPhysics(),
               children: [
                 Padding(
                   padding: const EdgeInsets.only(
@@ -114,7 +116,8 @@ class _AccettaState extends State<Accetta> {
                                           FlatButton(
                                             child: Text(
                                               'confirm'.i18n(),
-                                              style: TextStyle(fontSize: 18.0),
+                                              style: const TextStyle(
+                                                  fontSize: 18.0),
                                               textAlign: TextAlign.center,
                                             ),
                                             color: Colors.green,
@@ -197,7 +200,8 @@ class _AccettaState extends State<Accetta> {
                                           FlatButton(
                                             child: Text(
                                               'pay'.i18n(),
-                                              style: TextStyle(fontSize: 18.0),
+                                              style: const TextStyle(
+                                                  fontSize: 18.0),
                                               textAlign: TextAlign.center,
                                             ),
                                             color: Colors.green,

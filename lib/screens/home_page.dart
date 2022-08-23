@@ -7,6 +7,8 @@ import '../widgets/BottomBar.dart';
 import '../widgets/global.dart';
 
 class HomePage extends StatefulWidget {
+  const HomePage({Key? key}) : super(key: key);
+
   @override
   _HomePageState createState() => _HomePageState();
 }
@@ -33,13 +35,13 @@ class _HomePageState extends State<HomePage> {
     pageData = event.snapshot.value as Map<dynamic, dynamic>;
 
     if (pageData["transactions"] != null) {
-      Map<dynamic, dynamic> trans_id =
+      Map<dynamic, dynamic> transId =
           pageData["transactions"] as Map<dynamic, dynamic>;
       transactions.clear();
-      trans_id.forEach((key, value) {
-        DatabaseReference transaction_ref =
-            FirebaseDatabase.instance.ref('transactions/${value}');
-        transaction_ref.onValue.listen((DatabaseEvent event) {
+      transId.forEach((key, value) {
+        DatabaseReference transactionRef =
+            FirebaseDatabase.instance.ref('transactions/$value');
+        transactionRef.onValue.listen((DatabaseEvent event) {
           var transaction = event.snapshot.value as Map<dynamic, dynamic>;
           if (transaction['status'] == 'completed') {
             transactions.add(transaction);
@@ -60,7 +62,7 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
         extendBody: true,
         body: Container(
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
               gradient: LinearGradient(
             colors: [
               Colors.greenAccent,
@@ -70,55 +72,49 @@ class _HomePageState extends State<HomePage> {
             end: Alignment.bottomLeft,
           )),
           child: Column(children: <Widget>[
-            Padding(padding: EdgeInsets.only(top: 60)),
-            Container(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: <Widget>[
-                  DefaultTextStyle(
-                      style: const TextStyle(
-                        fontSize: 27.0,
-                        color: Colors.black,
-                      ),
-                      child: Text("hi".i18n() + pageData["name"] + "!")),
-                ],
-              ),
-            ),
-            Padding(padding: EdgeInsets.only(top: 60)),
-            Container(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  DefaultTextStyle(
+            const Padding(padding: EdgeInsets.only(top: 60)),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: <Widget>[
+                DefaultTextStyle(
                     style: const TextStyle(
-                      fontSize: 20.0,
+                      fontSize: 27.0,
                       color: Colors.black,
-                      fontWeight: FontWeight.bold,
                     ),
-                    child: Text("balance".i18n()),
-                  ),
-                ],
-              ),
+                    child: Text("hi".i18n() + pageData["name"] + "!")),
+              ],
             ),
-            Padding(padding: EdgeInsets.only(top: 15)),
-            Container(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  DefaultTextStyle(
-                    style: const TextStyle(
-                      fontSize: 40.0,
-                      color: Colors.black,
-                      fontWeight: FontWeight.bold,
-                    ),
-                    child: Text(
-                      pageData["balance"].toString() + " " + "hours".i18n(),
-                    ),
+            const Padding(padding: EdgeInsets.only(top: 60)),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                DefaultTextStyle(
+                  style: const TextStyle(
+                    fontSize: 20.0,
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
                   ),
-                ],
-              ),
+                  child: Text("balance".i18n()),
+                ),
+              ],
             ),
-            Padding(padding: EdgeInsets.only(top: 30)),
+            const Padding(padding: EdgeInsets.only(top: 15)),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                DefaultTextStyle(
+                  style: const TextStyle(
+                    fontSize: 40.0,
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                  ),
+                  child: Text(
+                    pageData["balance"].toString() + " " + "hours".i18n(),
+                  ),
+                ),
+              ],
+            ),
+            const Padding(padding: EdgeInsets.only(top: 30)),
             Flexible(
               child: ListView.builder(
                 itemCount: transactions.length,
@@ -156,15 +152,15 @@ class _HomePageState extends State<HomePage> {
   }
 
   loadUserData() async {
-    if (logged_user == null) {
+    if (loggedUser == null) {
       FirebaseAuth.instance.authStateChanges().listen((User? user) {
         if (user != null) {
-          logged_user = user;
+          loggedUser = user;
           DatabaseReference userRef =
               FirebaseDatabase.instance.ref('users/${user.uid}');
           userRef.onValue.listen((DatabaseEvent event) {
             var snapshot = event.snapshot.value as Map<dynamic, dynamic>;
-            global_user_data = UserData(
+            globalUserData = UserData(
                 snapshot["address"],
                 snapshot["services"],
                 snapshot["name"],
@@ -176,7 +172,7 @@ class _HomePageState extends State<HomePage> {
         }
       });
     } else {
-      user = logged_user!;
+      user = loggedUser!;
     }
   }
 }

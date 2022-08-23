@@ -4,6 +4,8 @@ import 'package:localization/localization.dart';
 import 'package:mytimetrade/firebase/auth_operations.dart';
 
 class RegistrationPage extends StatefulWidget {
+  const RegistrationPage({Key? key}) : super(key: key);
+
   @override
   _RegistrationPageState createState() => _RegistrationPageState();
 }
@@ -20,7 +22,6 @@ class _RegistrationPageState extends State<RegistrationPage> {
 
   //validate password
   bool validatePassword(String value) {
-    bool valid = false;
     RegExp regex =
         RegExp(r'^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$');
     if (value.isEmpty) {
@@ -67,9 +68,6 @@ class _RegistrationPageState extends State<RegistrationPage> {
 
   @override
   Widget build(BuildContext context) {
-    TextStyle defaultStyle =
-        const TextStyle(color: Colors.grey, fontSize: 20.0);
-    TextStyle linkStyle = const TextStyle(color: Colors.blue);
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -87,7 +85,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
               child: TextField(
                 controller: emailController,
                 decoration: InputDecoration(
-                    border: OutlineInputBorder(),
+                    border: const OutlineInputBorder(),
                     labelText: 'Email',
                     hintText: 'enter email'.i18n(),
                     errorText: _validEmail ? null : _emailError),
@@ -100,7 +98,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
               child: TextField(
                 controller: usernameController,
                 decoration: InputDecoration(
-                    border: OutlineInputBorder(),
+                    border: const OutlineInputBorder(),
                     labelText: 'Username',
                     hintText: 'enter usename'.i18n(),
                     errorText:
@@ -115,7 +113,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                 controller: passwordController,
                 obscureText: true,
                 decoration: InputDecoration(
-                    border: OutlineInputBorder(),
+                    border: const OutlineInputBorder(),
                     labelText: 'Password',
                     hintText: 'Enter secure password'.i18n(),
                     errorText: _validPassword ? null : _passwordError),
@@ -155,7 +153,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                 },
                 child: Text(
                   'register'.i18n(),
-                  style: TextStyle(color: Colors.white, fontSize: 25),
+                  style: const TextStyle(color: Colors.white, fontSize: 25),
                 ),
               ),
             ),

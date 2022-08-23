@@ -2,12 +2,14 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:localization/localization.dart';
 
-class forgotPassword extends StatefulWidget {
+class ForgotPassword extends StatefulWidget {
+  const ForgotPassword({Key? key}) : super(key: key);
+
   @override
-  _forgotPasswordState createState() => _forgotPasswordState();
+  _ForgotPasswordState createState() => _ForgotPasswordState();
 }
 
-class _forgotPasswordState extends State<forgotPassword> {
+class _ForgotPasswordState extends State<ForgotPassword> {
   TextEditingController emailController = TextEditingController();
   bool _validEmail = true;
   String _emailError = 'email required'.i18n();
@@ -30,9 +32,6 @@ class _forgotPasswordState extends State<forgotPassword> {
 
   @override
   Widget build(BuildContext context) {
-    TextStyle defaultStyle =
-        const TextStyle(color: Colors.grey, fontSize: 20.0);
-    TextStyle linkStyle = const TextStyle(color: Colors.blue);
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -45,11 +44,11 @@ class _forgotPasswordState extends State<forgotPassword> {
               height: 130,
             ),
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: 15),
+              padding: const EdgeInsets.symmetric(horizontal: 15),
               child: TextField(
                 controller: emailController,
                 decoration: InputDecoration(
-                    border: OutlineInputBorder(),
+                    border: const OutlineInputBorder(),
                     labelText: 'Email',
                     hintText: 'insert email'.i18n(),
                     errorText: _validEmail ? null : _emailError),
@@ -70,8 +69,7 @@ class _forgotPasswordState extends State<forgotPassword> {
                     try {
                       await FirebaseAuth.instance
                           .sendPasswordResetEmail(email: emailController.text);
-                    } on FirebaseAuthException catch (e) {
-                      print(e.code);
+                    } on FirebaseAuthException {
                       error = true;
                     }
                     if (!error) {
@@ -91,7 +89,7 @@ class _forgotPasswordState extends State<forgotPassword> {
                 },
                 child: Text(
                   'recover'.i18n(),
-                  style: TextStyle(color: Colors.white, fontSize: 25),
+                  style: const TextStyle(color: Colors.white, fontSize: 25),
                 ),
               ),
             ),

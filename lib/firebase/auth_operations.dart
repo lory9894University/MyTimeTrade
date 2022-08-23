@@ -34,23 +34,14 @@ class AuthOperation {
       } else if (e.code == 'email-already-in-use') {
         debugPrint('The account already exists for that email.');
       }
-    } catch (e) {
-      debugPrint(e.toString());
     }
     //login with the created user
-    try {
-      UserCredential userCredential = await auth.signInWithEmailAndPassword(
-        email: emailAddress,
-        password: password,
-      );
-      user = userCredential.user;
-    } on FirebaseAuthException catch (e) {
-      if (e.code == 'user-not-found') {
-        print('No user found for that email.');
-      } else if (e.code == 'wrong-password') {
-        print('Wrong password provided.');
-      }
-    }
+    UserCredential userCredential = await auth.signInWithEmailAndPassword(
+      email: emailAddress,
+      password: password,
+    );
+    user = userCredential.user;
+    /*on FirebaseAuthException catch (e) {}*/
 
     return user;
   }

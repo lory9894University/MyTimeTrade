@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -14,6 +12,8 @@ import '../widgets/BottomBar.dart';
 import '../widgets/custom_dialog_box.dart';
 
 class PersonalProfile extends StatefulWidget {
+  const PersonalProfile({Key? key}) : super(key: key);
+
   @override
   _PersonalProfileState createState() => _PersonalProfileState();
 }
@@ -28,7 +28,7 @@ class _PersonalProfileState extends State<PersonalProfile> {
   void initState() {
     super.initState();
     phoneController.text =
-        global_user_data!.phoneNr == null ? "" : global_user_data!.phoneNr!;
+        globalUserData!.phoneNr == null ? "" : globalUserData!.phoneNr!;
   }
 
   @override
@@ -36,7 +36,7 @@ class _PersonalProfileState extends State<PersonalProfile> {
     interests.clear();
     db
         .collection("interests")
-        .where("user_id", isEqualTo: global_user_data!.uid)
+        .where("user_id", isEqualTo: globalUserData!.uid)
         .get()
         .then((event) {
       for (var doc in event.docs) {
@@ -44,6 +44,8 @@ class _PersonalProfileState extends State<PersonalProfile> {
       }
       setState(() {});
     });
+
+    super.didChangeDependencies();
   }
 
   callback(Map<String, dynamic> interest) async {
@@ -79,53 +81,49 @@ class _PersonalProfileState extends State<PersonalProfile> {
           child: Column(
             children: <Widget>[
               const Padding(padding: EdgeInsets.only(top: 60)),
-              Container(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: <Widget>[
-                    const Icon(Icons.person, size: 35),
-                    DefaultTextStyle(
-                        style: const TextStyle(
-                          fontSize: 27.0,
-                          color: Colors.black,
-                        ),
-                        child: Text(global_user_data!.name))
-                  ],
-                ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: <Widget>[
+                  const Icon(Icons.person, size: 35),
+                  DefaultTextStyle(
+                      style: const TextStyle(
+                        fontSize: 27.0,
+                        color: Colors.black,
+                      ),
+                      child: Text(globalUserData!.name))
+                ],
               ),
               const Padding(padding: EdgeInsets.only(top: 20)),
               ExpansionTile(
-                title: Container(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      Icon(FontAwesomeIcons.locationArrow),
-                      Padding(padding: EdgeInsets.only(left: 0)),
-                      Center(
-                          child: DefaultTextStyle(
-                        style: TextStyle(
-                          fontSize: 20.0,
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold,
-                        ),
-                        child: Text("address".i18n()),
-                      )),
-                      Padding(padding: EdgeInsets.only(left: 45)),
-                    ],
-                  ),
+                title: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    const Icon(FontAwesomeIcons.locationArrow),
+                    const Padding(padding: EdgeInsets.only(left: 0)),
+                    Center(
+                        child: DefaultTextStyle(
+                      style: const TextStyle(
+                        fontSize: 20.0,
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold,
+                      ),
+                      child: Text("address".i18n()),
+                    )),
+                    const Padding(padding: EdgeInsets.only(left: 45)),
+                  ],
                 ),
                 children: [
                   Column(
                     children: [
                       DefaultTextStyle(
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontStyle: FontStyle.italic,
                           fontSize: 15.0,
                           color: Colors.black,
                         ),
-                        child: Text(global_user_data!.address == null
+                        child: Text(globalUserData!.address == null
                             ? "insert address".i18n()
-                            : global_user_data!.address!),
+                            : globalUserData!.address!),
                       ),
                       const Padding(padding: EdgeInsets.only(top: 5)),
                       IconButton(
@@ -169,24 +167,22 @@ class _PersonalProfileState extends State<PersonalProfile> {
                 ],
               ),
               ExpansionTile(
-                title: Container(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      Icon(FontAwesomeIcons.phone),
-                      Padding(padding: EdgeInsets.only(left: 0)),
-                      Center(
-                          child: DefaultTextStyle(
-                        style: TextStyle(
-                          fontSize: 20.0,
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold,
-                        ),
-                        child: Text("phoneNr".i18n()),
-                      )),
-                      Padding(padding: EdgeInsets.only(left: 45)),
-                    ],
-                  ),
+                title: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    const Icon(FontAwesomeIcons.phone),
+                    const Padding(padding: EdgeInsets.only(left: 0)),
+                    Center(
+                        child: DefaultTextStyle(
+                      style: const TextStyle(
+                        fontSize: 20.0,
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold,
+                      ),
+                      child: Text("phoneNr".i18n()),
+                    )),
+                    const Padding(padding: EdgeInsets.only(left: 45)),
+                  ],
                 ),
                 children: [
                   Column(
@@ -194,7 +190,7 @@ class _PersonalProfileState extends State<PersonalProfile> {
                       TextField(
                         controller: phoneController,
                         decoration: InputDecoration(
-                          border: OutlineInputBorder(),
+                          border: const OutlineInputBorder(),
                           labelText: 'phoneNr'.i18n(),
                           hintText: '##########',
                           prefixText: '+ 39',
@@ -213,11 +209,11 @@ class _PersonalProfileState extends State<PersonalProfile> {
                           FirebaseDatabase.instance
                               .ref()
                               .child("users")
-                              .child(logged_user!.uid)
+                              .child(loggedUser!.uid)
                               .update({
                             "phoneNr": phoneController.text,
                           });
-                          global_user_data!.phoneNr = phoneController.text;
+                          globalUserData!.phoneNr = phoneController.text;
                           setState(() {});
                         },
                         tooltip: "edit phoneNr".i18n(),
@@ -227,29 +223,27 @@ class _PersonalProfileState extends State<PersonalProfile> {
                 ],
               ),
               ExpansionTile(
-                title: Container(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      Icon(FontAwesomeIcons.briefcase),
-                      Padding(padding: EdgeInsets.only(left: 0)),
-                      Center(
-                          child: DefaultTextStyle(
-                        style: TextStyle(
-                          fontSize: 20.0,
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold,
-                        ),
-                        child: Text("interests".i18n()),
-                      )),
-                      Padding(padding: EdgeInsets.only(left: 45)),
-                    ],
-                  ),
+                title: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    const Icon(FontAwesomeIcons.briefcase),
+                    const Padding(padding: EdgeInsets.only(left: 0)),
+                    Center(
+                        child: DefaultTextStyle(
+                      style: const TextStyle(
+                        fontSize: 20.0,
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold,
+                      ),
+                      child: Text("interests".i18n()),
+                    )),
+                    const Padding(padding: EdgeInsets.only(left: 45)),
+                  ],
                 ),
                 children: [
                   Column(
                     children: [
-                      Container(
+                      SizedBox(
                         height: 180,
                         child: ListView.builder(
                             itemCount: interests.length,
@@ -262,13 +256,7 @@ class _PersonalProfileState extends State<PersonalProfile> {
                                   db
                                       .collection("interests")
                                       .doc(interests[index]["id"])
-                                      .delete()
-                                      .then(
-                                        (doc) => print(
-                                            "Document deleted"), //TODO: modificare in una snackbar
-                                        onError: (e) =>
-                                            print("Error updating document $e"),
-                                      );
+                                      .delete();
                                   interests.removeAt(index);
                                   setState(() {});
                                 }, //TODO: Chiedere conferma eliminazione con dialogBox
@@ -304,34 +292,32 @@ class _PersonalProfileState extends State<PersonalProfile> {
                   ),
                 ],
               ),
-              Padding(padding: EdgeInsets.only(top: 20)),
-              Container(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: <Widget>[
-                    Container(
-                      height: 50,
-                      width: 130,
-                      decoration: BoxDecoration(
-                          color: Colors.blue,
-                          borderRadius: BorderRadius.circular(20)),
-                      child: TextButton(
-                        onPressed: () async {
-                          await FirebaseAuth.instance.signOut();
-                          logged_user = null;
-                          global_user_data = null;
-                          Navigator.pushReplacementNamed(context, '/');
-                        },
-                        child: const Text(
-                          'Logout',
-                          style: TextStyle(color: Colors.white, fontSize: 25),
-                        ),
+              const Padding(padding: EdgeInsets.only(top: 20)),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: <Widget>[
+                  Container(
+                    height: 50,
+                    width: 130,
+                    decoration: BoxDecoration(
+                        color: Colors.blue,
+                        borderRadius: BorderRadius.circular(20)),
+                    child: TextButton(
+                      onPressed: () async {
+                        await FirebaseAuth.instance.signOut();
+                        loggedUser = null;
+                        globalUserData = null;
+                        Navigator.pushReplacementNamed(context, '/');
+                      },
+                      child: const Text(
+                        'Logout',
+                        style: TextStyle(color: Colors.white, fontSize: 25),
                       ),
-                    )
-                  ],
-                ),
+                    ),
+                  )
+                ],
               ),
-              Padding(padding: EdgeInsets.only(top: 80)),
+              const Padding(padding: EdgeInsets.only(top: 80)),
             ],
           ),
         ),

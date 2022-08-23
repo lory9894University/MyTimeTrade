@@ -45,11 +45,11 @@ class MyApp extends StatelessWidget {
 
         // define pt_BR as default when de language code is 'pt'
         if (locale?.languageCode == 'en') {
-          return Locale('en', 'US');
+          return const Locale('en', 'US');
         }
 
         // default language
-        return Locale('en', 'US');
+        return const Locale('en', 'US');
       },
       localizationsDelegates: [
         // delegate from flutter_localization
@@ -63,17 +63,17 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       initialRoute: '/',
       routes: {
-        '/': (context) => LoginPage(),
-        '/registration': (context) => RegistrationPage(),
-        '/lostpw': (context) => forgotPassword(),
-        '/welcome': (context) => HomePage(),
-        '/profile': (context) => Profile(),
-        '/pers_profile': (context) => PersonalProfile(),
-        '/ore': (context) => Ore(),
-        '/servizi': (context) => ServiziElenco(),
-        '/amici': (context) => InvitaAmici(),
-        '/accetta': (context) => Accetta(),
-        '/swipe': (context) => Swipe(),
+        '/': (context) => const LoginPage(),
+        '/registration': (context) => const RegistrationPage(),
+        '/lostpw': (context) => const ForgotPassword(),
+        '/welcome': (context) => const HomePage(),
+        '/profile': (context) => const Profile(),
+        '/pers_profile': (context) => const PersonalProfile(),
+        '/ore': (context) => const Ore(),
+        '/servizi': (context) => const ServiziElenco(),
+        '/amici': (context) => const InvitaAmici(),
+        '/accetta': (context) => const Accetta(),
+        '/swipe': (context) => const Swipe(),
       },
     );
   }

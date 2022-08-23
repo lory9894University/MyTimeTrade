@@ -5,6 +5,8 @@ import 'package:share_plus/share_plus.dart';
 import '../widgets/BottomBar.dart';
 
 class InvitaAmici extends StatefulWidget {
+  const InvitaAmici({Key? key}) : super(key: key);
+
   @override
   _InvitaAmiciState createState() => _InvitaAmiciState();
 }
@@ -28,20 +30,18 @@ class _InvitaAmiciState extends State<InvitaAmici> {
           child: Column(
             children: <Widget>[
               const Padding(padding: EdgeInsets.only(top: 60)),
-              Container(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    DefaultTextStyle(
-                      style: const TextStyle(
-                        fontSize: 30.0,
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold,
-                      ),
-                      child: Text("invite".i18n()),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  DefaultTextStyle(
+                    style: const TextStyle(
+                      fontSize: 30.0,
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold,
                     ),
-                  ],
-                ),
+                    child: Text("invite".i18n()),
+                  ),
+                ],
               ),
               const Padding(padding: EdgeInsets.only(top: 50)),
               Row(
