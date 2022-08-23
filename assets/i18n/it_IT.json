@@ -62,5 +62,6 @@
   "address_not_found": "Indirizzo non trovato",
   "specify interest" : "Specifica un interesse",
   "set address first" : "Imposta prima un indirizzo",
-  "category" : "Categoria"
+  "category" : "Categoria",
+  "share_msg": "Questo è il tuo codice per iscriverti!"
 }

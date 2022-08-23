@@ -62,5 +62,6 @@
   "address_not_found": "Address not found",
   "specify interest" : "Specify interest",
   "set address first" : "Set the address first",
-  "category" : "Category"
+  "category" : "Category",
+  "share_msg": "This is my referral code!"
 }

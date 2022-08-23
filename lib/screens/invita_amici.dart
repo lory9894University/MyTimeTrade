@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:localization/localization.dart';
+import 'package:mytimetrade/widgets/global.dart';
 import 'package:share_plus/share_plus.dart';
 
 import '../widgets/BottomBar.dart';
@@ -146,7 +147,9 @@ class _InvitaAmiciState extends State<InvitaAmici> {
                         borderRadius: BorderRadius.circular(20)),
                     child: TextButton(
                       onPressed: () async {
-                        Share.share("Questo è il tuo codice per iscriverti!");
+                        Share.share('share_msg'.i18n() +
+                            '\n' +
+                            globalUserData!.referralCode);
                       },
                       child: Text('share'.i18n(),
                           style: const TextStyle(
