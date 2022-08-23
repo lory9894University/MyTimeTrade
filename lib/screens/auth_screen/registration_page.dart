@@ -127,7 +127,6 @@ class _RegistrationPageState extends State<RegistrationPage> {
               //padding: EdgeInsets.symmetric(horizontal: 15),
               child: TextField(
                 controller: referralController,
-                obscureText: true,
                 decoration: InputDecoration(
                     border: const OutlineInputBorder(),
                     labelText: 'referral'.i18n(),
@@ -153,17 +152,40 @@ class _RegistrationPageState extends State<RegistrationPage> {
                       AuthOperation.registerUserAndSignIn(
                               emailController.text, passwordController.text)
                           .then((user) {
+                        int bal = 0;
+                        if (referralController.text.isNotEmpty) {
+                          bal = 10;
+                          Query ref = FirebaseDatabase.instance
+                              .ref("users")
+                              .orderByChild("referral")
+                              .equalTo(referralController.text)
+                              .limitToFirst(1);
+                          ref.once().then((DatabaseEvent event) {
+                            if (event != null) {
+                              Map<dynamic, dynamic> map =
+                                  event.snapshot.value as Map<dynamic, dynamic>;
+                              map.forEach((key, value) {
+                                FirebaseDatabase.instance
+                                    .ref("users")
+                                    .child(key)
+                                    .update(
+                                        {"balance": value["balance"] + bal});
+                              });
+                            }
+                          });
+                        }
                         DatabaseReference ref = FirebaseDatabase.instance
                             .ref()
                             .child("users/${user?.uid}");
                         ref.set({
                           "name": usernameController.text,
-                          "balance": 0,
+                          "balance": bal,
                           "transactions": [],
                           "referral": user?.uid.substring(0, 5),
                           "phoneNr": "",
-                        }).then((value) {
+                        }).then((value) async {
                           if (user != null) {
+                            await Future.delayed(Duration(seconds: 1));
                             Navigator.pushReplacementNamed(context, '/',
                                 arguments: user);
                           }
