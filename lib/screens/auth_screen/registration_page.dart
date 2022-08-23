@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:localization/localization.dart';
@@ -144,35 +145,29 @@ class _RegistrationPageState extends State<RegistrationPage> {
               child: TextButton(
                 onPressed: () async {
                   if (validateForm()) {
-                    AuthOperation.registerUserAndSignIn(
-                            emailController.text, passwordController.text)
-                        .then((user) {
-                      int bal = 0;
-                      if (referralController.text.isNotEmpty) {
-                        bal = 10;
-                        Query ref = FirebaseDatabase.instance
-                            .ref("users")
-                            .orderByChild("referral")
-                            .equalTo(referralController.text)
-                            .limitToFirst(1);
-                        ref.once().then((value) {
-                          print(value);
+                    FirebaseAuth.instance
+                        .createUserWithEmailAndPassword(
+                            email: emailController.text,
+                            password: passwordController.text)
+                        .then((value) {
+                      AuthOperation.registerUserAndSignIn(
+                              emailController.text, passwordController.text)
+                          .then((user) {
+                        DatabaseReference ref = FirebaseDatabase.instance
+                            .ref()
+                            .child("users/${user?.uid}");
+                        ref.set({
+                          "name": usernameController.text,
+                          "balance": 0,
+                          "transactions": [],
+                          "referral": user?.uid.substring(0, 5),
+                          "phoneNr": "",
+                        }).then((value) {
+                          if (user != null) {
+                            Navigator.pushReplacementNamed(context, '/',
+                                arguments: user);
+                          }
                         });
-                      }
-                      DatabaseReference ref = FirebaseDatabase.instance
-                          .ref()
-                          .child("users/${user?.uid}");
-                      ref.set({
-                        "name": usernameController.text,
-                        "balance": bal,
-                        "transactions": [],
-                        "referral": user?.uid.substring(0, 5),
-                        "phoneNr": "",
-                      }).then((value) {
-                        if (user != null) {
-                          Navigator.pushReplacementNamed(context, '/',
-                              arguments: user);
-                        }
                       });
                     });
                   }
