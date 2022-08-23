@@ -14,11 +14,14 @@ class _RegistrationPageState extends State<RegistrationPage> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   TextEditingController usernameController = TextEditingController();
+  TextEditingController referralController = TextEditingController();
   bool _validPassword = true;
   bool _validEmail = true;
   bool _validUsername = true;
+  bool _validReferral = true;
   String _passwordError = 'password required'.i18n();
   String _emailError = 'email required'.i18n();
+  String _referralError = 'Il codice amico non esiste'.i18n();
 
   //validate password
   bool validatePassword(String value) {
@@ -87,7 +90,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                 decoration: InputDecoration(
                     border: const OutlineInputBorder(),
                     labelText: 'Email',
-                    hintText: 'enter email'.i18n(),
+                    hintText: 'Inserisci email'.i18n(),
                     errorText: _validEmail ? null : _emailError),
               ),
             ),
@@ -100,7 +103,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                 decoration: InputDecoration(
                     border: const OutlineInputBorder(),
                     labelText: 'Username',
-                    hintText: 'enter usename'.i18n(),
+                    hintText: 'Inserisci il tuo username'.i18n(),
                     errorText:
                         _validUsername ? null : 'username required'.i18n()),
               ),
@@ -115,8 +118,22 @@ class _RegistrationPageState extends State<RegistrationPage> {
                 decoration: InputDecoration(
                     border: const OutlineInputBorder(),
                     labelText: 'Password',
-                    hintText: 'Enter secure password'.i18n(),
+                    hintText: 'Inserisci una password valida'.i18n(),
                     errorText: _validPassword ? null : _passwordError),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(
+                  left: 15.0, right: 15.0, top: 15, bottom: 0),
+              //padding: EdgeInsets.symmetric(horizontal: 15),
+              child: TextField(
+                controller: referralController,
+                obscureText: true,
+                decoration: InputDecoration(
+                    border: const OutlineInputBorder(),
+                    labelText: 'Codice amico',
+                    hintText: 'Se lo hai, inserisci qui il tuo codice amico'.i18n(),
+                    errorText: _validReferral ? null : _referralError),
               ),
             ),
             const SizedBox(
