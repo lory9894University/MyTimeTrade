@@ -165,7 +165,6 @@ class _RegistrationPageState extends State<RegistrationPage> {
           .then((value) {
         int bal = 0;
         if (referralController.text.isNotEmpty) {
-          bal = 10;
           Query ref = FirebaseDatabase.instance
               .ref("users")
               .orderByChild("referral")
@@ -179,7 +178,8 @@ class _RegistrationPageState extends State<RegistrationPage> {
                 FirebaseDatabase.instance
                     .ref("users")
                     .child(key)
-                    .update({"balance": val["balance"] + bal});
+                    .update({"balance": val["balance"] + 10});
+                bal = 10;
                 updateReferredUser(key, val, value.user?.uid);
               });
             }
