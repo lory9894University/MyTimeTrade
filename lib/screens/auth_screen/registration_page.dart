@@ -130,6 +130,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                     border: const OutlineInputBorder(),
                     labelText: 'referral'.i18n(),
                     hintText: 'referral_hint'.i18n()),
+                maxLength: 5,
               ),
             ),
             const SizedBox(
