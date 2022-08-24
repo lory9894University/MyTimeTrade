@@ -19,9 +19,10 @@ class _HomePageState extends State<HomePage> {
   List<dynamic> transactions = List.empty(growable: true);
 
   @override
-  void initState() {
+  initState() {
     super.initState();
     loadUserData();
+    setState(() => {});
   }
 
   @override
