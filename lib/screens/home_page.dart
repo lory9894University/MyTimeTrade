@@ -19,10 +19,9 @@ class _HomePageState extends State<HomePage> {
   List<dynamic> transactions = List.empty(growable: true);
 
   @override
-  Future<void> initState() async {
+  initState() {
     super.initState();
     loadUserData();
-    await Future.delayed(Duration(seconds: 1));
     setState(() => {});
   }
 

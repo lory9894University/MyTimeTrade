@@ -2,7 +2,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:localization/localization.dart';
-import 'package:mytimetrade/firebase/auth_operations.dart';
 
 class RegistrationPage extends StatefulWidget {
   const RegistrationPage({Key? key}) : super(key: key);
@@ -142,58 +141,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
               decoration: BoxDecoration(
                   color: Colors.blue, borderRadius: BorderRadius.circular(20)),
               child: TextButton(
-                onPressed: () async {
-                  if (validateForm()) {
-                    FirebaseAuth.instance
-                        .createUserWithEmailAndPassword(
-                            email: emailController.text,
-                            password: passwordController.text)
-                        .then((value) {
-                      AuthOperation.registerUserAndSignIn(
-                              emailController.text, passwordController.text)
-                          .then((user) {
-                        int bal = 0;
-                        if (referralController.text.isNotEmpty) {
-                          bal = 10;
-                          Query ref = FirebaseDatabase.instance
-                              .ref("users")
-                              .orderByChild("referral")
-                              .equalTo(referralController.text)
-                              .limitToFirst(1);
-                          ref.once().then((DatabaseEvent event) {
-                            if (event != null) {
-                              Map<dynamic, dynamic> map =
-                                  event.snapshot.value as Map<dynamic, dynamic>;
-                              map.forEach((key, value) {
-                                FirebaseDatabase.instance
-                                    .ref("users")
-                                    .child(key)
-                                    .update(
-                                        {"balance": value["balance"] + bal});
-                              });
-                            }
-                          });
-                        }
-                        DatabaseReference ref = FirebaseDatabase.instance
-                            .ref()
-                            .child("users/${user?.uid}");
-                        ref.set({
-                          "name": usernameController.text,
-                          "balance": bal,
-                          "transactions": [],
-                          "referral": user?.uid.substring(0, 5),
-                          "phoneNr": "",
-                        }).then((value) async {
-                          if (user != null) {
-                            await Future.delayed(Duration(seconds: 1));
-                            Navigator.pushReplacementNamed(context, '/',
-                                arguments: user);
-                          }
-                        });
-                      });
-                    });
-                  }
-                },
+                onPressed: registerUser,
                 child: Text(
                   'register'.i18n(),
                   style: const TextStyle(color: Colors.white, fontSize: 25),
@@ -207,5 +155,54 @@ class _RegistrationPageState extends State<RegistrationPage> {
         ),
       ),
     );
+  }
+
+  void registerUser() {
+    if (validateForm()) {
+      FirebaseAuth.instance
+          .createUserWithEmailAndPassword(
+              email: emailController.text, password: passwordController.text)
+          .then((value) {
+        int bal = 0;
+        if (referralController.text.isNotEmpty) {
+          bal = 10;
+          Query ref = FirebaseDatabase.instance
+              .ref("users")
+              .orderByChild("referral")
+              .equalTo(referralController.text.trim())
+              .limitToFirst(1);
+          ref.once().then((DatabaseEvent event) {
+            if (event != null) {
+              Map<dynamic, dynamic> map =
+                  event.snapshot.value as Map<dynamic, dynamic>;
+              map.forEach((key, val) {
+                FirebaseDatabase.instance
+                    .ref("users")
+                    .child(key)
+                    .update({"balance": val["balance"] + bal});
+                updateReferredUser(key, val, value.user?.uid);
+              });
+            }
+          });
+        }
+        DatabaseReference ref =
+            FirebaseDatabase.instance.ref().child("users/${value.user?.uid}");
+        ref.set({
+          "name": usernameController.text,
+          "balance": bal,
+          "transactions": [],
+          "referral": value.user?.uid.substring(0, 5),
+          "phoneNr": "",
+        }).then((value) {
+          Navigator.pushReplacementNamed(context, '/');
+        });
+      });
+    }
+  }
+
+  void updateReferredUser(key, value, uid) {
+    DatabaseReference ref =
+        FirebaseDatabase.instance.ref().child("users/$key/referred");
+    ref.set({usernameController.text: uid});
   }
 }
