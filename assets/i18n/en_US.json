@@ -48,6 +48,7 @@
   "services offline": "Cannot search services while offline",
   "address offline": "Cannot change address while offline",
   "wrong username or password" : "Wrong username or password",
+  "Sign in with Google" : "Sign in with Google",
   "Sign up with Google" : "Sign up with Google",
   "recover password": "Recover password",
   "insert email" : "Insert email address",
@@ -62,5 +63,7 @@
   "address_not_found": "Address not found",
   "specify interest" : "Specify interest",
   "set address first" : "Set the address first",
-  "category" : "Category"
+  "category" : "Category",
+  "insert address" : "Insert address",
+
 }

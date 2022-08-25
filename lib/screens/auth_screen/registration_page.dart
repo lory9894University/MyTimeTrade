@@ -1,5 +1,7 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_signin_button/button_list.dart';
+import 'package:flutter_signin_button/button_view.dart';
 import 'package:localization/localization.dart';
 import 'package:mytimetrade/firebase/auth_operations.dart';
 
@@ -155,6 +157,39 @@ class _RegistrationPageState extends State<RegistrationPage> {
                   'register'.i18n(),
                   style: const TextStyle(color: Colors.white, fontSize: 25),
                 ),
+              ),
+            ),
+            const Padding(padding: EdgeInsets.only(top: 15)),
+            Container(
+              height: 50,
+              width: 250,
+              decoration: BoxDecoration(
+                  color: Colors.black, borderRadius: BorderRadius.circular(20)),
+              child: SignInButton(
+                Buttons.Google,
+                text: "Sign up with Google".i18n(),
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20)),
+                onPressed: () async {
+                  AuthOperation.signInWithGoogle().then((user) {
+                    if (user != null) {
+                      DatabaseReference ref = FirebaseDatabase.instance
+                          .ref("users")
+                          .child(user.uid);
+                      ref.set({
+                        "name": user.displayName,
+                        "balance": 0,
+                        "transactions": [],
+                        "referral": user.uid.substring(0, 5),
+                        "phoneNr": user.phoneNumber ?? "",
+                      });
+                    }
+                    if (mounted) {
+                      Navigator.pushReplacementNamed(context, '/welcome',
+                          arguments: user);
+                    }
+                  });
+                },
               ),
             ),
             const SizedBox(

@@ -155,25 +155,11 @@ class _LoginPageState extends State<LoginPage> {
                         borderRadius: BorderRadius.circular(20)),
                     child: SignInButton(
                       Buttons.Google,
-                      text: "Sign up with Google".i18n(),
+                      text: "Sign in with Google".i18n(),
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(20)),
                       onPressed: () async {
                         AuthOperation.signInWithGoogle().then((user) {
-                          /*if (user != null) {
-                            //TODO: if user is not registered, register him/her
-                            DatabaseReference ref = FirebaseDatabase.instance
-                                .ref("users")
-                                .child(user.uid);
-                            //in questo modo però sovrascrive i dati ad ogni accesso.
-                            ref.set({
-                              "name": user.displayName,
-                              "balance": 0,
-                              "transactions": [],
-                              "referral": user.uid.substring(0, 5),
-                              "phoneNr": user.phoneNumber ?? "",
-                            });
-                          }*/
                           if (mounted) {
                             Navigator.pushReplacementNamed(context, '/welcome',
                                 arguments: user);
