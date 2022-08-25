@@ -166,13 +166,17 @@ class _RegistrationPageState extends State<RegistrationPage> {
                     borderRadius: BorderRadius.circular(20)),
                 onPressed: () async {
                   AuthOperation.signInWithGoogle().then((user) {
+                    int bal = 0;
+                    if (referralController.text.isNotEmpty) {
+                      bal = 10;
+                    }
                     if (user != null) {
                       DatabaseReference ref = FirebaseDatabase.instance
                           .ref("users")
                           .child(user.uid);
                       ref.set({
                         "name": user.displayName,
-                        "balance": 0,
+                        "balance": bal,
                         "transactions": [],
                         "referral": user.uid.substring(0, 5),
                         "phoneNr": user.phoneNumber ?? "",
@@ -203,6 +207,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
           .then((value) {
         int bal = 0;
         if (referralController.text.isNotEmpty) {
+          bal = 10;
           Query ref = FirebaseDatabase.instance
               .ref("users")
               .orderByChild("referral")
@@ -217,7 +222,6 @@ class _RegistrationPageState extends State<RegistrationPage> {
                     .ref("users")
                     .child(key)
                     .update({"balance": val["balance"] + 10});
-                bal = 10;
                 updateReferredUser(key, val, value.user?.uid);
               });
             }
