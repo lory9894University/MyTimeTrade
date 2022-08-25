@@ -48,7 +48,6 @@
   "services offline": "Cannot search services while offline",
   "address offline": "Cannot change address while offline",
   "wrong username or password" : "Wrong username or password",
-  "Sign in with Google" : "Sign in with Google",
   "Sign up with Google" : "Sign up with Google",
   "recover password": "Recover password",
   "insert email" : "Insert email address",
@@ -65,5 +64,7 @@
   "set address first" : "Set the address first",
   "category" : "Category",
   "insert address" : "Insert address",
-
+  "share_msg": "This is my referral code!",
+  "referral" : "Referral Code",
+  "referral_hint": "If you have a referral code, enter it here"
 }

@@ -17,7 +17,7 @@ final offlineSnackBar = SnackBar(
 );
 
 class UserData {
-  late String name, email, uid;
+  late String name, email, uid, referralCode;
   String? address, phoneNr;
   User authObject;
   List<String>? services;
@@ -28,6 +28,7 @@ class UserData {
       this.phoneNr, this.lat, this.lng) {
     email = authObject.email!;
     uid = authObject.uid;
+    referralCode = uid.substring(0, 5);
   }
 }
 
