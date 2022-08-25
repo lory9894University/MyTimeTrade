@@ -66,5 +66,6 @@
   "insert address" : "Insert address",
   "share_msg": "This is my referral code!",
   "referral" : "Referral Code",
-  "referral_hint": "If you have a referral code, enter it here"
+  "referral_hint": "If you have a referral code, enter it here",
+  "whatsapp message": "\nI'm contacting you through myTimeTrade about your service: "
 }
