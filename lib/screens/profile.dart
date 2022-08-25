@@ -30,6 +30,7 @@ class _ProfileState extends State<Profile> {
 
   @override
   Widget build(BuildContext context) {
+    var isLandscape = MediaQuery.of(context).orientation == Orientation.landscape;
     var index = 3;
     return Scaffold(
       extendBody: true,
@@ -178,16 +179,16 @@ class _ProfileState extends State<Profile> {
                           "Ciao! Ti contatto dall'applicazione MyTimeTrade per quel " +
                               lavoro); */
                       },
-                      child: Text(
+                      child: Center(child: Text(
                         'contact'.i18n(),
                         style:
                             const TextStyle(color: Colors.white, fontSize: 25),
-                      ),
+                      ),),
                     ),
                   ),
                   Container(
                     height: 50,
-                    width: 160,
+                    width: 120,
                     decoration: BoxDecoration(
                         color: Colors.blue,
                         borderRadius: BorderRadius.circular(20)),
@@ -195,16 +196,16 @@ class _ProfileState extends State<Profile> {
                       onPressed: () {
                         Navigator.pushNamed(context, '/ore', arguments: args);
                       },
-                      child: Text(
-                        'request service'.i18n(),
+                      child: Align(alignment: Alignment.topCenter, child: Text(
+                        'request'.i18n(),
                         style:
                             const TextStyle(color: Colors.white, fontSize: 25),
-                      ),
+                      ),),
                     ),
                   ),
                 ],
               ),
-              const Padding(padding: EdgeInsets.only(top: 80))
+              Padding(padding: EdgeInsets.only(bottom: isLandscape ? 260 : 130))
             ],
           ),
         ),
