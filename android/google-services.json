@@ -15,11 +15,27 @@
       },
       "oauth_client": [
         {
+          "client_id": "1012941757457-5hbv4pmsu3kk0f55ja0dm180d4t8jhge.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.mytimetrade",
+            "certificate_hash": "be7c80033392e455a2dba7ef9347c8955c23417c"
+          }
+        },
+        {
           "client_id": "1012941757457-5vtm2hgf4celhpsbtttmp9n2i56u2dss.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.example.mytimetrade",
             "certificate_hash": "d83e90ebf314f7a666ba460fca1c69027d3ed132"
+          }
+        },
+        {
+          "client_id": "1012941757457-nv5b4v8ouka8ni8blfr24d3511o2fgla.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.mytimetrade",
+            "certificate_hash": "1c3fc29a0f49bcff1a2bbb31debd8db2f703113e"
           }
         },
         {
