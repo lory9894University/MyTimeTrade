@@ -31,7 +31,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
         RegExp(r'^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$');
     if (value.isEmpty) {
       _passwordError = 'password required'.i18n();
-    } else if (!regex.hasMatch(value)) {
+    } else if (!regex.hasMatch(value.trim())) {
       _passwordError = "password must contain".i18n();
     } else {
       _validPassword = true;
@@ -48,7 +48,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
         r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$');
     if (value.isEmpty) {
       _emailError = 'email required'.i18n();
-    } else if (!regex.hasMatch(value)) {
+    } else if (!regex.hasMatch(value.trim())) {
       _emailError = 'invalid email'.i18n();
     } else {
       _validEmail = true;
@@ -203,7 +203,8 @@ class _RegistrationPageState extends State<RegistrationPage> {
     if (validateForm()) {
       FirebaseAuth.instance
           .createUserWithEmailAndPassword(
-              email: emailController.text, password: passwordController.text)
+              email: emailController.text.trim(),
+              password: passwordController.text.trim())
           .then((value) {
         int bal = 0;
         if (referralController.text.isNotEmpty) {
