@@ -168,16 +168,11 @@ class _ProfileState extends State<Profile> {
                     child: TextButton(
                       onPressed: () async {
                         launchWhatsapp(
-                            number: 3425934167, message: "hahahahahah");
-                        /*User? user = await AuthOperation.registerUserAndSignIn(
-                        emailController.text, passwordController.text);
-                    if (user != null) {
-                      Navigator.pushReplacementNamed(context, '/', arguments: user);
-                    }
-                      var lavoro = "lavoro da insegnante di liceo";
-                      Share.share(
-                          "Ciao! Ti contatto dall'applicazione MyTimeTrade per quel " +
-                              lavoro); */
+                            number: args['phone']?.replaceAll(" ", ""),
+                            message: "hi".i18n() +
+                                args['name']! +
+                                "whatsapp message".i18n() +
+                                args['interest']!);
                       },
                       child: Center(child: Text(
                         'contact'.i18n(),

@@ -1,7 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_signin_button/button_list.dart';
+import 'package:flutter_signin_button/button_view.dart';
 import 'package:localization/localization.dart';
+
+import '../../firebase/auth_operations.dart';
 
 class RegistrationPage extends StatefulWidget {
   const RegistrationPage({Key? key}) : super(key: key);
@@ -149,6 +153,43 @@ class _RegistrationPageState extends State<RegistrationPage> {
                 ),
               ),
             ),
+            const Padding(padding: EdgeInsets.only(top: 15)),
+            Container(
+              height: 50,
+              width: 250,
+              decoration: BoxDecoration(
+                  color: Colors.black, borderRadius: BorderRadius.circular(20)),
+              child: SignInButton(
+                Buttons.Google,
+                text: "Sign up with Google".i18n(),
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20)),
+                onPressed: () async {
+                  AuthOperation.signInWithGoogle().then((user) {
+                    int bal = 0;
+                    if (referralController.text.isNotEmpty) {
+                      bal = 10;
+                    }
+                    if (user != null) {
+                      DatabaseReference ref = FirebaseDatabase.instance
+                          .ref("users")
+                          .child(user.uid);
+                      ref.set({
+                        "name": user.displayName,
+                        "balance": bal,
+                        "transactions": [],
+                        "referral": user.uid.substring(0, 5),
+                        "phoneNr": user.phoneNumber ?? "",
+                      });
+                    }
+                    if (mounted) {
+                      Navigator.pushReplacementNamed(context, '/welcome',
+                          arguments: user);
+                    }
+                  });
+                },
+              ),
+            ),
             const SizedBox(
               height: 130,
             ),
@@ -166,6 +207,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
           .then((value) {
         int bal = 0;
         if (referralController.text.isNotEmpty) {
+          bal = 10;
           Query ref = FirebaseDatabase.instance
               .ref("users")
               .orderByChild("referral")
@@ -180,7 +222,6 @@ class _RegistrationPageState extends State<RegistrationPage> {
                     .ref("users")
                     .child(key)
                     .update({"balance": val["balance"] + 10});
-                bal = 10;
                 updateReferredUser(key, val, value.user?.uid);
               });
             }

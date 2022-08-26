@@ -48,7 +48,8 @@
   "services offline": "Impossibile cercare i servizi in modalità offline",
   "address offline": "Impossibile cambiare indirizzo in modalità offline",
   "wrong username or password" : "Username o password errati",
-  "Sign up with Google" : "Accedi con Google",
+  "Sign in with Google" : "Accedi con Google",
+  "Sign up with Google" : "Registrati con Google",
   "recover password": "Recupera password",
   "insert email" : "Inserisci un indirizzo email",
   "user not registered": "Utente non registrato",
@@ -62,9 +63,11 @@
   "address_not_found": "Indirizzo non trovato",
   "specify interest" : "Specifica un interesse",
   "set address first" : "Imposta prima un indirizzo",
+  "insert address" : "Inserisci un indirizzo",
   "category" : "Categoria",
   "share_msg": "Questo è il tuo codice per iscriverti!",
   "referral" : "Codice amico",
-  "referral_hint": "Se lo hai, inserisci qui il tuo codice amico"
+  "referral_hint": "Se lo hai, inserisci qui il tuo codice amico",
+  "whatsapp message": "\nTi contatto tramite MyTimeTrade per il tuo servizio: "
 
 }

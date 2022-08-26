@@ -206,13 +206,14 @@ class _AccettaState extends State<Accetta> {
                                             ),
                                             color: Colors.green,
                                             textColor: Colors.white,
-                                            onPressed: () {
-                                              Navigator.pushNamed(
+                                            onPressed: () async {
+                                              await Navigator.pushNamed(
                                                   context, '/swipe',
                                                   arguments:
                                                       Map<String, String>.from(
                                                           transactionsToPay[
                                                               index]));
+                                              didChangeDependencies();
                                             },
                                           ),
                                         ),
