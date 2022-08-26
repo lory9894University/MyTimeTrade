@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutterfire_ui/i10n.dart';
 import 'package:localization/localization.dart';
 import 'package:mytimetrade/screens/auth_screen/forgot_password.dart';
@@ -21,7 +22,8 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   FirebaseDatabase.instance.setPersistenceEnabled(true);
-  runApp(const MyApp());
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
+      .then((value) => runApp(const MyApp()));
 }
 
 class MyApp extends StatelessWidget {

@@ -120,7 +120,30 @@ class _HomePageState extends State<HomePage> {
               child: ListView.builder(
                 itemCount: transactions.length,
                 itemBuilder: (context, index) {
-                  return ListTile(
+                  return Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: <Widget>[
+                      Image.asset('assets/img/handshake.png', scale: 3,),
+                      Center(
+                        child: DefaultTextStyle(
+                          style: const TextStyle(
+                            fontStyle: FontStyle.italic,
+                            color: Colors.black,
+                            fontSize: 20
+                          ),
+                        child: Text(transactions[index]["supplier_name"]))),
+                      Center(
+                          child: DefaultTextStyle(
+                              style: const TextStyle(
+                                  fontStyle: FontStyle.italic,
+                                  color: Colors.black,
+                                  fontSize: 20
+                              ),
+                              child: Text(transactions[index]["ore"]))),
+                    ],
+                  );
+
+                  /*ListTile(
                     leading: Image.asset('assets/img/handshake.png'),
                     title: Center(
                         child: DefaultTextStyle(
@@ -139,7 +162,7 @@ class _HomePageState extends State<HomePage> {
                                 "service requested".i18n() +
                                 ": " +
                                 transactions[index]["description"]))),
-                  );
+                  );*/
                 },
                 shrinkWrap: true,
               ),

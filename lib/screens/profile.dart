@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:localization/localization.dart';
+import 'package:mytimetrade/Screen.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
 import '../widgets/BottomBar.dart';
@@ -30,7 +31,7 @@ class _ProfileState extends State<Profile> {
 
   @override
   Widget build(BuildContext context) {
-    var isLandscape = MediaQuery.of(context).orientation == Orientation.landscape;
+    bool isTablet7 = ScreenTry.diagonalInches(context) >= 7;
     var index = 3;
     return Scaffold(
       extendBody: true,
@@ -200,7 +201,7 @@ class _ProfileState extends State<Profile> {
                   ),
                 ],
               ),
-              Padding(padding: EdgeInsets.only(bottom: isLandscape ? 260 : 130))
+              Padding(padding: EdgeInsets.only(bottom: isTablet7 ? 410 : 150))
             ],
           ),
         ),
