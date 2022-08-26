@@ -143,7 +143,7 @@ class _HomePageState extends State<HomePage> {
                                   color: Colors.black,
                                   fontSize: 20),
                               child: Text(
-                                  who + "\n" + transactions[index]["date"].toString().))),
+                                  who + "\n" + transactions[index]["date"].toString()))),
                       Center(
                           child: DefaultTextStyle(
                               style: const TextStyle(
