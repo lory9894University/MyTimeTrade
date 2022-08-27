@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth_mocks/firebase_auth_mocks.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -16,11 +15,7 @@ Future<void> main() async {
 
   FirebaseFirestore.instance.settings = const Settings(
       host: 'localhost:8080', sslEnabled: false, persistenceEnabled: false);
-  int findOne = 0;
-  FirebaseDatabase database = FirebaseDatabase(
-    app: Firebase.app(),
-    databaseURL: "localhost:9000",
-  );
+  var findOne = findsNothing;
 
   final user = MockUser(
     isAnonymous: false,
@@ -45,7 +40,7 @@ Future<void> main() async {
 
     final username = find.textContaining('Lorenzo');
 
-    expect(username, findsNWidgets(findOne));
+    expect(username, findOne);
   });
 
   testWidgets('transaction rendering', (WidgetTester tester) async {
@@ -64,6 +59,6 @@ Future<void> main() async {
 
     final transaction = find.byKey(const Key('transaction'));
 
-    expect(transaction, findsNothing);
+    expect(transaction, findOne);
   });
 }

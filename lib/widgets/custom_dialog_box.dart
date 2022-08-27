@@ -68,6 +68,7 @@ class _CustomDialogBoxState extends State<CustomDialogBox> {
                 height: 10,
               ),
               TextField(
+                key: const Key("address_box"),
                 controller: addressController,
                 decoration: InputDecoration(
                   labelText: "address".i18n(),
@@ -93,6 +94,7 @@ class _CustomDialogBoxState extends State<CustomDialogBox> {
                   ),
                   Expanded(
                     child: FlatButton(
+                        key: const Key('confirm_address'),
                         onPressed: () async {
                           await updateDb(addressController.text);
                         },

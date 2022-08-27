@@ -48,7 +48,6 @@ void main() {
     await tester.tap(login);
 
     final userLogged = await result.user;
-    print(userLogged?.displayName);
     expect(userLogged?.displayName, 'Lorenzo');
     await tester.pump();
   });

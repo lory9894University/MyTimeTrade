@@ -95,10 +95,14 @@ class _PersonalProfileState extends State<PersonalProfile> {
               ),
               const Padding(padding: EdgeInsets.only(top: 20)),
               ExpansionTile(
+                key: const Key('expand_address'),
                 title: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
-                    const Icon(FontAwesomeIcons.locationArrow, size: 30,),
+                    const Icon(
+                      FontAwesomeIcons.locationArrow,
+                      size: 30,
+                    ),
                     //const Padding(padding: EdgeInsets.only(left: 0)),
                     Center(
                         child: DefaultTextStyle(
@@ -116,6 +120,7 @@ class _PersonalProfileState extends State<PersonalProfile> {
                   Column(
                     children: [
                       DefaultTextStyle(
+                        key: const Key('address'),
                         style: const TextStyle(
                           fontStyle: FontStyle.italic,
                           fontSize: 15.0,
@@ -127,6 +132,7 @@ class _PersonalProfileState extends State<PersonalProfile> {
                       ),
                       const Padding(padding: EdgeInsets.only(top: 5)),
                       IconButton(
+                        key: const Key('edit_address'),
                         icon: const Icon(FontAwesomeIcons.pen, size: 20),
                         onPressed: () async {
                           var connectivityResult =
@@ -170,7 +176,10 @@ class _PersonalProfileState extends State<PersonalProfile> {
                 title: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
-                    const Icon(FontAwesomeIcons.phone, size: 30,),
+                    const Icon(
+                      FontAwesomeIcons.phone,
+                      size: 30,
+                    ),
                     Center(
                         child: DefaultTextStyle(
                       style: const TextStyle(
@@ -225,7 +234,10 @@ class _PersonalProfileState extends State<PersonalProfile> {
                 title: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
-                    const Icon(FontAwesomeIcons.briefcase, size: 30,),
+                    const Icon(
+                      FontAwesomeIcons.briefcase,
+                      size: 30,
+                    ),
                     Center(
                         child: DefaultTextStyle(
                       style: const TextStyle(
