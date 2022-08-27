@@ -130,6 +130,7 @@ class _HomePageState extends State<HomePage> {
                   }
 
                   return Row(
+                    key: const Key("transaction"),
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: <Widget>[
                       Image.asset(

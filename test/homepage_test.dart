@@ -16,20 +16,21 @@ Future<void> main() async {
 
   FirebaseFirestore.instance.settings = const Settings(
       host: 'localhost:8080', sslEnabled: false, persistenceEnabled: false);
+  int findOne = 0;
   FirebaseDatabase database = FirebaseDatabase(
     app: Firebase.app(),
     databaseURL: "localhost:9000",
   );
 
-  testWidgets('transaction rendering', (WidgetTester tester) async {
-    FlutterError.onError = ignoreOverflowErrors;
+  final user = MockUser(
+    isAnonymous: false,
+    uid: 'xJwXwEA3oZSOLdNUGIC9dTiFmWp1',
+    email: 'lorenzo@developer.com',
+    displayName: 'Lorenzo',
+  );
 
-    final user = MockUser(
-      isAnonymous: false,
-      uid: 'Bm2KN9LjlPUvWnClvzIYQLjjUqj2',
-      email: 'lorenzo@developer.com',
-      displayName: 'Lorenzo',
-    );
+  testWidgets("User recognition", (WidgetTester tester) async {
+    FlutterError.onError = ignoreOverflowErrors;
 
     await tester.pumpWidget(MaterialApp(
       onGenerateRoute: (settings) {
@@ -41,5 +42,28 @@ Future<void> main() async {
         );
       },
     ));
+
+    final username = find.textContaining('Lorenzo');
+
+    expect(username, findsNWidgets(findOne));
+  });
+
+  testWidgets('transaction rendering', (WidgetTester tester) async {
+    FlutterError.onError = ignoreOverflowErrors;
+
+    await tester.pumpWidget(MaterialApp(
+      onGenerateRoute: (settings) {
+        return MaterialPageRoute(
+          settings: RouteSettings(arguments: user),
+          builder: (context) {
+            return HomePage();
+          },
+        );
+      },
+    ));
+
+    final transaction = find.byKey(const Key('transaction'));
+
+    expect(transaction, findsNothing);
   });
 }
