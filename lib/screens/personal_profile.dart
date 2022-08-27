@@ -98,8 +98,8 @@ class _PersonalProfileState extends State<PersonalProfile> {
                 title: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
-                    const Icon(FontAwesomeIcons.locationArrow),
-                    const Padding(padding: EdgeInsets.only(left: 0)),
+                    const Icon(FontAwesomeIcons.locationArrow, size: 30,),
+                    //const Padding(padding: EdgeInsets.only(left: 0)),
                     Center(
                         child: DefaultTextStyle(
                       style: const TextStyle(
@@ -109,7 +109,7 @@ class _PersonalProfileState extends State<PersonalProfile> {
                       ),
                       child: Text("address".i18n()),
                     )),
-                    const Padding(padding: EdgeInsets.only(left: 45)),
+                    const Padding(padding: EdgeInsets.only(right: 0)),
                   ],
                 ),
                 children: [
@@ -170,8 +170,7 @@ class _PersonalProfileState extends State<PersonalProfile> {
                 title: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
-                    const Icon(FontAwesomeIcons.phone),
-                    const Padding(padding: EdgeInsets.only(left: 0)),
+                    const Icon(FontAwesomeIcons.phone, size: 30,),
                     Center(
                         child: DefaultTextStyle(
                       style: const TextStyle(
@@ -181,7 +180,7 @@ class _PersonalProfileState extends State<PersonalProfile> {
                       ),
                       child: Text("phoneNr".i18n()),
                     )),
-                    const Padding(padding: EdgeInsets.only(left: 45)),
+                    const Padding(padding: EdgeInsets.only(right: 0)),
                   ],
                 ),
                 children: [
@@ -189,9 +188,9 @@ class _PersonalProfileState extends State<PersonalProfile> {
                     children: [
                       TextField(
                         controller: phoneController,
-                        decoration: InputDecoration(
-                          border: const OutlineInputBorder(),
-                          labelText: 'phoneNr'.i18n(),
+                        decoration: const InputDecoration(
+                          border: OutlineInputBorder(),
+                          //labelText: 'phoneNr'.i18n(),
                           hintText: '##########',
                           prefixText: '+ 39',
                         ),
@@ -226,8 +225,7 @@ class _PersonalProfileState extends State<PersonalProfile> {
                 title: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
-                    const Icon(FontAwesomeIcons.briefcase),
-                    const Padding(padding: EdgeInsets.only(left: 0)),
+                    const Icon(FontAwesomeIcons.briefcase, size: 30,),
                     Center(
                         child: DefaultTextStyle(
                       style: const TextStyle(
@@ -237,7 +235,7 @@ class _PersonalProfileState extends State<PersonalProfile> {
                       ),
                       child: Text("interests".i18n()),
                     )),
-                    const Padding(padding: EdgeInsets.only(left: 45)),
+                    const Padding(padding: EdgeInsets.only(right: 0)),
                   ],
                 ),
                 children: [

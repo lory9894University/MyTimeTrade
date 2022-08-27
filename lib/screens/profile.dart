@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:localization/localization.dart';
+import 'package:mytimetrade/Screen.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
 import '../widgets/BottomBar.dart';
@@ -30,6 +31,7 @@ class _ProfileState extends State<Profile> {
 
   @override
   Widget build(BuildContext context) {
+    bool isTablet7 = ScreenTry.diagonalInches(context) >= 7;
     var index = 3;
     return Scaffold(
       extendBody: true,
@@ -173,16 +175,16 @@ class _ProfileState extends State<Profile> {
                                 "whatsapp message".i18n() +
                                 args['interest']!);
                       },
-                      child: Text(
+                      child: Center(child: Text(
                         'contact'.i18n(),
                         style:
                             const TextStyle(color: Colors.white, fontSize: 25),
-                      ),
+                      ),),
                     ),
                   ),
                   Container(
                     height: 50,
-                    width: 160,
+                    width: 120,
                     decoration: BoxDecoration(
                         color: Colors.blue,
                         borderRadius: BorderRadius.circular(20)),
@@ -190,16 +192,16 @@ class _ProfileState extends State<Profile> {
                       onPressed: () {
                         Navigator.pushNamed(context, '/ore', arguments: args);
                       },
-                      child: Text(
-                        'request service'.i18n(),
+                      child: Align(alignment: Alignment.topCenter, child: Text(
+                        'request'.i18n(),
                         style:
                             const TextStyle(color: Colors.white, fontSize: 25),
-                      ),
+                      ),),
                     ),
                   ),
                 ],
               ),
-              const Padding(padding: EdgeInsets.only(top: 80))
+              Padding(padding: EdgeInsets.only(bottom: isTablet7 ? 410 : 150))
             ],
           ),
         ),

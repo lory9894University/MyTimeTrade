@@ -120,7 +120,43 @@ class _HomePageState extends State<HomePage> {
               child: ListView.builder(
                 itemCount: transactions.length,
                 itemBuilder: (context, index) {
-                  return ListTile(
+                  String who = "", inOrOut = "";
+                  if (transactions[index]["client"] == globalUserData?.uid) {
+                    who = transactions[index]["supplier_name"];
+                    inOrOut = "-";
+                  } else {
+                    who = transactions[index]["client_name"];
+                    inOrOut = "+";
+                  }
+
+                  return Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: <Widget>[
+                      Image.asset(
+                        'assets/img/handshake.png',
+                        scale: 3,
+                      ),
+                      Center(
+                          child: DefaultTextStyle(
+                              style: const TextStyle(
+                                  fontStyle: FontStyle.italic,
+                                  color: Colors.black,
+                                  fontSize: 20),
+                              child: Text(who +
+                                  "\n" +
+                                  transactions[index]["date"].toString()))),
+                      Center(
+                          child: DefaultTextStyle(
+                              style: const TextStyle(
+                                  fontStyle: FontStyle.italic,
+                                  color: Colors.black,
+                                  fontSize: 20),
+                              child:
+                                  Text(inOrOut + transactions[index]["ore"]))),
+                    ],
+                  );
+
+                  /*ListTile(
                     leading: Image.asset('assets/img/handshake.png'),
                     title: Center(
                         child: DefaultTextStyle(
@@ -139,7 +175,7 @@ class _HomePageState extends State<HomePage> {
                                 "service requested".i18n() +
                                 ": " +
                                 transactions[index]["description"]))),
-                  );
+                  );*/
                 },
                 shrinkWrap: true,
               ),
