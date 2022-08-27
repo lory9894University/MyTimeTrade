@@ -1,0 +1,187 @@
+{
+  "transactions": {
+    "1661516670950": {
+      "client": "xJwXwEA3oZSOLdNUGIC9dTiFmWp1",
+      "client_name": "Lorenzo Dentis",
+      "date": "2022-08-26",
+      "description": "lezioni di giapponese ",
+      "ore": "5",
+      "status": "completed",
+      "supplier": "3M5mdZ57ZcayCpqc5EmEriAyCeN2",
+      "supplier_name": "Fedra Canarelli ",
+      "timestamp": "1661516670950"
+    },
+    "1661520512772": {
+      "client": "zDKtj87giNYIvm18lNQzzsUKRMF3",
+      "client_name": "dangiolino_99",
+      "date": "2022-08-26",
+      "description": "cucina orientale",
+      "ore": "38",
+      "status": "completed",
+      "supplier": "rvSStZ5mB0c1TFl3fa0fagrfgFX2",
+      "supplier_name": "andrea_dangi99",
+      "timestamp": "1661520512772"
+    },
+    "1661520667956": {
+      "client": "zDKtj87giNYIvm18lNQzzsUKRMF3",
+      "client_name": "dangiolino_99",
+      "date": "2022-08-26",
+      "description": "dolci alla frutta",
+      "ore": "9",
+      "status": "completed",
+      "supplier": "rvSStZ5mB0c1TFl3fa0fagrfgFX2",
+      "supplier_name": "andrea_dangi99",
+      "timestamp": "1661520667956"
+    },
+    "1661520780355": {
+      "client": "zDKtj87giNYIvm18lNQzzsUKRMF3",
+      "client_name": "dangiolino_99",
+      "date": "2022-08-26",
+      "description": "dolci alla frutta",
+      "ore": "9",
+      "status": "completed",
+      "supplier": "rvSStZ5mB0c1TFl3fa0fagrfgFX2",
+      "supplier_name": "andrea_dangi99",
+      "timestamp": "1661520780355"
+    },
+    "1661520926888": {
+      "client": "rvSStZ5mB0c1TFl3fa0fagrfgFX2",
+      "client_name": "andrea_dangi99",
+      "date": "2022-08-26",
+      "description": "messicano",
+      "ore": "16",
+      "status": "completed",
+      "supplier": "zDKtj87giNYIvm18lNQzzsUKRMF3",
+      "supplier_name": "dangiolino_99",
+      "timestamp": "1661520926888"
+    },
+    "1661523576314": {
+      "client": "zDKtj87giNYIvm18lNQzzsUKRMF3",
+      "client_name": "dangiolino_99",
+      "date": "2022-08-26",
+      "description": "dolci alla frutta",
+      "ore": "8",
+      "status": "completed",
+      "supplier": "rvSStZ5mB0c1TFl3fa0fagrfgFX2",
+      "supplier_name": "andrea_dangi99",
+      "timestamp": "1661523576314"
+    },
+    "1661529553488": {
+      "client": "3M5mdZ57ZcayCpqc5EmEriAyCeN2",
+      "client_name": "Fedra Canarelli ",
+      "date": "2022-08-26",
+      "description": "cucina Etiope ",
+      "ore": "5",
+      "status": "pending",
+      "supplier": "xJwXwEA3oZSOLdNUGIC9dTiFmWp1",
+      "supplier_name": "Lorenzo Dentis",
+      "timestamp": "1661529553488"
+    },
+    "1661529823386": {
+      "client": "xJwXwEA3oZSOLdNUGIC9dTiFmWp1",
+      "client_name": "Lorenzo Dentis",
+      "date": "2022-08-26",
+      "description": "lezioni di giapponese ",
+      "ore": "1",
+      "status": "pending",
+      "supplier": "3M5mdZ57ZcayCpqc5EmEriAyCeN2",
+      "supplier_name": "Fedra Canarelli ",
+      "timestamp": "1661529823386"
+    },
+    "1661530146082": {
+      "client": "3M5mdZ57ZcayCpqc5EmEriAyCeN2",
+      "client_name": "Fedra Canarelli ",
+      "date": "2022-08-26",
+      "description": "cucina Etiope ",
+      "ore": "6",
+      "status": "working",
+      "supplier": "xJwXwEA3oZSOLdNUGIC9dTiFmWp1",
+      "supplier_name": "Lorenzo Dentis",
+      "timestamp": "1661530146082"
+    }
+  },
+  "users": {
+    "3M5mdZ57ZcayCpqc5EmEriAyCeN2": {
+      "address": "Via Matteotti, 33, Coazze, 10050, Italia",
+      "balance": 5,
+      "lat": 45.0517087,
+      "lng": 7.295959399999999,
+      "name": "Fedra Canarelli ",
+      "phoneNr": "3899562007",
+      "referral": "3M5md",
+      "transactions": {
+        "-NAPuVJYejUtYNvVu-ez": "1661530146082"
+      }
+    },
+    "Bm2KN9LjlPUvWnClvzIYQLjjUqj2": {
+      "address": "Via Reano, 24, Rivoli, 10098, Italia",
+      "balance": 10,
+      "lat": 45.0696326,
+      "lng": 7.50195,
+      "name": "lorenzo",
+      "phoneNr": "3272014546",
+      "referral": "Bm2KN"
+    },
+    "UGLl3lir99NWqmDNLHO2UJohlf12": {
+      "address": "Via Sambuy 94, 10026, Santena",
+      "lat": 44.9562731,
+      "lng": 7.786421299999999
+    },
+    "rvSStZ5mB0c1TFl3fa0fagrfgFX2": {
+      "address": "Via Sambuy, 90, Santena, 10026, Italy",
+      "balance": 68,
+      "lat": 44.9563352,
+      "lng": 7.7858578,
+      "name": "andrea_dangi99",
+      "phoneNr": "3425934167",
+      "referral": "rvSSt",
+      "referred": {
+        "dangiolino_99": "zDKtj87giNYIvm18lNQzzsUKRMF3"
+      },
+      "transactions": {
+        "-NAPKkRCqJT4Ya_ZgqGE": "1661520512772",
+        "-NAPLLJpOH2Vuo8EwPp-": "1661520667956",
+        "-NAPLll3hX8M-4hS3msp": "1661520780355",
+        "-NAPMKXjrPGQV7F5nt6n": "1661520926888",
+        "-NAPWRNF0r2iaIDVlDsv": "1661523576314"
+      }
+    },
+    "v1PDhUyEsoMkdzi3oru7MjLNEii1": {
+      "address": "Via Sambuy 94, 10026, Santena",
+      "balance": 0,
+      "lat": 44.9562731,
+      "lng": 7.786421299999999,
+      "name": "Andrea2909",
+      "phoneNr": "3425934167",
+      "referral": "v1PDh"
+    },
+    "xJwXwEA3oZSOLdNUGIC9dTiFmWp1": {
+      "address": "via reano 24 Rivoli, 10098, Italia",
+      "balance": 10,
+      "lat": 45.0696326,
+      "lng": 7.50195,
+      "name": "Lorenzo Dentis",
+      "phoneNr": "3272014546",
+      "referral": "xJwXw",
+      "transactions": {
+        "-NAPuVJYejUtYNvVu-f-": "1661530146082"
+      }
+    },
+    "zDKtj87giNYIvm18lNQzzsUKRMF3": {
+      "address": "Via Sambuy, 90, Santena, 10026, Italy",
+      "balance": -38,
+      "lat": 44.9563352,
+      "lng": 7.7858578,
+      "name": "dangiolino_99",
+      "phoneNr": "3425934167",
+      "referral": "zDKtj",
+      "transactions": {
+        "-NAPKkR8zyn06XssXuQs": "1661520512772",
+        "-NAPLLJoC4Pc6pAszwgd": "1661520667956",
+        "-NAPLll3hX8M-4hS3mso": "1661520780355",
+        "-NAPMKXnN1nmFqdbJme6": "1661520926888",
+        "-NAPWRN5drwyo9Pk7Fj4": "1661523576314"
+      }
+    }
+  }
+}
