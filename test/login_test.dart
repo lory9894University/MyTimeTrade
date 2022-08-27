@@ -19,13 +19,6 @@ void main() {
   setupFirebaseAuthMocks();
   Firebase.initializeApp();
 
-  final user = MockUser(
-    isAnonymous: false,
-    uid: 'Bm2KN9LjlPUvWnClvzIYQLjjUqj2',
-    email: 'lorenzo@developer.com',
-    displayName: 'Lorenzo',
-  );
-
   testWidgets('Login', (WidgetTester tester) async {
     FlutterError.onError = ignoreOverflowErrors;
 
