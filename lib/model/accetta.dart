@@ -6,7 +6,6 @@ import 'package:mytimetrade/widgets/global.dart';
 
 import '../widgets/BottomBar.dart';
 
-
 class Accetta extends StatefulWidget {
   const Accetta({Key? key}) : super(key: key);
 
@@ -20,37 +19,12 @@ class _AccettaState extends State<Accetta> {
   List<dynamic> transactionsToPay = List.empty(growable: true);
 
   @override
-  didChangeDependencies() async {
-    DatabaseReference userRef = FirebaseDatabase.instance
-        .ref('users/${globalUserData!.uid}/transactions');
-    userRef.onValue.listen((DatabaseEvent event) async {
-      transactionsPending.clear();
-      transactionsAccepted.clear();
-      transactionsToPay.clear();
-      if (!event.snapshot.exists) {
-        return;
-      }
-      var pageData = event.snapshot.value as Map<dynamic, dynamic>;
-
-      for (var value in pageData.values) {
-        DatabaseReference ref =
-            FirebaseDatabase.instance.ref('transactions/$value');
-        event = await ref.once();
-        var transaction = event.snapshot.value as Map<dynamic, dynamic>;
-        if (transaction['status'] == 'working' &&
-            transaction['supplier'] != globalUserData!.uid) {
-          transactionsToPay.add(transaction);
-        } else if (transaction['status'] == 'pending' &&
-            transaction['supplier'] == globalUserData!.uid) {
-          transactionsPending.add(transaction);
-        } else if (transaction['status'] == 'working' &&
-            transaction['supplier'] == globalUserData!.uid) {
-          transactionsAccepted.add(transaction);
-        }
-      }
-
-      setState(() => {});
-    });
+  didChangeDependencies() {
+    List<Map<String, String>> args =
+        ModalRoute.of(context)?.settings.arguments as List<Map<String, String>>;
+    transactionsPending.add(args[0]);
+    transactionsAccepted.add(args[1]);
+    transactionsToPay.add(args[2]);
 
     super.didChangeDependencies();
   }
@@ -67,9 +41,9 @@ class _AccettaState extends State<Accetta> {
             toolbarHeight: 0.5,
             bottom: TabBar(
               tabs: [
-                Tab(text: "to accept".i18n()),
-                Tab(text: "accepted".i18n()),
-                Tab(text: "to pay".i18n())
+                Tab(key: Key("accept"), text: "to accept".i18n()),
+                Tab(key: Key("accepted"), text: "accepted".i18n()),
+                Tab(key: Key("to_pay"), text: "to pay".i18n())
               ],
             ),
           ),

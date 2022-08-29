@@ -22,7 +22,6 @@ Future<void> main() async {
       "Andrea2909");
   Interest interest = Interest(
       "lorenzo", "3272014546", "Via reano 24 Rivoli", "prova", "10", "prova");
-  var findOne = findsNothing;
 
   testWidgets("swipe layout", (WidgetTester tester) async {
     await tester.pumpWidget(MaterialApp(

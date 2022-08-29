@@ -18,6 +18,20 @@ class Transaction {
     date = DateTime.now().toString().substring(0, 10);
   }
 
+  toMap() {
+    return {
+      'ore': ore.toString(),
+      'description': description,
+      'supplier': supplier,
+      'supplier_name': supplier_name,
+      'client': client,
+      'client_name': client_name,
+      'status': status,
+      'date': date,
+      'timestamp': timestamp.toString()
+    };
+  }
+
   TransactionSend() {
     final Map<String, Map> updates = {};
     updates['/transactions/${timestamp.toString()}'] = {
