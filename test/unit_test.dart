@@ -2,22 +2,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mytimetrade/screens/auth_screen/login_demo.dart';
-
-class UserData {
-  late String name, email, uid, referralCode;
-  String? address, phoneNr;
-  User? authObject;
-  List<String>? services;
-  double? lat, lng;
-  double radius = 10;
-
-  UserData(this.address, this.services, this.name, this.authObject,
-      this.phoneNr, this.lat, this.lng, this.email, this.uid) {
-    referralCode = uid.substring(0, 5);
-  }
-}
+import 'package:mytimetrade/widgets/transaction.dart';
 
 void main() {
+  TestWidgetsFlutterBinding.ensureInitialized();
+
   group('Verification', () {
     TextEditingController emailController = TextEditingController();
     TextEditingController passwordController = TextEditingController();
@@ -58,4 +47,37 @@ void main() {
       expect(userData.referralCode, "uidUs");
     });
   });
+
+  group('Transactions', () {
+    test("transaction creation", () {
+      Transaction transaction = Transaction(
+          10,
+          "prova",
+          "Bm2KN9LjlPUvWnClvzIYQLjjUqj2",
+          "lorenzo",
+          "v1PDhUyEsoMkdzi3oru7MjLNEii1",
+          "Andrea2909");
+      expect(transaction.ore, 10);
+      expect(transaction.description, "prova");
+      expect(transaction.supplier, "Bm2KN9LjlPUvWnClvzIYQLjjUqj2");
+      expect(transaction.supplier_name, "lorenzo");
+      expect(transaction.client, "v1PDhUyEsoMkdzi3oru7MjLNEii1");
+      expect(transaction.client_name, "Andrea2909");
+      expect(transaction.date, DateTime.now().toString().substring(0, 10));
+    });
+  });
+}
+
+class UserData {
+  late String name, email, uid, referralCode;
+  String? address, phoneNr;
+  User? authObject;
+  List<String>? services;
+  double? lat, lng;
+  double radius = 10;
+
+  UserData(this.address, this.services, this.name, this.authObject,
+      this.phoneNr, this.lat, this.lng, this.email, this.uid) {
+    referralCode = uid.substring(0, 5);
+  }
 }
