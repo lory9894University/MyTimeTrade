@@ -173,6 +173,7 @@ class _PersonalProfileState extends State<PersonalProfile> {
                 ],
               ),
               ExpansionTile(
+                key: const Key('expand_phoneNr'),
                 title: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
@@ -196,6 +197,7 @@ class _PersonalProfileState extends State<PersonalProfile> {
                   Column(
                     children: [
                       TextField(
+                        key: const Key('phoneNr'),
                         controller: phoneController,
                         decoration: const InputDecoration(
                           border: OutlineInputBorder(),
@@ -206,6 +208,7 @@ class _PersonalProfileState extends State<PersonalProfile> {
                       ),
                       const Padding(padding: EdgeInsets.only(top: 5)),
                       IconButton(
+                        key: const Key('edit_phoneNr'),
                         icon: const Icon(FontAwesomeIcons.check, size: 20),
                         onPressed: () async {
                           var connectivityResult =
@@ -231,6 +234,7 @@ class _PersonalProfileState extends State<PersonalProfile> {
                 ],
               ),
               ExpansionTile(
+                key: const Key('expand_interests'),
                 title: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
@@ -259,6 +263,7 @@ class _PersonalProfileState extends State<PersonalProfile> {
                             itemCount: interests.length,
                             itemBuilder: (context, index) {
                               return ListTile(
+                                key: const Key("interest"),
                                 dense: true,
                                 leading:
                                     const Icon(FontAwesomeIcons.ban, size: 20),

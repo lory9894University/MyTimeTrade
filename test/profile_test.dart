@@ -19,9 +19,10 @@ void main() {
     email: 'lorenzo@developer.com',
     displayName: 'Lorenzo',
   );
+  var findOne = findsNothing;
 
-  globalUserData = UserData(
-      "via reano 24, Rivoli, 10098, Italia", [], "Lorenzo", user, "", 0, 0);
+  globalUserData = UserData("via reano 24, Rivoli, 10098, Italia",
+      ["prova", "prova2"], "Lorenzo", user, "3272014546", 0, 0);
 
   test('global user data creation', () {
     expect(globalUserData?.name, 'Lorenzo');
@@ -61,7 +62,36 @@ void main() {
     await tester.tap(edit_address);
     await tester.pump();
     await tester.pumpAndSettle();
+  });
 
-    expect(find.text("Confirm"), findsOneWidget);
+  testWidgets('check Phone', (WidgetTester tester) async {
+    final phone = find.byKey(const Key('phoneNr'));
+    final edit_phone = find.byKey(const Key('edit_phoneNr'));
+    final expand_phone = find.byKey(const Key('expand_phoneNr'));
+
+    await tester.pumpWidget(const MaterialApp(home: PersonalProfile()));
+    await tester.pumpAndSettle();
+
+    expect(expand_phone, findsOneWidget);
+    await tester.tap(expand_phone);
+    await tester.pumpAndSettle();
+
+    expect(edit_phone, findsOneWidget);
+    expect(phone, findsOneWidget);
+    expect(find.text("3272014546"), findsOneWidget);
+  });
+
+  testWidgets('check Interest', (WidgetTester tester) async {
+    final interest = find.byKey(const Key('interest'));
+    final expand_interests = find.byKey(const Key('expand_interests'));
+
+    await tester.pumpWidget(const MaterialApp(home: PersonalProfile()));
+    await tester.pumpAndSettle();
+
+    expect(expand_interests, findsOneWidget);
+    await tester.tap(expand_interests);
+    await tester.pumpAndSettle();
+
+    expect(interest, findOne);
   });
 }
