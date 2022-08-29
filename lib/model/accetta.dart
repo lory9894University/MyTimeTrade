@@ -6,6 +6,7 @@ import 'package:mytimetrade/widgets/global.dart';
 
 import '../widgets/BottomBar.dart';
 
+
 class Accetta extends StatefulWidget {
   const Accetta({Key? key}) : super(key: key);
 
