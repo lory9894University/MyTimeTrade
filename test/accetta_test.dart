@@ -24,7 +24,7 @@ Future<void> main() async {
   transactions.add(transaction.toMap());
   transactions.add(transaction.toMap());
 
-  testWidgets("swipe layout", (WidgetTester tester) async {
+  testWidgets("transazioni da accettare", (WidgetTester tester) async {
     await tester.pumpWidget(MaterialApp(
       onGenerateRoute: (settings) {
         return MaterialPageRoute(
@@ -37,5 +37,54 @@ Future<void> main() async {
     ));
 
     await tester.pump();
+    await tester.pumpAndSettle();
+
+    expect(find.text("10"), findsOneWidget);
+  });
+
+  testWidgets("transazioni accettate", (WidgetTester tester) async {
+    await tester.pumpWidget(MaterialApp(
+      onGenerateRoute: (settings) {
+        return MaterialPageRoute(
+          settings: RouteSettings(arguments: transactions),
+          builder: (context) {
+            return Accetta();
+          },
+        );
+      },
+    ));
+
+    final accettare_button = find.byKey(const Key('accept'));
+
+    await tester.pumpAndSettle();
+
+    await tester.tap(accettare_button);
+
+    await tester.pumpAndSettle();
+
+    expect(find.text("10"), findsOneWidget);
+  });
+
+  testWidgets("transazioni da pagare", (WidgetTester tester) async {
+    await tester.pumpWidget(MaterialApp(
+      onGenerateRoute: (settings) {
+        return MaterialPageRoute(
+          settings: RouteSettings(arguments: transactions),
+          builder: (context) {
+            return Accetta();
+          },
+        );
+      },
+    ));
+
+    final accettare_button = find.byKey(const Key('to_pay'));
+
+    await tester.pumpAndSettle();
+
+    await tester.tap(accettare_button);
+
+    await tester.pumpAndSettle();
+
+    expect(find.text("10"), findsOneWidget);
   });
 }
