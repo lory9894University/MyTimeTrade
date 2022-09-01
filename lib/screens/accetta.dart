@@ -191,7 +191,7 @@ class _AccettaState extends State<Accetta> {
                                   transactionsToPay.length,
                                   (index) => DataRow(cells: [
                                         DataCell(Text(transactionsToPay[index]
-                                            ['client_name'])),
+                                            ['supplier_name'])),
                                         DataCell(Text(transactionsToPay[index]
                                             ['description'])),
                                         DataCell(Text(
