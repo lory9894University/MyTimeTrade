@@ -239,8 +239,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
           "referral": value.user?.uid.substring(0, 5),
           "phoneNr": "",
         }).then((val) {
-          Navigator.pushReplacementNamed(context, '/welcome',
-              arguments: value.user!);
+          Navigator.pushReplacementNamed(context, '/welcome');
           loggedUser == null;
         });
       });
