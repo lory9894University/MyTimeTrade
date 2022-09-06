@@ -27,7 +27,6 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Future<void> didChangeDependencies() async {
-    user = ModalRoute.of(context)?.settings.arguments as User;
     super.didChangeDependencies();
 
     DatabaseReference userRef =

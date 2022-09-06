@@ -6,6 +6,7 @@ import 'package:flutter_signin_button/button_view.dart';
 import 'package:localization/localization.dart';
 
 import '../../firebase/auth_operations.dart';
+import '../../widgets/global.dart';
 
 class RegistrationPage extends StatefulWidget {
   const RegistrationPage({Key? key}) : super(key: key);
@@ -185,6 +186,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                     if (mounted) {
                       Navigator.pushReplacementNamed(context, '/welcome',
                           arguments: user);
+                      loggedUser == null;
                     }
                   });
                 },
@@ -236,16 +238,18 @@ class _RegistrationPageState extends State<RegistrationPage> {
           "transactions": [],
           "referral": value.user?.uid.substring(0, 5),
           "phoneNr": "",
-        }).then((value) {
-          Navigator.pushReplacementNamed(context, '/');
+        }).then((val) {
+          Navigator.pushReplacementNamed(context, '/welcome');
+          loggedUser == null;
         });
       });
     }
   }
 
   void updateReferredUser(key, value, uid) {
-    DatabaseReference ref =
-        FirebaseDatabase.instance.ref().child("users/$key/referred");
+    DatabaseReference ref = FirebaseDatabase.instance
+        .ref()
+        .child("users/$key/referred/${usernameController.text}");
     ref.set({usernameController.text: uid});
   }
 }
